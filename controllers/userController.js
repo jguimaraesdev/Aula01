@@ -29,17 +29,17 @@ class userController{
         }
     }
 
-    async findAllUser(req, res){
-        const {login} = req.body;
-        try{
-            const allUsers = await this.userService.findAllUser(login);
-            res.status(200).json(allUsers);
+    async findAllUser(req, res) {
+        try {
+          const users = await this.userService.findAllUser();
+          res.status(200).json(users);
+        } catch (error) {
+          res.status(500).json({ error: 'Erro ao buscar usuários' });
         }
-        catch(error){
-            res.status(500).json({error:"Login invalido"});
-        }
-        
     }
+        
+    
+
     async findUserbyId(req, res){
         const {id, senha} = req.body;
         try{
