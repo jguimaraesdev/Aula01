@@ -38,7 +38,9 @@ async function ApplyMigrations(){
 
 ApplyMigrations();
 
-var port = '3000';
-app.listen(port);
-console.log('teste');
+const port = 3001; // Use uma porta diferente
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+});
+
 module.exports = app;

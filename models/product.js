@@ -14,7 +14,8 @@ module.exports= (sequelize) => {
         valor:{
             type: Sequelize.DOUBLE,
             unique:true
-        },
+        }
+        
         
     });
     return Product;
