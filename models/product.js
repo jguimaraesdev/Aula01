@@ -13,8 +13,8 @@ module.exports= (sequelize) => {
             allowNull:false
         },
         valor:{
-            type: Sequelize.DOUBLE(10,2),
-            unique:true
+            type: Sequelize.DECIMAL(10,2),
+            allowNull: false
         }
         
         

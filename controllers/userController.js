@@ -4,6 +4,9 @@ class userController{
     constructor(userService){
         this.userService = userService;
     }
+
+    //--------------------------------------------------------------------------------------------------//
+
     async create(req,res){
         const {nome, login, email, senha} = req.body;
         try{
@@ -14,6 +17,8 @@ class userController{
             res.status(500).json({error:"Erro ao inserir o novo usuário"});
         }
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     async loginUser(req, res){
         const { login, senha } = req.body;
@@ -29,6 +34,7 @@ class userController{
         }
     }
 
+    //--------------------------------------------------------------------------------------------------//
     async findAllUser(req, res) {
         try {
           const users = await this.userService.findAllUser();
@@ -38,9 +44,9 @@ class userController{
         }
     }
         
-    
-   async findUserbyId(req, res) {
-    const userId = req.params.id; // Obter o ID do usuário dos parâmetros da URL
+    //--------------------------------------------------------------------------------------------------//
+    async findUserbyId(req, res) {
+        const userId = req.params.id; // Obter o ID do usuário dos parâmetros da URL
         try {
             const oneUser = await this.userService.findUserbyId(userId); // Chamar a função do serviço passando apenas o ID
             if (oneUser) {
@@ -52,6 +58,8 @@ class userController{
             res.status(500).json({ error: "Erro interno do servidor" });
         }
     }
+    
+    //--------------------------------------------------------------------------------------------------//
 
 }
 module.exports = userController;

@@ -1,7 +1,10 @@
 class ProductController {
+    
     constructor(productService) {
         this.productService = productService;
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     async create(req, res) {
         const { nome, valor } = req.body;
@@ -13,6 +16,7 @@ class ProductController {
         }
     }
 
+    //--------------------------------------------------------------------------------------------------//
     async findAllProduct(req, res) {
         try {
             const products = await this.productService.findAllProduct();
@@ -22,6 +26,7 @@ class ProductController {
         }
     }
 
+    //--------------------------------------------------------------------------------------------------//
     async findProductById(req, res) {
         const productId = req.params.id;
         try {
@@ -35,6 +40,7 @@ class ProductController {
             res.status(500).json({ error: "Erro interno do servidor" });
         }
     }
+    //--------------------------------------------------------------------------------------------------//
 }
 
 module.exports = ProductController;

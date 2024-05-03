@@ -9,13 +9,20 @@ const DepositController = require('../controllers/depositController');
 const depositService = new DepositService(db.Deposit);
 const depositController = new DepositController(depositService);
 
+//--------------------------------------------------------------------------------------------------//
 // Rotas
-router.post('/newdeposits', (req, res, next) => {
+router.post('/newdeposit', (req, res, next) => {
   depositController.create(req, res);
 });
 
-router.get('/findalldeposits', (req, res, next) => {
+router.get('/findalldeposit', (req, res, next) => {
   depositController.findAllDeposits(req, res);
 });
 
+router.get('/findDepositById/:id', (req, res, next) => {
+  depositController.findDepositById(req, res);
+});
+
+
+//--------------------------------------------------------------------------------------------------//
 module.exports = router;

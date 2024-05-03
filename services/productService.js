@@ -3,6 +3,8 @@ class ProductService {
         this.Product = ProductModel;
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     async create(nome, valor) {
         try {
             const newProduct = await this.Product.create({ nome, valor });
@@ -12,14 +14,18 @@ class ProductService {
         }
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     async findAllProduct() {
         try {
-            const products = await this.Product.findAll();
-            return products;
+            const allproducts = await this.Product.findAll();
+            return allproducts;
         } catch (error) {
             throw error;
         }
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     async findProductById(id) {
         try {
@@ -29,6 +35,7 @@ class ProductService {
             throw error;
         }
     }
+    //--------------------------------------------------------------------------------------------------//
 }
 
 module.exports = ProductService;

@@ -9,6 +9,8 @@ class UserService {
         this.authenticateToken = authenticateToken;
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     async create(nome, login, email, senha) {
         try {
             const senhaHash = await bcrypt.hash(senha, 10);
@@ -25,6 +27,8 @@ class UserService {
         }
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     async verifyUser(login, senha) {
         try {
             const user = await this.User.findOne({ where: { login } });
@@ -35,6 +39,8 @@ class UserService {
             throw error;
         }
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     async loginUser(login, senha) {
         try {
@@ -50,6 +56,8 @@ class UserService {
         }
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     async findAllUser() {
         try {
             const allUsers = await this.User.findAll({ attributes: { exclude: ['senha'] } });
@@ -58,6 +66,8 @@ class UserService {
             throw error;
         }
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     async findUserbyId(id) {
         console.log('Procurando usuário com ID:', id);
@@ -70,6 +80,8 @@ class UserService {
             throw error;
         }
     }
+
+    //--------------------------------------------------------------------------------------------------//
     
 }
 

@@ -1,14 +1,14 @@
-class DepositService {
-    constructor(DepositModel) {
-        this.Deposit = DepositModel;
+class XtelefoneService {
+    constructor(XtelefoneModel) {
+        this.Xtelefone = XtelefoneModel;
     }
 
     //--------------------------------------------------------------------------------------------------//
 
-    async create(movimento, productId, qtd) {
+    async create(DDD, numero, userId) {
         try {
-            const newDeposit = await this.Deposit.create({ movimento, ProductId: productId, qtd });
-            return newDeposit;
+            const newXtelefone = await this.Xtelefone.create({ DDD, numero, userId });
+            return newXtelefone;
         } catch (error) {
             throw error;
         }
@@ -16,10 +16,10 @@ class DepositService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllDeposits() {
+    async findAllXtelefones() {
         try {
-            const deposits = await this.Deposit.findAll();
-            return deposits;
+            const allXtelefones = await this.Xtelefone.findAll();
+            return allXtelefones;
         } catch (error) {
             throw error;
         }
@@ -27,16 +27,17 @@ class DepositService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findDepositById(id) {
+    async findXtelefoneById(id) {
         try {
-            const deposit = await this.Deposit.findOne({ where: { id } });
-            return deposit;
+            const xtelefone = await this.Xtelefone.findOne({ where: { id } });
+            return xtelefone;
         } catch (error) {
             throw error;
         }
     }
+
     //--------------------------------------------------------------------------------------------------//
     
 }
 
-module.exports = DepositService;
+module.exports = XtelefoneService;

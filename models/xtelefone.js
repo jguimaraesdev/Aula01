@@ -1,11 +1,12 @@
 // ./models/xtelefone.js
 const Sequelize = require('sequelize');
+
 module.exports= (sequelize) => {
-    
-    const xtelefone = sequelize.define('xtelefone',{
+    const Xtelefone = sequelize.define('Xtelefone',{
         id:{
             type: Sequelize.INTEGER,
-            primaryKey:true
+            primaryKey:true,
+            autoIncrement: true
         },
         DDD:{
             type: Sequelize.STRING,
@@ -18,12 +19,12 @@ module.exports= (sequelize) => {
         
     });
 
-    xtelefone.associate = (models) =>{
-        xtelefone.belongsTo(sequelize.models.User,{
+    Xtelefone.associate = (models) =>{
+        Xtelefone.belongsTo(sequelize.models.User,{
             foreingKey: 'userId',
             as: 'User'
         });
     };
 
-    return xtelefone;
+    return Xtelefone;
 };

@@ -12,6 +12,7 @@ const authenticateToken = new AuthenticateToken(secretKey);
 const userService = new UserService(db.User, authenticateToken);
 const userController = new UserController(userService);
 
+//--------------------------------------------------------------------------------------------------//
 router.get('/', (req, res, next) => {
   res.send('Módulo de usuários está rodando');
 });
@@ -32,5 +33,6 @@ router.get('/findUserbyId/:id', (req, res, next) => {
   userController.findUserbyId(req, res);
 });
 
+//--------------------------------------------------------------------------------------------------//
 
 module.exports = router;
