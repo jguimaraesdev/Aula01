@@ -1,19 +1,35 @@
-const Sequelize = require('sequelize');
-const Product = require('./product');
+// ./models/deposit.js
+
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    const Deposit = sequelize.define('Deposit', {
+
+    const Deposit = sequelize.define('Deposit',{
+        
+        id:{
+            type: DataTypes.INTEGER,
+            primaryKey:true,
+            autoIncrement: true
+        },
         movimento: {
-            type: Sequelize.BOOLEAN,
+            type: DataTypes.ENUM('+', '-'), // Corrigido o tipo de dados ENUM
             allowNull: false
         },
         qtd: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         }
     });
 
-    Deposit.belongsTo(Product); // Relacionamento: Um depósito pertence a um produto
+    Deposit.associate = (models) =>{
+        Deposit.belongsTo(models.Product, { // Corrigido o relacionamento
+            foreignKey: 'productId', // Corrigido o nome da chave estrangeira
+            as: 'product' // Corrigido o alias
+        });
+    };
 
     return Deposit;
 };
+
+
+

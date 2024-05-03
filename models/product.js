@@ -5,14 +5,15 @@ module.exports= (sequelize) => {
     const Product = sequelize.define('Product',{
         id:{
             type: Sequelize.INTEGER,
-            primaryKey:true
+            primaryKey:true,
+            autoIncrement: true
         },
         nome:{
             type: Sequelize.STRING,
             allowNull:false
         },
         valor:{
-            type: Sequelize.DOUBLE,
+            type: Sequelize.DOUBLE(10,2),
             unique:true
         }
         
