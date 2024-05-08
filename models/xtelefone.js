@@ -20,7 +20,7 @@ module.exports= (sequelize) => {
     });
 
     Xtelefone.associate = (models) =>{
-        Xtelefone.belongsTo(sequelize.models.User,{
+        Xtelefone.belongsTo(models.User,{
             foreingKey: 'userId',
             as: 'User'
         });

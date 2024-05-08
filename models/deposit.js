@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
             unique:true
         },
         ativo: {
-            type: Sequelize.BOOLEAN,
+            type: DataTypes.BOOLEAN,
             defaultValue: true, // Setting default value to true
             allowNull: false
         }

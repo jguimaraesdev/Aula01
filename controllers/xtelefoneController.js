@@ -5,8 +5,10 @@ class XtelefoneController {
     }
 
     //--------------------------------------------------------------------------------------------------//
+    
     async create(req, res) {
-        const { DDD, numero, userId } = req.body;
+        const { DDD, numero } = req.body;
+        const userId = req.userId; // Suponho que você tenha o ID do usuário na requisição
         try {
             const newXtelefone = await this.xtelefoneService.create(DDD, numero, userId);
             res.status(200).json(newXtelefone);

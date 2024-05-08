@@ -27,15 +27,15 @@ module.exports = (sequelize) =>{
         
     });
 
-    Moviment.associate = (models) =>{
-        Moviment.belongsTo(models.Product, { // Corrigido o relacionamento
+    Moviments.associate = (models) =>{
+        Moviments.belongsTo(models.Product, { // Corrigido o relacionamento
             foreignKey: 'productId', // Corrigido o nome da chave estrangeira
             as: 'product' // Corrigido o alias
         });
     };
 
-    Moviment.associate = (models) =>{
-        Moviment.belongsTo(models.Deposit, { // Corrigido o relacionamento
+    Moviments.associate = (models) =>{
+        Moviments.belongsTo(models.Deposit, { // Corrigido o relacionamento
             foreignKey: 'depositId', // Corrigido o nome da chave estrangeira
             as: 'deposit' // Corrigido o alias
         });
