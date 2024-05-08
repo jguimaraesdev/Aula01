@@ -6,12 +6,29 @@ class DepositController {
     //--------------------------------------------------------------------------------------------------//
 
     async create(req, res) {
-        const { movimento, productId, qtd } = req.body;
+        const { central } = req.body;
         try {
-            const newDeposit = await this.depositService.create(movimento, productId, qtd);
+            const newDeposit = await this.depositService.create(central);
             res.status(200).json(newDeposit);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir o novo registro de depósito" });
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+    
+    async update(req, res) {
+        const depositId = req.params.id;
+        const updates = req.body;
+        try {
+            const { updatedRowsCount, updatedRows } = await this.depositService.update(depositId, updates);
+            if (updatedRowsCount > 0) {
+                res.status(200).json(updatedRows);
+            } else {
+                res.status(404).json({ error: "Depósito não encontrado" });
+            }
+        } catch (error) {
+            res.status(500).json({ error: "Erro ao atualizar depósito" });
         }
     }
 

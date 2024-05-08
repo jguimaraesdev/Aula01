@@ -15,6 +15,21 @@ class XtelefoneService {
     }
 
     //--------------------------------------------------------------------------------------------------//
+    
+    async update(id, updates) {
+        try {
+            const [updatedRowsCount, updatedRows] = await this.Xtelefone.update(updates, {
+                where: { id },
+                returning: true // Para retornar os registros atualizados
+            });
+            return { updatedRowsCount, updatedRows };
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+    //--------------------------------------------------------------------------------------------------//
 
     async findAllXtelefones() {
         try {

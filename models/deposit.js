@@ -11,14 +11,16 @@ module.exports = (sequelize) => {
             primaryKey:true,
             autoIncrement: true
         },
-        movimento: {
-            type: DataTypes.ENUM('+', '-'), // Corrigido o tipo de dados ENUM
-            allowNull: false
+        central: {
+            type: DataTypes.STRING,
+            unique:true
         },
-        qtd: {
-            type: DataTypes.INTEGER,
+        ativo: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: true, // Setting default value to true
             allowNull: false
         }
+        
     });
 
     Deposit.associate = (models) =>{

@@ -17,6 +17,23 @@ class XtelefoneController {
 
     //--------------------------------------------------------------------------------------------------//
 
+    async update(req, res) {
+        const xtelefoneId = req.params.id;
+        const updates = req.body;
+        try {
+            const { updatedRowsCount, updatedRows } = await this.xtelefoneService.update(xtelefoneId, updates);
+            if (updatedRowsCount > 0) {
+                res.status(200).json(updatedRows);
+            } else {
+                res.status(404).json({ error: "Telefone não encontrado" });
+            }
+        } catch (error) {
+            res.status(500).json({ error: "Erro ao atualizar telefone" });
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
     async findAllXtelefones(req, res) {
         try {
             const xtelefones = await this.xtelefoneService.findAllXtelefones();

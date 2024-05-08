@@ -5,10 +5,24 @@ class DepositService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async create(movimento, productId, qtd) {
+    async create(central) {
         try {
-            const newDeposit = await this.Deposit.create({ movimento, ProductId: productId, qtd });
+            const newDeposit = await this.Deposit.create({ central });
             return newDeposit;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    async update(id, updates) {
+        try {
+            const [updatedRowsCount, updatedRows] = await this.Deposit.update(updates, {
+                where: { id },
+                returning: true // Para retornar os registros atualizados
+            });
+            return { updatedRowsCount, updatedRows };
         } catch (error) {
             throw error;
         }

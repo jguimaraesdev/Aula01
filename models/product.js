@@ -15,6 +15,11 @@ module.exports= (sequelize) => {
         valor:{
             type: Sequelize.DECIMAL(10,2),
             allowNull: false
+        },
+        ativo: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: true, // Setting default value to true
+            allowNull: false
         }
         
         

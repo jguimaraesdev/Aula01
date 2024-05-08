@@ -15,6 +15,11 @@ router.post('/newproduct', (req, res, next) => {
   productController.create(req, res);
 });
 
+// Rota de atualização
+router.put('/updateProduct/:id', (req, res, next) => {
+  productController.update(req, res);
+});
+
 router.get('/findallproduct', (req, res, next) => {
   productController.findAllProduct(req, res);
 });

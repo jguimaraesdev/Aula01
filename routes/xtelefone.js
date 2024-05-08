@@ -15,6 +15,11 @@ router.post('/newxtelefone', (req, res, next) => {
   xtelefoneController.create(req, res);
 });
 
+// Rota de atualização
+router.put('/updateXtelefone/:id', (req, res, next) => {
+  xtelefoneController.update(req, res);
+});
+
 router.get('/findallxtelefones', (req, res, next) => {
   xtelefoneController.findAllXtelefones(req, res);
 });

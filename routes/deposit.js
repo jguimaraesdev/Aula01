@@ -15,6 +15,11 @@ router.post('/newdeposit', (req, res, next) => {
   depositController.create(req, res);
 });
 
+// Rota de atualização
+router.put('/updateDeposit/:id', (req, res, next) => {
+  depositController.update(req, res);
+});
+
 router.get('/findalldeposit', (req, res, next) => {
   depositController.findAllDeposits(req, res);
 });

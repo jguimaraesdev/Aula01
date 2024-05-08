@@ -25,6 +25,11 @@ router.post('/loginUser', (req, res, next) => {
   userController.loginUser(req, res);
 });
 
+// Rota de atualização
+router.put('/updateUser/:id', (req, res, next) => {
+  userController.update(req, res);
+});
+
 router.get('/allUsers', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
   userController.findAllUser(req, res);
 })

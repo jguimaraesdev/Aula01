@@ -16,6 +16,20 @@ class ProductService {
 
     //--------------------------------------------------------------------------------------------------//
 
+    async update(id, updates) {
+        try {
+            const [updatedRowsCount, updatedRows] = await this.Product.update(updates, {
+                where: { id },
+                returning: true // Para retornar os registros atualizados
+            });
+            return { updatedRowsCount, updatedRows };
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
     async findAllProduct() {
         try {
             const allproducts = await this.Product.findAll();

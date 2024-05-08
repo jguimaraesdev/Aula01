@@ -35,6 +35,23 @@ class userController{
     }
 
     //--------------------------------------------------------------------------------------------------//
+    
+    async update(req, res) {
+        const userId = req.params.id;
+        const updates = req.body;
+        try {
+            const { updatedRowsCount, updatedRows } = await this.userService.update(userId, updates);
+            if (updatedRowsCount > 0) {
+                res.status(200).json(updatedRows);
+            } else {
+                res.status(404).json({ error: "Usuário não encontrado" });
+            }
+        } catch (error) {
+            res.status(500).json({ error: "Erro ao atualizar usuário" });
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------//
     async findAllUser(req, res) {
         try {
           const users = await this.userService.findAllUser();

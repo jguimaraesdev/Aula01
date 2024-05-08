@@ -7,7 +7,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productRouter = require('./routes/product');
 var depositRouter = require('./routes/deposit');
-var xtelefoneRouter = require('./routes/xtelefone')
+var xtelefoneRouter = require('./routes/xtelefone');
+var movimentsRouter = require('./routes/moviments');
 
 var app = express();
 
@@ -22,6 +23,7 @@ app.use('/users', usersRouter);
 app.use('/product', productRouter);
 app.use('/deposit', depositRouter);
 app.use('/xtelefone', xtelefoneRouter);
+app.use('/moviments', movimentsRouter);
 
 const db = require('./models');
 
