@@ -21,7 +21,7 @@ module.exports= (sequelize) => {
 
     Xtelefone.associate = (models) =>{
         Xtelefone.belongsTo(models.User,{
-            foreingKey: 'userId',
+            foreignKey: 'userId',
             as: 'User'
         });
     };

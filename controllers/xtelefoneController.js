@@ -1,3 +1,4 @@
+// ./controllers/xtelefoneController.js
 class XtelefoneController {
     
     constructor(xtelefoneService) {
@@ -8,11 +9,13 @@ class XtelefoneController {
     
     async create(req, res) {
         const { DDD, numero } = req.body;
-        const userId = req.userId; // Suponho que você tenha o ID do usuário na requisição
+        const UserId = req.userId; // Suponho que você tenha o ID do usuário na requisição
         try {
-            const newXtelefone = await this.xtelefoneService.create(DDD, numero, userId);
+            const newXtelefone = await this.xtelefoneService.create(DDD, numero, UserId);
             res.status(200).json(newXtelefone);
+            
         } catch (error) {
+            console.error(error); // Adiciona esta linha para ver o erro no console
             res.status(500).json({ error: "Erro ao inserir o novo telefone" });
         }
     }
@@ -23,22 +26,39 @@ class XtelefoneController {
         const xtelefoneId = req.params.id;
         const updates = req.body;
         try {
+            // Verificar se o ID do registro é um número válido
+            if (isNaN(xtelefoneId)) {
+                return res.status(400).json({ error: "ID de registro inválido" });
+            }
+    
+            // Verificar se os dados de atualização estão presentes
+            if (!updates || Object.keys(updates).length === 0) {
+                return res.status(400).json({ error: "Dados de atualização inválidos" });
+            }
+    
+            // Chamar o método update da xtelefoneService para realizar a atualização
             const { updatedRowsCount, updatedRows } = await this.xtelefoneService.update(xtelefoneId, updates);
+           
             if (updatedRowsCount > 0) {
-                res.status(200).json(updatedRows);
+                return res.status(200).json({ message: "Registro atualizado com sucesso", updatedRowsCount, updatedRows });
             } else {
-                res.status(404).json({ error: "Telefone não encontrado" });
+                return res.status(404).json({ error: "Registro não encontrado" });
             }
         } catch (error) {
-            res.status(500).json({ error: "Erro ao atualizar telefone" });
+            // Tratar erros gerais
+            console.error("Erro ao atualizar registro:", error);
+            return res.status(500).json({ error: "Erro ao atualizar registro" });
         }
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     async findAllXtelefones(req, res) {
+
+        const{ page, pageSize} = req.query;
+
         try {
-            const xtelefones = await this.xtelefoneService.findAllXtelefones();
+            const xtelefones = await this.xtelefoneService.findAllXtelefones(page, pageSize);
             res.status(200).json(xtelefones);
         } catch (error) {
             res.status(500).json({ error: "Erro ao buscar telefones" });

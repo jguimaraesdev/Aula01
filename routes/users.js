@@ -1,3 +1,5 @@
+//./routes/users.js
+
 const express = require('express');
 const router = express.Router();
 
@@ -26,7 +28,7 @@ router.post('/loginUser', (req, res, next) => {
 });
 
 // Rota de atualização
-router.put('/updateUser/:id', (req, res, next) => {
+router.put('/updateUser/:id', authenticateToken.verifyToken.bind(authenticateToken),(req, res, next) => {
   userController.update(req, res);
 });
 

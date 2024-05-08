@@ -1,3 +1,5 @@
+//./routes/deposit.js
+
 const express = require('express');
 const router = express.Router();
 
@@ -24,7 +26,7 @@ router.get('/findalldeposit', (req, res, next) => {
   depositController.findAllDeposits(req, res);
 });
 
-router.get('/findDepositById/:id', (req, res, next) => {
+router.get('/findalldepositbyid/:id', (req, res, next) => {
   depositController.findDepositById(req, res);
 });
 

@@ -16,7 +16,7 @@ module.exports= (sequelize) => {
             type: Sequelize.DECIMAL(10,2),
             allowNull: false
         },
-        ativo: {
+        status: {
             type: Sequelize.BOOLEAN,
             defaultValue: true, // Setting default value to true
             allowNull: false
