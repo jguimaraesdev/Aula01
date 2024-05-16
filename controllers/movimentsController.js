@@ -4,22 +4,26 @@ class MovimentsController {
         this.movimentsService = movimentsService;
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     async create(req, res) {
-        const { movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_unitario } = req.body;
+        const { movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId  } = req.body;
         try {
-            const newMoviment = await this.movimentsService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_unitario);
+            const newMoviment = await this.movimentsService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
             res.status(200).json(newMoviment);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir novo movimento" });
         }
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     async update(req, res) {
         const movimentId = req.params.id;
         const updates = req.body;
         try {
             // Verificar se o ID do depósito é um número válido
-            if (isNaN(movimentIdId)) {
+            if (isNaN(movimentId)) {
                 return res.status(400).json({ error: "ID de movimento inválido" });
             }
     
@@ -44,6 +48,8 @@ class MovimentsController {
         }
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     async findAllMoviments(req, res) {
 
         const { page, pageSize } = req.query;
@@ -55,6 +61,8 @@ class MovimentsController {
             res.status(500).json({ error: 'Erro ao buscar movimentos' });
         }
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     async findMovimentById(req, res) {
         const movimentId = req.params.id;
@@ -70,7 +78,32 @@ class MovimentsController {
         }
     }
 
-    // Aqui você pode adicionar outras funções conforme necessário
+    //--------------------------------------------------------------------------------------------------//
+
+    async getPosicaoByDeposito(req, res) {
+        const { depositoId, page = 1, pageSize = 10 } = req.params;
+        try {
+            const posicao = await this.movimentsService.getPosicaoByDeposito(depositoId, page, pageSize);
+            res.status(200).json(posicao);
+        } catch (error) {
+            res.status(500).json({ error: "Erro ao buscar posição por depósito" });
+        }
+    }
+    
+    //--------------------------------------------------------------------------------------------------//
+
+    async getPosicaoByProdutoDeposito(req, res) {
+        const { produtoId, depositoId, page = 1, pageSize = 10 } = req.params;
+        try {
+            const posicao = await this.movimentsService.getPosicaoByProdutoDeposito(produtoId, depositoId, page, pageSize);
+            res.status(200).json(posicao);
+        } catch (error) {
+            res.status(500).json({ error: "Erro ao buscar posição por produto e depósito" });
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+    
 }
 
 module.exports = MovimentsController;

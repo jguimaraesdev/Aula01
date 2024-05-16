@@ -4,19 +4,25 @@ class MovimentsService {
         this.Moviments = movimentsModel;
     }
 
-    async create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_unitario) {
+    //--------------------------------------------------------------------------------------------------//
+
+    async create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId) {
         try {
             const newMoviment = await this.Moviments.create({
                 movimento_tipo,
                 qtd_disponivel,
                 qtd_bloqueado,
-                valor_unitario
+                valor_faturado,
+                productId, 
+                depositId
             });
             return newMoviment;
         } catch (error) {
             throw error;
         }
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     async update(id, updates) {
         try {
@@ -42,6 +48,8 @@ class MovimentsService {
            
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     async findAllMoviments(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
@@ -55,6 +63,8 @@ class MovimentsService {
         }
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     async findMovimentById(id) {
         try {
             const moviment = await this.Moviments.findOne({ where: { id } });
@@ -64,7 +74,40 @@ class MovimentsService {
         }
     }
 
-    // Aqui você pode adicionar outras funções conforme necessário
+    //--------------------------------------------------------------------------------------------------//
+    
+    async getPosicaoByDeposito(depositoId, page = 1, pageSize = 10) {
+        try {
+            const offset = (page - 1) * pageSize;
+            const posicao = await this.Moviments.findAndCountAll({
+                where: { depositId: depositoId },
+                limit: pageSize,
+                offset: offset
+            });
+            return posicao;
+        } catch (error) {
+            throw error;
+        }
+    }
+    
+    //--------------------------------------------------------------------------------------------------//
+
+    async getPosicaoByProdutoDeposito(produtoId, depositoId, page = 1, pageSize = 10) {
+        try {
+            const offset = (page - 1) * pageSize;
+            const posicao = await this.Moviments.findAndCountAll({
+                where: { productId: produtoId, depositId: depositoId },
+                limit: pageSize,
+                offset: offset
+            });
+            return posicao;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+    
 }
 
 module.exports = MovimentsService;

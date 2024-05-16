@@ -1,43 +1,48 @@
 // ./models/moviments.js
 const Sequelize = require('sequelize');
-module.exports = (sequelize) =>{
+module.exports = (sequelize) => {
 
-    const Moviments =  sequelize.define('Moviment',{
-        id:{
+    const Moviments = sequelize.define('Moviment',{
+
+        id: {
             type: Sequelize.INTEGER,
-            primaryKey:true,
+            primaryKey: true,
             autoIncrement: true
         },
-        movimento_tipo:{
-            type: Sequelize.STRING,
-            allowNull:false
+        movimento_tipo: {
+            type: Sequelize.ENUM('entrada', 'saida'),
+            allowNull: false
         },
-        qtd_disponivel:{
+        qtd_disponivel: {
             type: Sequelize.INTEGER,
-            allowNull:false
+            allowNull: false
         },
-        qtd_bloqueado:{
+        qtd_bloqueado: {
             type: Sequelize.INTEGER,
-            allowNull:false
+            allowNull: false
         },
-        valor_unitario:{
-            type: Sequelize.DECIMAL(10,2),
-            allowNull:false
+        valor_faturado: {
+            type: Sequelize.DECIMAL(10, 2),
+            allowNull: false
         }
-        
     });
 
-    Moviments.associate = (models) =>{
-        Moviments.belongsTo(models.Product, { // Corrigido o relacionamento
-            foreignKey: 'productId', // Corrigido o nome da chave estrangeira
-            as: 'product' // Corrigido o alias
-        });
-    };
+    // criando relacionamento
+    
 
     Moviments.associate = (models) =>{
-        Moviments.belongsTo(models.Deposit, { // Corrigido o relacionamento
-            foreignKey: 'depositId', // Corrigido o nome da chave estrangeira
-            as: 'deposit' // Corrigido o alias
+        Moviments.belongsTo(models.Product,{
+            foreignKey: 'productId',
+            as: 'Product'
+        }),
+
+        Moviments.belongsTo(models.Deposit,{
+            foreignKey: 'depositId',
+            as: 'Deposit'
         });
+        
     };
-}
+
+
+    return Moviments;
+};

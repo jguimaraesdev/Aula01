@@ -1,4 +1,4 @@
-//./routes/moviment.js
+// ./routes/moviment.js
 
 const express = require('express');
 const router = express.Router();
@@ -29,6 +29,15 @@ router.get('/findMovimentById/:id', (req, res, next) => {
   movimentsController.findMovimentById(req, res);
 });
 
+// Nova rota para buscar posição por depósito
+router.get('/getPosicaoByDeposito/:depositoId', (req, res, next) => {
+  movimentsController.getPosicaoByDeposito(req, res);
+});
 
+// Nova rota para buscar posição por produto e depósito
+router.get('/getPosicaoByProdutoDeposito/:produtoId/:depositoId', (req, res, next) => {
+  movimentsController.getPosicaoByProdutoDeposito(req, res);
+});
 //--------------------------------------------------------------------------------------------------//
+
 module.exports = router;
