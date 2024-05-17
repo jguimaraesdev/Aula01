@@ -9,7 +9,12 @@ var productRouter = require('./routes/product');
 var depositRouter = require('./routes/deposit');
 var xtelefoneRouter = require('./routes/xtelefone');
 var movimentsRouter = require('./routes/moviments');
-
+const supplierRoutes = require('./routes/supplier');
+const costCenterRoutes = require('./routes/costCenter');
+const requisitionRoutes = require('./routes/requisition');
+const quotationRoutes = require('./routes/quotation');
+const purchaseRoutes = require('./routes/purchase');
+const departamentRoutes = require('./routes/department');
 var app = express();
 
 app.use(logger('dev'));
@@ -24,6 +29,15 @@ app.use('/product', productRouter);
 app.use('/deposit', depositRouter);
 app.use('/xtelefone', xtelefoneRouter);
 app.use('/moviments', movimentsRouter);
+app.use('/supplier', supplierRoutes);
+app.use('/cost', costCenterRoutes);
+app.use('/requisition', requisitionRoutes);
+app.use('/quotation', quotationRoutes);
+app.use('/purchase', purchaseRoutes);
+app.use('/departament', departamentRoutes);
+
+
+
 
 const db = require('./models');
 
