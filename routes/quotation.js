@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const QuotationService = require('../services/servicesPurchase/quotationService');
-const QuotationController = require('../controllers/controllersPurchase/quotationController');
+const QuotationService = require('../services/quotationService');
+const QuotationController = require('../controllers/quotationController');
 
 // Instanciando o serviço e o controlador
 const quotationService = new QuotationService(db.Quotation);

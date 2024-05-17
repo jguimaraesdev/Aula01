@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const DepartmentService = require('../services/servicesPurchase/departmentService');
-const DepartmentController = require('../controllers/controllersPurchase/departmentController');
+const DepartmentService = require('../services/departmentService');
+const DepartmentController = require('../controllers/departmentController');
 
 // Instanciando o serviço e o controlador
 const departmentService = new DepartmentService(db.Department);

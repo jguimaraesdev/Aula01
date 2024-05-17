@@ -4,8 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const ProductService = require('../services/servicesLogistic/productService');
-const ProductController = require('../controllers/controllersLogistic/productController');
+const ProductService = require('../services/productService');
+const ProductController = require('../controllers/productController');
 
 // Instanciando o serviço e o controlador
 const productService = new ProductService(db.Product);

@@ -4,9 +4,9 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const UserService = require('../services/servicesAcessManagement/userService');
-const AuthenticateToken = require('../services/servicesAcessManagement/authenticateToken');
-const UserController = require('../controllers/controllersAccessManagement/userController');
+const UserService = require('../services/userService');
+const AuthenticateToken = require('../services/authenticateToken');
+const UserController = require('../controllers/userController');
 
 const secretKey = 'SUA_CHAVE_SECRETA'; // Chave secreta do token JWT
 

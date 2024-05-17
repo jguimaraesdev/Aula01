@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const PurchaseService = require('../services/servicesPurchase/purchaseService');
-const PurchaseController = require('../controllers/controllersPurchase/purchaseController');
+const PurchaseService = require('../services/purchaseService');
+const PurchaseController = require('../controllers/purchaseController');
 
 // Instanciando o serviço e o controlador
 const purchaseService = new PurchaseService(db.Purchase);

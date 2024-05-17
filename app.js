@@ -1,21 +1,28 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const dotenv = require('dotenv');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var productRouter = require('./routes/product');
-var depositRouter = require('./routes/deposit');
-var xtelefoneRouter = require('./routes/xtelefone');
-var movimentsRouter = require('./routes/moviments');
-const supplierRoutes = require('./routes/supplier');
-const costCenterRoutes = require('./routes/costCenter');
-const requisitionRoutes = require('./routes/requisition');
-const quotationRoutes = require('./routes/quotation');
-const purchaseRoutes = require('./routes/purchase');
-const departamentRoutes = require('./routes/department');
-var app = express();
+dotenv.config();
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const productRouter = require('./routes/product');
+const depositRouter = require('./routes/deposit');
+const xtelefoneRouter = require('./routes/xtelefone');
+const movimentsRouter = require('./routes/moviments');
+const supplierRouter = require('./routes/supplier');
+const costCenterRouter = require('./routes/costCenter');
+const requisitionRouter = require('./routes/requisition');
+const quotationRouter = require('./routes/quotation');
+const purchaseRouter = require('./routes/purchase');
+const departmentRouter = require('./routes/department');
+
+const { applyMigrations } = require('./config/database');
+const errorHandler = require('./middleware/errorHandler');
+
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -29,40 +36,22 @@ app.use('/product', productRouter);
 app.use('/deposit', depositRouter);
 app.use('/xtelefone', xtelefoneRouter);
 app.use('/moviments', movimentsRouter);
-app.use('/supplier', supplierRoutes);
-app.use('/cost', costCenterRoutes);
-app.use('/requisition', requisitionRoutes);
-app.use('/quotation', quotationRoutes);
-app.use('/purchase', purchaseRoutes);
-app.use('/departament', departamentRoutes);
+app.use('/supplier', supplierRouter);
+app.use('/cost', costCenterRouter);
+app.use('/requisition', requisitionRouter);
+app.use('/quotation', quotationRouter);
+app.use('/purchase', purchaseRouter);
+app.use('/departament', departmentRouter);
 
+// Middleware de tratamento de erros
+app.use(errorHandler);
 
+// Sincronização com o banco de dados
+applyMigrations();
 
-
-const db = require('./models');
-
-async function ApplyMigrations(){
-    try{
-        migration_config={
-            create:true,
-            alter:true
-        };
-
-        await db.sequelize.sync({
-            alter: migration_config.alter
-        });
-        console.log('Sincronização com o banco de dados realizada.')
-    }
-    catch(error){
-        console.log('Erro sincronizando o banco de dados', error);
-    }
-}
-
-ApplyMigrations();
-
-const port = 3001; // Use uma porta diferente
+const port = process.env.PORT;
 app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`);
+  console.log(`Servidor rodando na porta ${port}`);
 });
 
 module.exports = app;
