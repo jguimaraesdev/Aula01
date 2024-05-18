@@ -23,11 +23,11 @@ router.put('/updatedepartment/:id', (req, res, next) => {
 });
 
 router.get('/findalldepartments', (req, res, next) => {
-  departmentController.findAll(req, res);
+  departmentController.findAllDepartments(req, res);
 });
 
 router.get('/finddepartmentbyid/:id', (req, res, next) => {
-  departmentController.findById(req, res);
+  departmentController.findDepartmentById(req, res);
 });
 
 router.delete('/deletedepartment/:id', (req, res, next) => {

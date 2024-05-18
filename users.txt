@@ -1,0 +1,15 @@
+{
+    "nome": "Yan G. Guimaraes",
+    "login": "ygg",
+    "email": "ygg@gmail.com",
+    "senha": "ygg123",
+    "status": "ativo"
+}
+
+{
+    "nome": "Jhonny Guimaraes",
+    "login": "jguimaraes",
+    "email": "jguimaraes@gmail.com",
+    "senha": "jg123",
+    "status": "ativo"
+}

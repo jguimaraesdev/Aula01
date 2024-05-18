@@ -1,77 +1,92 @@
 // ./controllers/purchaseController.js
+
 class PurchaseController {
-    constructor(purchaseService) {
+  constructor(purchaseService) {
       this.purchaseService = purchaseService;
-    }
-
-    //--------------------------------------------------------------------------------------------------//
-  
-    async create(req, res) {
-      try {
-        const purchase = await this.purchaseService.create(req.body);
-        res.status(201).json(purchase);
-      } catch (error) {
-        res.status(400).json({ error: error.message });
-      }
-    }
-
-    //--------------------------------------------------------------------------------------------------//
-  
-    async update(req, res) {
-      try {
-        await this.purchaseService.update(req.params.id, req.body);
-        res.status(204).send();
-      } catch (error) {
-        res.status(400).json({ error: error.message });
-      }
-    }
-
-    //--------------------------------------------------------------------------------------------------//
-  
-    async findAll(req, res) {
-      try {
-        const page = parseInt(req.query.page, 10) || 1;
-        const pageSize = parseInt(req.query.pageSize, 10) || 10;
-        const { count, rows } = await this.purchaseService.findAll(page, pageSize);
-        res.status(200).json({
-          totalItems: count,
-          totalPages: Math.ceil(count / pageSize),
-          currentPage: page,
-          items: rows,
-        });
-      } catch (error) {
-        res.status(400).json({ error: error.message });
-      }
-    }
-
-    //--------------------------------------------------------------------------------------------------//
-  
-    async findById(req, res) {
-      try {
-        const purchase = await this.purchaseService.findById(req.params.id);
-        if (purchase) {
-          res.status(200).json(purchase);
-        } else {
-          res.status(404).json({ error: 'Purchase not found' });
-        }
-      } catch (error) {
-        res.status(400).json({ error: error.message });
-      }
-    }
-
-    //--------------------------------------------------------------------------------------------------//
-  
-    async delete(req, res) {
-      try {
-        await this.purchaseService.delete(req.params.id);
-        res.status(204).send();
-      } catch (error) {
-        res.status(400).json({ error: error.message });
-      }
-    }
-
-    //--------------------------------------------------------------------------------------------------//
   }
-  
-  module.exports = PurchaseController;
-  
+
+  //--------------------------------------------------------------------------------------------------//
+
+  async create(req, res) {
+      const { quantity, unitCost, status, supplierId, quotationId, userId, productId } = req.body;
+      try {
+          const newPurchase = await this.purchaseService.create(
+              quantity, unitCost, status, supplierId, quotationId, userId, productId
+          );
+          res.status(200).json(newPurchase);
+      } catch (error) {
+          res.status(500).json({ error: "Erro ao inserir a nova compra" });
+      }
+  }
+
+  //--------------------------------------------------------------------------------------------------//
+
+  async update(req, res) {
+      const purchaseId = req.params.id;
+      const updates = req.body;
+      try {
+          if (isNaN(purchaseId)) {
+              return res.status(400).json({ error: "ID de registro inválido" });
+          }
+
+          if (!updates || Object.keys(updates).length === 0) {
+              return res.status(400).json({ error: "Dados de atualização inválidos" });
+          }
+
+          const { updatedRowsCount, updatedRows } = await this.purchaseService.update(purchaseId, updates);
+
+          if (updatedRowsCount > 0) {
+              return res.status(200).json({ message: "Registro atualizado com sucesso" });
+          } else {
+              res.status(404).json({ error: "Compra não encontrada", updatedRowsCount, updatedRows });
+          }
+      } catch (error) {
+          console.error("Erro ao atualizar registro:", error);
+          return res.status(500).json({ error: "Erro ao atualizar registro" });
+      }
+  }
+
+  //--------------------------------------------------------------------------------------------------//
+
+  async findAllPurchases(req, res) {
+      const { page, pageSize } = req.query;
+      try {
+          const purchases = await this.purchaseService.findAllPurchases(page, pageSize);
+          res.status(200).json(purchases);
+      } catch (error) {
+          res.status(500).json({ error: "Erro ao buscar compras" });
+      }
+  }
+
+  //--------------------------------------------------------------------------------------------------//
+
+  async findPurchaseById(req, res) {
+      const purchaseId = req.params.id;
+      try {
+          const purchase = await this.purchaseService.findPurchaseById(purchaseId);
+          if (purchase) {
+              res.status(200).json(purchase);
+          } else {
+              res.status(404).json({ error: "Compra não encontrada" });
+          }
+      } catch (error) {
+          res.status(500).json({ error: "Erro interno do servidor" });
+      }
+  }
+
+  //--------------------------------------------------------------------------------------------------//
+
+  async getPurchasesBySupplier(req, res) {
+      const supplierId = req.params.supplierId;
+      try {
+          const purchases = await this.purchaseService.getPurchasesBySupplier(supplierId);
+          res.status(200).json(purchases);
+      } catch (error) {
+          res.status(500).json({ error: "Erro ao buscar compras por fornecedor" });
+      }
+  }
+
+  //--------------------------------------------------------------------------------------------------//
+}
+
+module.exports = PurchaseController;

@@ -9,14 +9,14 @@ module.exports = (sequelize) => {
       autoIncrement: true,
     },
    
-    quantity: {
+    quantity_required: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
     
     status: {
-      type: Sequelize.ENUM('pendente', 'realizada', 'cancelada'),
-      defaultValue: 'pending',
+      type: Sequelize.ENUM('pendente', 'processada', 'cancelada'),
+      defaultValue: 'pendente',
     },
   });
 

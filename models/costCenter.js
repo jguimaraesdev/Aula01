@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
     name: {
       type: Sequelize.STRING,
       allowNull: false,
-    },
+    }
   });
   return CostCenter;
 };

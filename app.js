@@ -41,7 +41,7 @@ app.use('/cost', costCenterRouter);
 app.use('/requisition', requisitionRouter);
 app.use('/quotation', quotationRouter);
 app.use('/purchase', purchaseRouter);
-app.use('/departament', departmentRouter);
+app.use('/department', departmentRouter);
 
 // Middleware de tratamento de erros
 app.use(errorHandler);
