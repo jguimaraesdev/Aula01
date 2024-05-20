@@ -72,6 +72,17 @@ class CostCenterController {
       }
   }
 
+  async delete (req, res){
+    try{
+        await this.costCenterService.delete(req.params.id);
+        res.status(204).send();
+
+    }catch(erro){
+        res.status(400).json({ error: error.message});
+    }
+  }
+  
+
   //--------------------------------------------------------------------------------------------------//
 }
 

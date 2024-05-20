@@ -108,6 +108,9 @@ class MovimentsService {
 
     //--------------------------------------------------------------------------------------------------//
     
+    async delete(id){
+        return this.Moviments.delete({ where: { id }});
+    }
 }
 
 module.exports = MovimentsService;

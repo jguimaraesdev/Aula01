@@ -65,6 +65,11 @@ class SupplierService {
   }
 
   //--------------------------------------------------------------------------------------------------//
+
+  async delete(id){
+    return this.Supplier.delete({ where: { id }});
+  }
+
 }
 
 module.exports = SupplierService;

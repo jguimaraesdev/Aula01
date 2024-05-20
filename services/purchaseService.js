@@ -78,6 +78,11 @@ class PurchaseService {
   }
 
   //--------------------------------------------------------------------------------------------------//
+
+  async delete(id){
+    return this.Purchase.delete({ where: { id }});
+  }
+
 }
 
 module.exports = PurchaseService;

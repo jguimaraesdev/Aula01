@@ -30,6 +30,10 @@ router.get('/findalldepositbyid/:id', (req, res, next) => {
   depositController.findDepositById(req, res);
 });
 
+router.delete('/deletedeposit/:id', (req, res, next) => {
+  depositController.delete(req, res);
+});
+
 
 //--------------------------------------------------------------------------------------------------//
 module.exports = router;

@@ -74,6 +74,10 @@ class DepositService {
     }
     //--------------------------------------------------------------------------------------------------//
     
+    async delete(id){
+        return this.Deposit.delete({ where: { id }});
+    }
+
 }
 
 module.exports = DepositService;

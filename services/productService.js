@@ -102,7 +102,9 @@ class ProductService {
 
     //--------------------------------------------------------------------------------------------------//
     
-    
+    async delete(id){
+        return this.Product.delete({ where: { id }});
+      }
 }
 
 module.exports = ProductService;

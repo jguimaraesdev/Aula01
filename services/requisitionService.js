@@ -96,6 +96,11 @@ class RequisitionService {
   }
 
   //--------------------------------------------------------------------------------------------------//
+
+  async delete(id){
+    return this.delete.delete({ where: { id }});
+  }
+
 }
 
 module.exports = RequisitionService;

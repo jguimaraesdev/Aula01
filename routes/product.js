@@ -30,5 +30,9 @@ router.get('/findallproductbyid/:id', (req, res, next) => {
   productController.findProductById(req, res);
 });
 
+router.delete('/deletecproduct/:id', (req, res, next) => {
+  productController.delete(req, res);
+});
+
 //--------------------------------------------------------------------------------------------------//
 module.exports = router;

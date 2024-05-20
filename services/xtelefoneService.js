@@ -73,6 +73,10 @@ class XtelefoneService {
 
     //--------------------------------------------------------------------------------------------------//
     
+    async delete(id){
+        return this.Xtelefone.delete({ where: { id }});
+    }
+
 }
 
 module.exports = XtelefoneService;

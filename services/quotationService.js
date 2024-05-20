@@ -75,6 +75,11 @@ class QuotationService {
   }
 
   //--------------------------------------------------------------------------------------------------//
+
+  async delete(id){
+    return this.Quotation.delete({ where: { id }});
+  }
+
 }
 
 module.exports = QuotationService;

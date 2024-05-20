@@ -65,6 +65,12 @@ class CostCenterService {
   }
 
   //--------------------------------------------------------------------------------------------------//
+
+  async delete(id){
+    return this.CostCenter.delete({ where: { id }});
+  }
+
+
 }
 
 module.exports = CostCenterService;

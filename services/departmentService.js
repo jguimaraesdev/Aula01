@@ -65,6 +65,11 @@ class DepartmentService {
   }
 
   //--------------------------------------------------------------------------------------------------//
+
+  async delete(id){
+    return this.Department.delete({ where: { id }});
+  }
+
 }
 
 module.exports = DepartmentService;

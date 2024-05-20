@@ -118,6 +118,9 @@ class UserService {
 
     //--------------------------------------------------------------------------------------------------//
     
+    async delete(id){
+        return this.delete.delete({ where: { id }});
+    }
 }
 
 module.exports = UserService;

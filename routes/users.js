@@ -40,6 +40,10 @@ router.get('/findUserbyId/:id', (req, res, next) => {
   userController.findUserbyId(req, res);
 });
 
+router.delete('/deleteuser/:id', (req, res, next) => {
+  userController.delete(req, res);
+});
+
 //--------------------------------------------------------------------------------------------------//
 
 module.exports = router;

@@ -30,4 +30,8 @@ router.get('/findXtelefonebyId/:id', (req, res, next) => {
     xtelefoneController.findXtelefoneById(req, res);
 });
 
+router.delete('/deletextelefone/:id', (req, res, next) => {
+    xtelefoneController.delete(req, res);
+  });
+
 module.exports = router;

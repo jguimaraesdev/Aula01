@@ -38,6 +38,12 @@ router.get('/getPosicaoByDeposito/:depositoId', (req, res, next) => {
 router.get('/getPosicaoByProdutoDeposito/:produtoId/:depositoId', (req, res, next) => {
   movimentsController.getPosicaoByProdutoDeposito(req, res);
 });
+
+router.delete('/deletemoviment/:id', (req, res, next) => {
+  movimentsController.delete(req, res);
+});
+
+
 //--------------------------------------------------------------------------------------------------//
 
 module.exports = router;
