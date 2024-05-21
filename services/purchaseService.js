@@ -7,10 +7,15 @@ class PurchaseService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(quantity, unitCost, status, supplierId, quotationId, userId, productId) {
+  async create(quantity, totalCost, status, supplierId, quotationId, userId) {
       try {
           const newPurchase = await this.Purchase.create({
-              quantity, unitCost, status, supplierId, quotationId, userId, productId
+              quantity, 
+              totalCost, 
+              status, 
+              supplierId, 
+              quotationId, 
+              userId
           });
           return newPurchase;
       } catch (error) {

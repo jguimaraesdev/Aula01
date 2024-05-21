@@ -33,9 +33,9 @@ module.exports = (sequelize) => {
       foreignKey: 'supplierId', 
       as: 'Supplier' 
     }),
-    Quotation.belongsTo(models.User, { 
-      foreignKey: 'userId', 
-      as: 'User' 
+    Quotation.belongsTo(models.Requisition, { 
+      foreignKey: 'requisitionId', 
+      as: 'Requisition' 
     });
 
   };

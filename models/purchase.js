@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    unitCost: {
+    totalCost: {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
     },
@@ -35,13 +35,7 @@ module.exports = (sequelize) => {
     Purchase.belongsTo(models.User, { 
       foreignKey: 'userId', 
       as: 'User' 
-    }),
-    Purchase.belongsTo(models.Product, { 
-      foreignKey: 'productId', 
-      as: 'Product' 
-    });
-
-    
+    })
   };
 
   return Purchase;

@@ -8,11 +8,16 @@ class PurchaseController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { quantity, unitCost, status, supplierId, quotationId, userId, productId } = req.body;
+      const { quantity, totalCost, status, supplierId, quotationId, userId} = req.body;
       try {
           const newPurchase = await this.purchaseService.create(
-              quantity, unitCost, status, supplierId, quotationId, userId, productId
-          );
+            quantity, 
+            totalCost, 
+            status, 
+            supplierId, 
+            quotationId, 
+            userId
+        );
           res.status(200).json(newPurchase);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir a nova compra" });

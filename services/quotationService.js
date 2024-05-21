@@ -6,14 +6,31 @@ class QuotationService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(description, status, supplierId) {
-      try {
-          const newQuotation = await this.Quotation.create({ description, status, supplierId });
-          return newQuotation;
-      } catch (error) {
-          throw error;
-      }
-  }
+  async create(price, productId, supplierId, requisitionId) {
+    try {
+        // Obter a data e hora atuais
+        const currentDate = new Date();
+        
+        // Calcular a data de validade adicionando 5 dias
+        const validityDate = new Date(currentDate);
+        validityDate.setDate(currentDate.getDate() + 5);
+
+        // Criar o novo registro de cotação com as datas calculadas
+        const newQuotation = await this.Quotation.create({
+            price,
+            quotationDate: currentDate,
+            validityDate,
+            productId,
+            supplierId,
+            requisitionId
+        });
+
+        return newQuotation;
+    } catch (error) {
+        throw error;
+    }
+}
+
 
   //--------------------------------------------------------------------------------------------------//
 

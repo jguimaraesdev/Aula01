@@ -21,11 +21,11 @@ router.put('/updatequotation/:id', (req, res, next) => {
 });
 
 router.get('/findallquotations', (req, res, next) => {
-  quotationController.findAll(req, res);
+  quotationController.findAllQuotations(req, res);
 });
 
 router.get('/findquotationbyid/:id', (req, res, next) => {
-  quotationController.findById(req, res);
+  quotationController.findQuotationById(req, res);
 });
 
 router.delete('/deletequotation/:id', (req, res, next) => {

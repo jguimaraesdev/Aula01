@@ -1,0 +1,1363 @@
+{
+	"info": {
+		"_postman_id": "43baff0d-8c37-4986-b86f-a826506c6997",
+		"name": "Sistemas_corporativos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34631135"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "newUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Jhonny Guimaraes\",\r\n    \"login\": \"jguimaraes\",\r\n    \"email\": \"jguimaraes@gmail.com\",\r\n    \"senha\": \"jg123\",\r\n    \"status\": \"ativo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/users/newUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"newUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE1OTc0MDMzLCJleHAiOjE3MTU5Nzc2MzN9.5X2GWgEXWXGCI9Fucj-7YMI67WyisxUzJIKCSUwa0oo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/users/allusers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"allusers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"login\": \"ygg\",\r\n    \"senha\": \"ygg123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/users/loginUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"loginUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findUserbyId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/users/findUserbyId/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"findUserbyId",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE1OTc0MDMzLCJleHAiOjE3MTU5Nzc2MzN9.5X2GWgEXWXGCI9Fucj-7YMI67WyisxUzJIKCSUwa0oo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"Yan Felipe G. Guimarães\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/users//updateUser/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"",
+								"updateUser",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginUser2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"jguimaraes\",\r\n    \"senha\": \"jg123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/users/loginUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"loginUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newUser2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Yan G. Guimaraes\",\r\n    \"login\": \"ygg\",\r\n    \"email\": \"ygg@gmail.com\",\r\n    \"senha\": \"ygg123\",\r\n    \"status\": \"ativo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/users/newUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"newUser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "findallproductbyid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/product/findallproductbyid/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"findallproductbyid",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/newproduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Iphone 12\",\r\n    \"valor\": 3000.00,\r\n    \"status\": \"Ativo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/product/newproduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"newproduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findallproduct",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/product/findallproduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"findallproduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"valor\": \"3500.00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/product/updateProduct/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"updateProduct",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "xtelefone",
+			"item": [
+				{
+					"name": "newxtelefone",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE1OTc2OTczLCJleHAiOjE3MTU5ODA1NzN9.phxAY_1ggdjHl5EHHVwEQWTY4MDBRZ866JqTNg0kvP0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DDD\":\"43\",\r\n    \"numero\": \"989797-8888\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/xtelefone/newxtelefone",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"xtelefone",
+								"newxtelefone"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findallxtelefones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/xtelefone/findallxtelefones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"xtelefone",
+								"findallxtelefones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findXtelefonebyId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/xtelefone/findXtelefonebyId/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"xtelefone",
+								"findXtelefonebyId",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateXtelefone",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numero\": \"98267-2516\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/xtelefone/updateXtelefone/17",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"xtelefone",
+								"updateXtelefone",
+								"17"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deposit",
+			"item": [
+				{
+					"name": "findDepositById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/deposit/findalldepositbyid/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"deposit",
+								"findalldepositbyid",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findalldeposit",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/deposit/findalldeposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"deposit",
+								"findalldeposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newdeposit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"central\":\"Ecoville\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/deposit/newdeposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"deposit",
+								"newdeposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateDeposit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"false\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/deposit/updateDeposit/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"deposit",
+								"updateDeposit",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Moviments",
+			"item": [
+				{
+					"name": "newmoviment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"movimento_tipo\": \"entrada\",\r\n    \"qtd_disponivel\": 10,\r\n    \"qtd_bloqueado\": 0,\r\n    \"valor_faturado\": 0.0,\r\n    \"productId\": 1,\r\n    \"depositId\": 1\r\n         \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/moviments/newmoviment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"moviments",
+								"newmoviment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findallmoviments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/moviments/findallmoviments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"moviments",
+								"findallmoviments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findMovimentById/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/moviments/findMovimentById/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"moviments",
+								"findMovimentById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateMoviment/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"movimento_tipo\": \"saida\",\r\n    \"qtd_disponivel\": 5,\r\n    \"qtd_bloqueado\": 5,\r\n    \"valor_faturado\": \"4500.0\"\r\n    \r\n         \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/moviments/updateMoviment/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"moviments",
+								"updateMoviment",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPosicaoByDeposito/:depositoId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/moviments/getPosicaoByDeposito/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"moviments",
+								"getPosicaoByDeposito",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPosicaoByProdutoDeposito/:produtoId/:depositoId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/moviments/getPosicaoByProdutoDeposito/1/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"moviments",
+								"getPosicaoByProdutoDeposito",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cost Center",
+			"item": [
+				{
+					"name": "newcostcenter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\":\"CCM01\",\r\n    \"name\": \"Centro de Custos Area de  Manutenção da Empresa\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/cost/newcostcenter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"cost",
+								"newcostcenter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatecostcenter/id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n    \"code\": \"CCM01\",\r\n    \"name\": \"Centro de Custos Area de  Manutenção da Empresa\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/cost/updatecostcenter/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"cost",
+								"updatecostcenter",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findallcostcenters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/cost/findallcostcenters",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"cost",
+								"findallcostcenters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findcostcenterbyid/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/cost/findcostcenterbyid/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"cost",
+								"findcostcenterbyid",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Supplier",
+			"item": [
+				{
+					"name": "updatesupplier/id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Nissei.py\",\r\n    \"contactInfo\": \"vendas@nissei.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/supplier/updatesupplier/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"supplier",
+								"updatesupplier",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newsupplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Nissei.py\",\r\n    \"contactInfo\": \"atendimentorma@megaeletronicos.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/supplier/newsupplier",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"supplier",
+								"newsupplier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findallsuppliers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/supplier/findallsuppliers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"supplier",
+								"findallsuppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findsupplierbyid/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/supplier/findsupplierbyid/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"supplier",
+								"findsupplierbyid",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requisitions",
+			"item": [
+				{
+					"name": "newrequisition",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzE2MDUzNTMxLCJleHAiOjE3MTYwNTcxMzF9.JILozldl4EVObW3o4iNAsQmbA0nULOw1eWwJMS-Cw9E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity_required\": 1,\r\n    \"status\":\"pendente\",\r\n    \"productId\": 1\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/requisition/newrequisition",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"requisition",
+								"newrequisition"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findallrequisitions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/requisition/findallrequisitions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"requisition",
+								"findallrequisitions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findrequisitionbyid/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/requisition/findrequisitionbyid/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"requisition",
+								"findrequisitionbyid",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updaterequisition/id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity_required\": 1,\r\n    \"status\":\"pendente\",\r\n    \"productId\": 1,\r\n    \"costCenterId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/requisition/updaterequisition/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"requisition",
+								"updaterequisition",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Department",
+			"item": [
+				{
+					"name": "newdepartment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"vendas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/department/newdepartment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"department",
+								"newdepartment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findalldepartments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/department/findalldepartments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"department",
+								"findalldepartments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "finddepartmentbyid/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/department/finddepartmentbyid/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"department",
+								"finddepartmentbyid",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatedepartment/id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Vendas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/department/updatedepartment/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"department",
+								"updatedepartment",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Quotation",
+			"item": [
+				{
+					"name": "findallquotations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/quotation/findallquotations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"quotation",
+								"findallquotations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findquotationbyid/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/quotation/findquotationbyid/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"quotation",
+								"findquotationbyid",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newquotation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"price\": 680.00,\r\n    \"productId\": 1,\r\n    \"supplierId\": 1,\r\n    \"requisitionId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/quotation/newquotation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"quotation",
+								"newquotation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatequotation/id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"price\": 680.00,\r\n    \"productId\": 1,\r\n    \"supplierId\": 1,\r\n    \"requisitionId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/quotation/updatequotation/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"quotation",
+								"updatequotation",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Purchase",
+			"item": [
+				{
+					"name": "newpurchase",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"quantity\": 10,\r\n   \"totalCost\": 6080.00,\r\n   \"status\": \"pendente\",\r\n   \"supplierId\": 1,\r\n   \"quotationId\": 2,\r\n   \"userId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/purchase/newpurchase",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"purchase",
+								"newpurchase"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findallpurchases",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/purchase/findallpurchases",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"purchase",
+								"findallpurchases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findpurchasebyid/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/purchase/findpurchasebyid/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"purchase",
+								"findpurchasebyid",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatepurchase/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"quantity\": 10,\r\n   \"totalCost\": 6080.00,\r\n   \"status\": \"pendente\",\r\n   \"supplierId\": 1,\r\n   \"quotationId\": 2,\r\n   \"userId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/purchase/updatepurchase/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"purchase",
+								"updatepurchase",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

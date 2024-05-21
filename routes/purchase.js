@@ -21,11 +21,11 @@ router.put('/updatepurchase/:id', (req, res, next) => {
 });
 
 router.get('/findallpurchases', (req, res, next) => {
-  purchaseController.findAll(req, res);
+  purchaseController.findAllPurchases(req, res);
 });
 
 router.get('/findpurchasebyid/:id', (req, res, next) => {
-  purchaseController.findById(req, res);
+  purchaseController.findPurchaseById(req, res);
 });
 
 router.delete('/deletepurchase/:id', (req, res, next) => {
