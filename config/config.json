@@ -1,29 +1,29 @@
 {
   "development": {
     "use_env_variable": "DATABASE_URL",
-    "username": "root",
-    "password": "root",
-    "database": "sistemascorporativos",
-    "host": "localhost",
-    "dialect": "mysql",
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": "",
     "timezone": "-03:00"
   },
   "test": {
     "use_env_variable": "DATABASE_TEST_URL",
-    "username": "root",
-    "password": "root",
-    "database": "sistemascorporativos",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": ""
     
   },
   "production": {
     "use_env_variable": "DATABASE_PROD_URL",
-    "username": "root",
-    "password": "root",
-    "database": "sistemascorporativos",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": ""
     
   }
 }
