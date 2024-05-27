@@ -1,5 +1,6 @@
 // ./models/quotation.js
 const Sequelize = require('sequelize');
+
 module.exports = (sequelize) => {
   const Quotation = sequelize.define('Quotation', {
     id: {

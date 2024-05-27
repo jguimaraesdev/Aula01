@@ -6,9 +6,9 @@ class RequisitionService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(qtd_requerida, status, userId, productId) {
+  async create(qtd_requerida, status, userId, productId, costCenterId) {
       try {
-          const newRequisition = await this.Requisition.create({ qtd_requerida, status, userId, productId });
+          const newRequisition = await this.Requisition.create({ qtd_requerida, status, userId, productId, costCenterId });
           return newRequisition;
       } catch (error) {
           throw error;
@@ -97,9 +97,21 @@ class RequisitionService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async delete(id){
-    return this.delete.delete({ where: { id }});
-  }
+  async delete(id) {
+    try {
+      const result = await this.Requisition.destroy({
+        where: { id: id }
+      });
+  
+      if (result === 0) {
+        throw new Error('Registro não encontrado');
+      }
+  
+      return { message: 'Registro deletado com sucesso' };
+    } catch (error) {
+      throw error;
+    }
+}
 
 }
 

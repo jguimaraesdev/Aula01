@@ -66,9 +66,21 @@ class DepartmentService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async delete(id){
-    return this.Department.delete({ where: { id }});
-  }
+  async delete(id) {
+    try {
+      const result = await this.Department.destroy({
+        where: { id: id }
+      });
+  
+      if (result === 0) {
+        throw new Error('Registro não encontrado');
+      }
+  
+      return { message: 'Registro deletado com sucesso' };
+    } catch (error) {
+      throw error;
+    }
+}
 
 }
 

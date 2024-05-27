@@ -1,3 +1,5 @@
+//app.js
+
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -11,16 +13,17 @@ const usersRouter = require('./routes/users');
 const productRouter = require('./routes/product');
 const depositRouter = require('./routes/deposit');
 const xtelefoneRouter = require('./routes/xtelefone');
-const movimentsproductRouter = require('./routes/movementproduct');
+const movementproductRouter = require('./routes/movementproduct');
 const supplierRouter = require('./routes/supplier');
 const costCenterRouter = require('./routes/costCenter');
 const requisitionRouter = require('./routes/requisition');
 const quotationRouter = require('./routes/quotation');
-const purchaseRouter = require('./routes/purchase');
+const salesRouter = require('./routes/sales');
 const departmentRouter = require('./routes/department');
 const movementTitleRouter = require('./routes/movementtitle');
 const titleRouter = require('./routes/title');
-const salesRouter = require('./routes/sales');
+const purchaseRouter = require('./routes/purchase');
+
 
 const { applyMigrations } = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
@@ -38,16 +41,16 @@ app.use('/users', usersRouter);
 app.use('/product', productRouter);
 app.use('/deposit', depositRouter);
 app.use('/xtelefone', xtelefoneRouter);
-app.use('/movimentsproduct', movimentsproductRouter);
+app.use('/movementsproduct', movementproductRouter);
 app.use('/supplier', supplierRouter);
 app.use('/cost', costCenterRouter);
 app.use('/requisition', requisitionRouter);
 app.use('/quotation', quotationRouter);
-app.use('/purchase', purchaseRouter);
+app.use('/sales', salesRouter);
 app.use('/department', departmentRouter);
 app.use('/movementtitle', movementTitleRouter);
 app.use('/title', titleRouter);
-app.use('/sales', salesRouter);
+app.use('/purchase', purchaseRouter);
 
 
 // Middleware de tratamento de erros
@@ -56,7 +59,7 @@ app.use(errorHandler);
 // Sincronização com o banco de dados
 applyMigrations();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });

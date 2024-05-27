@@ -102,9 +102,23 @@ class ProductService {
 
     //--------------------------------------------------------------------------------------------------//
     
-    async delete(id){
-        return this.Product.delete({ where: { id }});
+    async delete(id) {
+        try {
+          const result = await this.Product.destroy({
+            where: { id: id }
+          });
+      
+          if (result === 0) {
+            throw new Error('Registro não encontrado');
+          }
+      
+          return { message: 'Registro deletado com sucesso' };
+        } catch (error) {
+          throw error;
+        }
       }
+      
+    
 }
 
 module.exports = ProductService;

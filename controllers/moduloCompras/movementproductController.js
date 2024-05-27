@@ -1,7 +1,7 @@
 // ./controllers/MovimentsController.js
-class MovementsProductController {
-    constructor(movementsproductService) {
-        this.movementsproductService = movementsproductService;
+class MovementProductController {
+    constructor(movementproductService) {
+        this.movementproductService = movementproductService;
     }
 
     //--------------------------------------------------------------------------------------------------//
@@ -9,7 +9,7 @@ class MovementsProductController {
     async create(req, res) {
         const { movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId  } = req.body;
         try {
-            const newMovement = await this.movementsproductService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
+            const newMovement = await this.movementproductService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
             res.status(200).json(newMovement);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir novo movimento" });
@@ -33,7 +33,7 @@ class MovementsProductController {
             }
     
             // Chamar o método update da DepositService para realizar a atualização
-            const { updatedRowsCount, updatedRows } = await this.movementsproductService.update(movementId, updates);
+            const { updatedRowsCount, updatedRows } = await this.movementproductService.update(movementId, updates);
     
             // Verificar se o depósito foi encontrado e atualizado com sucesso
             if (updatedRowsCount > 0) {
@@ -55,7 +55,7 @@ class MovementsProductController {
         const { page, pageSize } = req.query;
 
         try {
-            const movements = await this.movementsproductService.findAllMovements(page, pageSize);
+            const movements = await this.movementproductService.findAllMovements(page, pageSize);
             res.status(200).json(movements);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao buscar movimentos' });
@@ -67,7 +67,7 @@ class MovementsProductController {
     async findMovementById(req, res) {
         const movementId = req.params.id;
         try {
-            const movement = await this.movementsproductService.findMovementById(movementId);
+            const movement = await this.movementproductService.findMovementById(movementId);
             if (movement) {
                 res.status(200).json(movement);
             } else {
@@ -83,7 +83,7 @@ class MovementsProductController {
     async getPosicaoByDeposito(req, res) {
         const { depositoId, page = 1, pageSize = 10 } = req.params;
         try {
-            const posicao = await this.movementsproductService.getPosicaoByDeposito(depositoId, page, pageSize);
+            const posicao = await this.movementproductService.getPosicaoByDeposito(depositoId, page, pageSize);
             res.status(200).json(posicao);
         } catch (error) {
             res.status(500).json({ error: "Erro ao buscar posição por depósito" });
@@ -95,7 +95,7 @@ class MovementsProductController {
     async getPosicaoByProdutoDeposito(req, res) {
         const { produtoId, depositoId, page = 1, pageSize = 10 } = req.params;
         try {
-            const posicao = await this.movementsproductService.getPosicaoByProdutoDeposito(produtoId, depositoId, page, pageSize);
+            const posicao = await this.movementproductService.getPosicaoByProdutoDeposito(produtoId, depositoId, page, pageSize);
             res.status(200).json(posicao);
         } catch (error) {
             res.status(500).json({ error: "Erro ao buscar posição por produto e depósito" });
@@ -105,17 +105,21 @@ class MovementsProductController {
     //--------------------------------------------------------------------------------------------------//
     
     async delete (req, res){
-        try{
-            await this.movementsproductService.delete(req.params.id);
-            res.status(204).send();
+        const movementId = req.params.id;
     
-        }catch(erro){
-            res.status(400).json({ error: error.message});
-        }
+        const movement = await this.movementproductService.delete(movementId);
+              if (movement) {
+                  res.status(200).json(movement);
+              } else {
+                  res.status(404).json({ error: "Registro não deletado" });
+              }
+          } catch (error) {
+              res.status(500).json({ error: error.message });
+          }
     }
 
     //--------------------------------------------------------------------------------------------------//
 
-}
 
-module.exports = MovementsProductController;
+
+module.exports = MovementProductController;

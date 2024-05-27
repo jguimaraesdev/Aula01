@@ -1,5 +1,6 @@
 // ./models/purchase.js
 const Sequelize = require('sequelize');
+
 module.exports = (sequelize) => {
   const Purchase = sequelize.define('Purchase', {
     id: {

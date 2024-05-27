@@ -1,7 +1,7 @@
 // ./models/MovementProduct.js
 const Sequelize = require('sequelize');
-module.exports = (sequelize) => {
 
+module.exports = (sequelize) => {
     const MovementProduct = sequelize.define('MovementProduct',{
 
         id: {
@@ -44,5 +44,5 @@ module.exports = (sequelize) => {
     };
 
 
-    return MovementsProduct ;
+    return MovementProduct ;
 };

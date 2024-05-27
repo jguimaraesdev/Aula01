@@ -12,14 +12,14 @@ class QuotationService {
         const currentDate = new Date();
         
         // Calcular a data de validade adicionando 5 dias
-        const validityDate = new Date(currentDate);
-        validityDate.setDate(currentDate.getDate() + 5);
+        const validadeCotacao = new Date(currentDate);
+        validadeCotacao.setDate(currentDate.getDate() + 5);
 
         // Criar o novo registro de cotação com as datas calculadas
         const newQuotation = await this.Quotation.create({
-            price: preco,
-            quotationDate: currentDate,
-            validityDate,
+            preco,
+            cotacaoData: currentDate,
+            validadeCotacao,
             productId,
             supplierId,
             requisitionId
@@ -93,9 +93,21 @@ class QuotationService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async delete(id){
-    return this.Quotation.delete({ where: { id }});
-  }
+  async delete(id) {
+    try {
+      const result = await this.Quotation.destroy({
+        where: { id: id }
+      });
+  
+      if (result === 0) {
+        throw new Error('Registro não encontrado');
+      }
+  
+      return { message: 'Registro deletado com sucesso' };
+    } catch (error) {
+      throw error;
+    }
+}
 
 }
 

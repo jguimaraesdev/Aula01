@@ -1,5 +1,6 @@
 // ./models/supplier.js
 const Sequelize = require('sequelize');
+
 module.exports = (sequelize) => {
   const Supplier = sequelize.define('Supplier', {
     id: {
@@ -7,7 +8,7 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    nome: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -16,5 +17,6 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
   });
+  
   return Supplier;
 };

@@ -8,10 +8,10 @@ class RequisitionController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { qtd_requerida, status, productId } = req.body;
+      const { qtd_requerida, status, productId, costCenterId} = req.body;
       const userId = req.userId; // Suponho que você tenha o ID do usuário na requisição
       try {
-          const newRequisition = await this.requisitionService.create(qtd_requerida, status, userId, productId);
+          const newRequisition = await this.requisitionService.create(qtd_requerida, status, userId, productId, costCenterId);
           res.status(200).json(newRequisition);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir a nova requisição" });
@@ -100,14 +100,18 @@ class RequisitionController {
   //--------------------------------------------------------------------------------------------------//
 
   async delete (req, res){
-    try{
-        await this.requisitionService.delete(req.params.id);
-        res.status(204).send();
+    const requistionId = req.params.id;
 
-    }catch(erro){
-        res.status(400).json({ error: error.message});
-    }
-  }
+    const requisition = await this.requisitionService.delete(requistionId);
+          if (requisition) {
+              res.status(200).json(requisition);
+          } else {
+              res.status(404).json({ error: "Registro não deletado" });
+          }
+      } catch (error) {
+          res.status(500).json({ error: error.message });
+      }
+
 
   //--------------------------------------------------------------------------------------------------//
 

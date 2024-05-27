@@ -9,14 +9,7 @@ class PurchaseService {
   
     async create(quantidade, custototal, status, supplierId, quotationId, userId) {
         try {
-            const newPurchase = await this.Purchase.create({
-                quantidade, 
-                custototal, 
-                status, 
-                supplierId, 
-                quotationId, 
-                userId
-            });
+            const newPurchase = await this.Purchase.create({quantidade, custototal, status, supplierId, quotationId, userId});
             return newPurchase;
         } catch (error) {
             throw error;
@@ -84,9 +77,23 @@ class PurchaseService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async delete(id){
-      return this.Purchase.delete({ where: { id }});
+    async delete(id) {
+        try {
+          const result = await this.Purchase.destroy({
+            where: { id: id }
+          });
+      
+          if (result === 0) {
+            throw new Error('Registro não encontrado');
+          }
+      
+          return { message: 'Registro deletado com sucesso' };
+        } catch (error) {
+          throw error;
+        }
     }
+      
+    
   
   }
   

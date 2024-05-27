@@ -66,9 +66,21 @@ class SupplierService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async delete(id){
-    return this.Supplier.delete({ where: { id }});
-  }
+  async delete(id) {
+    try {
+      const result = await this.Supplier.destroy({
+        where: { id: id }
+      });
+  
+      if (result === 0) {
+        throw new Error('Registro não encontrado');
+      }
+  
+      return { message: 'Registro deletado com sucesso' };
+    } catch (error) {
+      throw error;
+    }
+}
 
 }
 

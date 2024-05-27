@@ -1,5 +1,6 @@
 // ./models/product.js
 const Sequelize = require('sequelize');
+
 module.exports= (sequelize) => {
     
     const Product = sequelize.define('Product',{

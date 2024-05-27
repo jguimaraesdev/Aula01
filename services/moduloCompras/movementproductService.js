@@ -1,14 +1,14 @@
 // ./services/movimentsProductService.js
-class MovementsProductService {
-    constructor(MovementsProductModel) {
-        this.MovementsProduct = MovementsProductModel;
+class MovementProductService {
+    constructor(MovementProductModel) {
+        this.MovementProduct = MovementProductModel;
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     async create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId) {
         try {
-            const newMovement = await this.MovementsProduct.create({
+            const newMovement = await this.MovementProduct.create({
                 movimento_tipo,
                 qtd_disponivel,
                 qtd_bloqueado,
@@ -31,7 +31,7 @@ class MovementsProductService {
                 throw new Error("ID inválido para atualização");
             }
             // Atualizar os registros na tabela
-            const [updatedRowsCount, updatedRows] = await this.MovementsProduct.update(updates, {
+            const [updatedRowsCount, updatedRows] = await this.MovementProduct.update(updates, {
                 where: { id },
             });
             // Verificar se algum registro foi atualizado
@@ -53,7 +53,7 @@ class MovementsProductService {
     async findAllMovements(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
-            const allMovements = await this.MovementsProduct.findAndCountAll({
+            const allMovements = await this.MovementProduct.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
@@ -67,7 +67,7 @@ class MovementsProductService {
 
     async findMovementById(id) {
         try {
-            const movement = await this.MovementsProduct.findOne({ where: { id } });
+            const movement = await this.MovementProduct.findOne({ where: { id } });
             return movement;
         } catch (error) {
             throw error;
@@ -79,7 +79,7 @@ class MovementsProductService {
     async getPosicaoByDeposito(depositoId, page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
-            const posicao = await this.MovementsProduct.findAndCountAll({
+            const posicao = await this.MovementProduct.findAndCountAll({
                 where: { depositId: depositoId },
                 limit: pageSize,
                 offset: offset
@@ -95,7 +95,7 @@ class MovementsProductService {
     async getPosicaoByProdutoDeposito(produtoId, depositoId, page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
-            const posicao = await this.MovementsProduct.findAndCountAll({
+            const posicao = await this.MovementProduct.findAndCountAll({
                 where: { productId: produtoId, depositId: depositoId },
                 limit: pageSize,
                 offset: offset
@@ -108,9 +108,23 @@ class MovementsProductService {
 
     //--------------------------------------------------------------------------------------------------//
     
-    async delete(id){
-        return this.MovementsProduct.delete({ where: { id }});
+    async delete(id) {
+        try {
+          const result = await this.MovementProduct.destroy({
+            where: { id: id }
+          });
+      
+          if (result === 0) {
+            throw new Error('Registro não encontrado');
+          }
+      
+          return { message: 'Registro deletado com sucesso' };
+        } catch (error) {
+          throw error;
+        }
+      }
+      
     }
-}
 
-module.exports = MovementsProductService;
+
+module.exports = MovementProductService;

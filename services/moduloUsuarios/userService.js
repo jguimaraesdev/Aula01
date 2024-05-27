@@ -1,7 +1,7 @@
 // ./services/userService.js
 
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+
 
 class UserService {
     constructor(userModel, authenticateToken) {
@@ -117,10 +117,22 @@ class UserService {
     }
 
     //--------------------------------------------------------------------------------------------------//
-    
-    async delete(id){
-        return this.delete.delete({ where: { id }});
+    async delete(id) {
+        try {
+          const result = await this.User.destroy({
+            where: { id: id }
+          });
+      
+          if (result === 0) {
+            throw new Error('Registro não encontrado');
+          }
+      
+          return { message: 'Registro deletado com sucesso' };
+        } catch (error) {
+          throw error;
+        }
     }
+    
 }
 
 module.exports = UserService;

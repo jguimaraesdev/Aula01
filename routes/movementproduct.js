@@ -5,7 +5,7 @@ const router = express.Router();
 
 const db = require('../models');
 const MovementProductService = require('../services/moduloCompras/productService');
-const MovementProductController = require('../controllers/moduloCompras/movementsproductController');
+const MovementProductController = require('../controllers/moduloCompras/movementproductController');
 
 // Instanciando o serviço e o controlador
 const movementproductService = new MovementProductService(db.MovementProduct);

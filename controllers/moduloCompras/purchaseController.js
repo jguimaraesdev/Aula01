@@ -1,6 +1,7 @@
 // ./controllers/PurchaseController.js
 
 class PurchaseController {
+    
     constructor(purchaseService) {
         this.purchaseService = purchaseService;
     }
@@ -8,16 +9,9 @@ class PurchaseController {
     //--------------------------------------------------------------------------------------------------//
   
     async create(req, res) {
-        const { quantidade, custototal, status, supplierId, quotationId, userId} = req.body;
+        const {quantidade, custototal, status, supplierId, quotationId, userId} = req.body;
         try {
-            const newPurchase = await this.purchaseService.create(
-              quantidade, 
-              custototal, 
-              status, 
-              supplierId, 
-              quotationId, 
-              userId
-          );
+            const newPurchase = await this.purchaseService.create(quantidade, custototal, status, supplierId, quotationId, userId);
             res.status(200).json(newPurchase);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir a nova compra" });
@@ -94,17 +88,20 @@ class PurchaseController {
     //--------------------------------------------------------------------------------------------------//
   
     async delete (req, res){
-      try{
-          await this.purchaseService.delete(req.params.id);
-          res.status(204).send();
-  
-      }catch(erro){
-          res.status(400).json({ error: error.message});
-      }
+        const purchaseId = req.params.id;
+    
+        const purchase = await this.purchaseService.delete(purchaseId);
+              if (purchase) {
+                  res.status(200).json(purchase);
+              } else {
+                  res.status(404).json({ error: "Registro não deletado" });
+              }
+          } catch (error) {
+              res.status(500).json({ error: error.message });
+          }
     }
   
     //--------------------------------------------------------------------------------------------------//
   
-  }
   
   module.exports = PurchaseController;

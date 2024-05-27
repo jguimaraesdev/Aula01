@@ -73,8 +73,20 @@ class XtelefoneService {
 
     //--------------------------------------------------------------------------------------------------//
     
-    async delete(id){
-        return this.Xtelefone.delete({ where: { id }});
+    async delete(id) {
+        try {
+          const result = await this.Xtelefone.destroy({
+            where: { id: id }
+          });
+      
+          if (result === 0) {
+            throw new Error('Registro não encontrado');
+          }
+      
+          return { message: 'Registro deletado com sucesso' };
+        } catch (error) {
+          throw error;
+        }
     }
 
 }

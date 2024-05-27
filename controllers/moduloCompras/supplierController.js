@@ -75,14 +75,18 @@ class SupplierController {
   //--------------------------------------------------------------------------------------------------//
 
   async delete (req, res){
-    try{
-        await this.SupplierController.delete(req.params.id);
-        res.status(204).send();
+    const supplierId = req.params.id;
 
-    }catch(erro){
-        res.status(400).json({ error: error.message});
-    }
-  }
+    const supplier = await this.supplierService.delete(supplierId);
+          if (supplier) {
+              res.status(200).json(supplier);
+          } else {
+              res.status(404).json({ error: "Registro não deletado" });
+          }
+      } catch (error) {
+          res.status(500).json({ error: error.message });
+      }
+
 
   //--------------------------------------------------------------------------------------------------//
 

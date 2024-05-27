@@ -84,14 +84,18 @@ class XtelefoneController {
     //--------------------------------------------------------------------------------------------------//
 
     async delete (req, res){
-        try{
-            await this.xtelefoneService.delete(req.params.id);
-            res.status(204).send();
+        const xtelefoneId = req.params.id;
     
-        }catch(erro){
-            res.status(400).json({ error: error.message});
-        }
-    }
+        const xtelefone = await this.xtelefoneService.delete(xtelefoneId);
+              if (xtelefone) {
+                  res.status(200).json(xtelefone);
+              } else {
+                  res.status(404).json({ error: "Registro não deletado" });
+              }
+          } catch (error) {
+              res.status(500).json({ error: error.message });
+          }
+    
 
     //--------------------------------------------------------------------------------------------------//
 }
