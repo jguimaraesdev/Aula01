@@ -9,9 +9,8 @@ class SalesController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { qtdVendida, custoUnitario, parcelas, numeroNotaFiscal} = req.body;
-      const productId = req.userId;
-
+      const { qtdVendida, custoUnitario, parcelas, numeroNotaFiscal, productId} = req.body;
+      
       try {
           const newSales = await this.salesService.create(qtdVendida, custoUnitario, parcelas, numeroNotaFiscal, productId );
           res.status(200).json(newSales);

@@ -1,18 +1,24 @@
-// ./controllers/MovimentTitleController.js
+// ./controllers/ControleTitleController.js
 
-class MovementTitleController {
-    constructor(movementtitleService) {
-        this.movementtitleService = movementtitleService;
+class ControleTitleController {
+    constructor(controletitleService) {
+        this.controletitleService = controletitleService;
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     async create(req, res) {
-        const { dataMovimento, qdataMovimento, valorMovimento, valorMulta, valorJuros} = req.body;
-        const titleId = req.titleId;
+        const { tipoMovimento, valorMovimento, valorMulta, valorJuros, titleId} = req.body;
+        
         try {
-            const newMovement = await this.movementtitleService.create(dataMovimento, qdataMovimento, valorMovimento, valorMulta, valorJuros, titleId );
-            res.status(200).json(newMovement);
+            const newControleTitle = await this.controletitleService.create(
+                tipoMovimento, 
+                valorMovimento, 
+                valorMulta, 
+                valorJuros, 
+                titleId
+            );
+            res.status(200).json(newControleTitle);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir novo movimento" });
         }
@@ -35,7 +41,7 @@ class MovementTitleController {
             }
     
             // Chamar o método update da DepositService para realizar a atualização
-            const { updatedRowsCount, updatedRows } = await this.movementtitleService.update(movementId, updates);
+            const { updatedRowsCount, updatedRows } = await this.controletitleService.update(movementId, updates);
     
             // Verificar se o depósito foi encontrado e atualizado com sucesso
             if (updatedRowsCount > 0) {
@@ -52,13 +58,13 @@ class MovementTitleController {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllMovimentTitle(req, res) {
+    async findAllControleTitle(req, res) {
 
         const { page, pageSize } = req.query;
 
         try {
-            const movements = await this.movementtitleService.findAllMovimenttitle(page, pageSize);
-            res.status(200).json(movements);
+            const newmovements = await this.controletitleService.findAllControleTitle(page, pageSize);
+            res.status(200).json(newmovements);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao buscar movimentos' });
         }
@@ -66,12 +72,12 @@ class MovementTitleController {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findMovimentTitleById(req, res) {
+    async findControleTitleById(req, res) {
         const movementId = req.params.id;
         try {
-            const movement = await this.movementtitleService.findMovimentTitleById(movementId);
-            if (movement) {
-                res.status(200).json(movement);
+            const newmovement = await this.controletitleService.findControleTitleById(movementId);
+            if (newmovement) {
+                res.status(200).json(newmovement);
             } else {
                 res.status(404).json({ error: "Movimento não encontrado" });
             }
@@ -84,22 +90,25 @@ class MovementTitleController {
 
     //--------------------------------------------------------------------------------------------------//
     
-    async delete (req, res){
+    async delete(req, res) {
         const movementId = req.params.id;
     
-        const movement = await this.movementtitleService.delete(movementId);
-              if (movement) {
-                  res.status(200).json(movement);
-              } else {
-                  res.status(404).json({ error: "Registro não deletado" });
-              }
-          } catch (error) {
-              res.status(500).json({ error: error.message });
-          }
+        try {
+            const movement = await this.controletitleService.delete(movementId);
+            if (movement) {
+                res.status(200).json(movement);
+            } else {
+                res.status(404).json({ error: "Registro não deletado" });
+            }
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+    
     
 
     //--------------------------------------------------------------------------------------------------//
 
 }
 
-module.exports = MovementTitleController;
+module.exports = ControleTitleController;

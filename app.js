@@ -20,7 +20,7 @@ const requisitionRouter = require('./routes/requisition');
 const quotationRouter = require('./routes/quotation');
 const salesRouter = require('./routes/sales');
 const departmentRouter = require('./routes/department');
-const movementTitleRouter = require('./routes/movementtitle');
+const controletitleRouter = require('./routes/controletitle');
 const titleRouter = require('./routes/title');
 const purchaseRouter = require('./routes/purchase');
 
@@ -48,7 +48,7 @@ app.use('/requisition', requisitionRouter);
 app.use('/quotation', quotationRouter);
 app.use('/sales', salesRouter);
 app.use('/department', departmentRouter);
-app.use('/movementtitle', movementTitleRouter);
+app.use('/controletitle', controletitleRouter);
 app.use('/title', titleRouter);
 app.use('/purchase', purchaseRouter);
 

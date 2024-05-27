@@ -26,7 +26,7 @@ router.get('/findalltitle', (req, res, next) => {
 });
 
 router.get('/findtitlebyid/:id', (req, res, next) => {
-  titleController.findTitleById(req, res);
+  titleController.findtitlebyid(req, res);
 });
 
 router.delete('/deletetitle/:id', (req, res, next) => {

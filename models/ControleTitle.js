@@ -1,18 +1,14 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
-  const MovementTitle = sequelize.define('MovementTitle', {
+  const ControleTitle = sequelize.define('ControleTitle', {
+
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    
-    dataMovimento: {
-      type: Sequelize.DATE,
-      allowNull: false,
-    },
-    dataMovimento: {
+    tipoMovimento: {
       type: Sequelize.ENUM('abertura', 'pagamento'),
       allowNull: false,
     },
@@ -28,14 +24,16 @@ module.exports = (sequelize) => {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: true,
     },
+
   });
 
-  MovementTitle.associate = (models) =>{
-    MovementTitle.belongsTo(models.Title,{
+  ControleTitle.associate = (models) =>{
+    ControleTitle.belongsTo(models.Title,{
         foreignKey: 'titleId',
         as: 'Title'
     });
   };
 
-  return MovementTitle;
+  return ControleTitle;
+  
 };

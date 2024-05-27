@@ -70,7 +70,7 @@ class TitleController {
     async findTitleById(req, res) {
         const titleId = req.params.id;
         try {
-            const title = await this.titleService.findSalesById(titleId);
+            const title = await this.titleService.findTitleById(titleId);
             if (title) {
                 res.status(200).json(title);
             } else {

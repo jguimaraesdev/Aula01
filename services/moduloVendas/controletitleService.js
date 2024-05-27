@@ -1,16 +1,23 @@
 //service/movementtitleService.js
 
 
-class MovementTitleService {
-    constructor(MovementTitleModel) {
-        this.MovementTitle = MovementTitleModel;
+class ControleTitleService {
+    constructor(ControleTitleModel) {
+        this.controleTitle = ControleTitleModel;
     }
   
     //--------------------------------------------------------------------------------------------------//
   
-    async create( dataMovimento, qdataMovimento, valorMovimento, valorMulta, valorJuros, titleId  ) {
+    async create( tipoMovimento, valorMovimento, valorMulta, valorJuros, titleId ) {
         try {
-            const newMovement = await this.MovementTitle.create({ dataMovimento, qdataMovimento, valorMovimento, valorMulta, valorJuros, titleId});
+            const newMovement = await this.controleTitle.create({
+                tipoMovimento, 
+                valorMovimento, 
+                valorMulta, 
+                valorJuros, 
+                titleId
+            });
+            
             return newMovement;
         } catch (error) {
             throw error;
@@ -27,7 +34,7 @@ class MovementTitleService {
             }
     
             // Atualizar os registros na tabela
-            const [updatedRowsCount, updatedRows] = await this.MovementTitle.update(updates, {
+            const [updatedRowsCount, updatedRows] = await this.controleTitle.update(updates, {
                 where: { id },
             });
             // Verificar se algum registro foi atualizado
@@ -47,11 +54,11 @@ class MovementTitleService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findAllMovimentTitle(page = 1, pageSize = 10) {
+    async findAllControleTitle(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
         
-            const allMovementTitle = await this.MovementTitle.findAndCountAll({
+            const allMovementTitle = await this.controleTitle.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
@@ -63,9 +70,9 @@ class MovementTitleService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findMovimentTitleById(id) {
+    async findControleTitleById(id) {
         try {
-            const movement = await this.MovementTitle.findOne({ where: { id } });
+            const movement = await this.controleTitle.findOne({ where: { id } });
             return movement;
         } catch (error) {
             throw error;
@@ -76,7 +83,7 @@ class MovementTitleService {
     
     async delete(id) {
         try {
-          const result = await this.MovementTitle.destroy({
+          const result = await this.controleTitle.destroy({
             where: { id: id }
           });
       
@@ -92,5 +99,5 @@ class MovementTitleService {
   
   }
   
-  module.exports = MovementTitleService;
+  module.exports = ControleTitleService;
   
