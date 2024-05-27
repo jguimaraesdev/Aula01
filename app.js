@@ -41,7 +41,7 @@ app.use('/users', usersRouter);
 app.use('/product', productRouter);
 app.use('/deposit', depositRouter);
 app.use('/xtelefone', xtelefoneRouter);
-app.use('/movementsproduct', movementproductRouter);
+app.use('/movementproduct', movementproductRouter);
 app.use('/supplier', supplierRouter);
 app.use('/cost', costCenterRouter);
 app.use('/requisition', requisitionRouter);

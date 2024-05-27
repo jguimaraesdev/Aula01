@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const MovementProductService = require('../services/moduloCompras/productService');
+const MovementProductService = require('../services/moduloCompras/movementproductService');
 const MovementProductController = require('../controllers/moduloCompras/movementproductController');
 
 // Instanciando o serviço e o controlador
@@ -21,11 +21,11 @@ router.put('/updateMovement/:id', (req, res, next) => {
   movementproductController.update(req, res);
 });
 
-router.get('/findallmovements', (req, res, next) => {
+router.get('/findallmovement', (req, res, next) => {
   movementproductController.findAllMovements(req, res);
 });
 
-router.get('/findMovementById/:id', (req, res, next) => {
+router.get('/findmovementbyid/:id', (req, res, next) => {
   movementproductController.findMovementById(req, res);
 });
 
