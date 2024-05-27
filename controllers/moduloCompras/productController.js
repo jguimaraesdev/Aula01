@@ -1,4 +1,4 @@
-// ./controllers/mproductController.js
+// ./controllers/ProductController.js
 class ProductController {
     
     constructor(productService) {
@@ -8,9 +8,9 @@ class ProductController {
     //--------------------------------------------------------------------------------------------------//
 
     async create(req, res) {
-        const { nome, valor, status } = req.body;
+        const { nome, descricao, status } = req.body;
         try {
-            const newProduct = await this.productService.create(nome, valor, status);
+            const newProduct = await this.productService.create(nome, descricao, status);
             res.status(200).json(newProduct);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir o novo produto" });

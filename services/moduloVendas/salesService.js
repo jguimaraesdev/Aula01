@@ -1,60 +1,62 @@
-// ./services/purchaseService.js
+//service/salesService.js
 
-class PurchaseService {
-  constructor(PurchaseModel) {
-      this.Purchase = PurchaseModel;
+// ./services/xtelefoneService.js
+
+class SalesService {
+  constructor(SalesModel) {
+      this.Sales = SalesModel;
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(quantity, totalCost, status, supplierId, quotationId, userId) {
+  async create(qtdVendida, custoUnitario, parcelas, numeroNotaFiscal, productId ) {
       try {
-          const newPurchase = await this.Purchase.create({
-              quantity, 
-              totalCost, 
-              status, 
-              supplierId, 
-              quotationId, 
-              userId
-          });
-          return newPurchase;
+          const newSales = await this.Sales.create({ qtdVendida, custoUnitario, parcelas, numeroNotaFiscal, productId});
+          return newSales;
       } catch (error) {
           throw error;
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
-
+  
   async update(id, updates) {
       try {
+          // Verificar se o ID fornecido é válido
           if (!id) {
               throw new Error("ID inválido para atualização");
           }
-
-          const [updatedRowsCount, updatedRows] = await this.Purchase.update(updates, {
+  
+          // Atualizar os registros na tabela
+          const [updatedRowsCount, updatedRows] = await this.Sales.update(updates, {
               where: { id },
           });
-
+          // Verificar se algum registro foi atualizado
           if (updatedRowsCount === 0) {
               throw new Error("Nenhum registro encontrado para atualização");
           } else {
+              // Retornar algo específico para indicar que a atualização foi bem-sucedida
               return { message: "Atualização bem-sucedida", updatedRowsCount, updatedRows };
           }
       } catch (error) {
+          // Lançar novamente o erro para ser tratado na camada de controle
           throw error;
       }
+          
   }
+
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllPurchases(page = 1, pageSize = 10) {
+  async findAllSales(page = 1, pageSize = 10) {
       try {
           const offset = (page - 1) * pageSize;
-          const purchases = await this.Purchase.findAndCountAll({
+      
+          const allSales = await this.Sales.findAndCountAll({
               limit: pageSize,
               offset: offset
           });
-          return purchases;
+          return allSales;
       } catch (error) {
           throw error;
       }
@@ -62,32 +64,21 @@ class PurchaseService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findPurchaseById(id) {
+  async findSalesById(id) {
       try {
-          const purchase = await this.Purchase.findOne({ where: { id } });
-          return purchase;
+          const sales = await this.Sales.findOne({ where: { id } });
+          return sales;
       } catch (error) {
           throw error;
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
-
-  async getPurchasesBySupplier(supplierId) {
-      try {
-          const purchases = await this.Purchase.findAll({ where: { supplierId } });
-          return purchases;
-      } catch (error) {
-          throw error;
-      }
-  }
-
-  //--------------------------------------------------------------------------------------------------//
-
+  
   async delete(id){
-    return this.Purchase.delete({ where: { id }});
+      return this.Sales.delete({ where: { id }});
   }
 
 }
 
-module.exports = PurchaseService;
+module.exports = SalesService;

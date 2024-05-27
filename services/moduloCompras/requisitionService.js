@@ -6,9 +6,9 @@ class RequisitionService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(quantity_required, status, userId, productId) {
+  async create(qtd_requerida, status, userId, productId) {
       try {
-          const newRequisition = await this.Requisition.create({ quantity_required, status, userId, productId });
+          const newRequisition = await this.Requisition.create({ qtd_requerida, status, userId, productId });
           return newRequisition;
       } catch (error) {
           throw error;

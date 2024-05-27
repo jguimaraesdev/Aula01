@@ -1,4 +1,4 @@
-// ./controllers/costCenterController.js
+// ./controllers/CostCenterController.js
 
 class CostCenterController {
   constructor(costCenterService) {
@@ -8,9 +8,9 @@ class CostCenterController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { code, name } = req.body;
+      const { codigo, nome } = req.body;
       try {
-          const newCostCenter = await this.costCenterService.create(code, name);
+          const newCostCenter = await this.costCenterService.create(codigo, nome);
           res.status(200).json(newCostCenter);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir o novo centro de custo" });

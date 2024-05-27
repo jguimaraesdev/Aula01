@@ -1,4 +1,4 @@
-// ./controllers/quotationController.js
+// ./controllers/QuotationController.js
 
 class QuotationController {
   constructor(quotationService) {
@@ -8,9 +8,9 @@ class QuotationController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { price, productId, supplierId, requisitionId } = req.body;
+      const { preco, productId, supplierId, requisitionId } = req.body;
       try {
-          const newQuotation = await this.quotationService.create(price, productId, supplierId, requisitionId);
+          const newQuotation = await this.quotationService.create(preco, productId, supplierId, requisitionId);
           res.status(200).json(newQuotation);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir a nova cotação" });

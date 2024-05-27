@@ -1,4 +1,4 @@
-// ./controllers/supplierController.js
+// ./controllers/SupplierController.js
 
 class SupplierController {
   constructor(supplierService) {
@@ -8,9 +8,9 @@ class SupplierController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { name, contactInfo } = req.body;
+      const { nome, contato } = req.body;
       try {
-          const newSupplier = await this.supplierService.create(name, contactInfo);
+          const newSupplier = await this.supplierService.create(nome, contato);
           res.status(200).json(newSupplier);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir o novo fornecedor" });

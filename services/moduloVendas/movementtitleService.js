@@ -1,23 +1,24 @@
-// ./services/productService.js
+//service/movementtitleService.js
 
-class ProductService {
-    constructor(ProductModel) {
-        this.Product = ProductModel;
+
+class MovementTitleService {
+    constructor(MovementTitleModel) {
+        this.MovementTitle = MovementTitleModel;
     }
-
+  
     //--------------------------------------------------------------------------------------------------//
-
-    async create(nome, valor, status) {
+  
+    async create( dataMovimento, qdataMovimento, valorMovimento, valorMulta, valorJuros, titleId  ) {
         try {
-            const newProduct = await this.Product.create({ nome, valor, status });
-            return newProduct;
+            const newMovement = await this.MovementTitle.create({ dataMovimento, qdataMovimento, valorMovimento, valorMulta, valorJuros, titleId});
+            return newMovement;
         } catch (error) {
             throw error;
         }
     }
-
+  
     //--------------------------------------------------------------------------------------------------//
-
+    
     async update(id, updates) {
         try {
             // Verificar se o ID fornecido é válido
@@ -26,10 +27,9 @@ class ProductService {
             }
     
             // Atualizar os registros na tabela
-            const [updatedRowsCount, updatedRows] = await this.Product.update(updates, {
+            const [updatedRowsCount, updatedRows] = await this.MovementTitle.update(updates, {
                 where: { id },
             });
-            
             // Verificar se algum registro foi atualizado
             if (updatedRowsCount === 0) {
                 throw new Error("Nenhum registro encontrado para atualização");
@@ -41,70 +41,44 @@ class ProductService {
             // Lançar novamente o erro para ser tratado na camada de controle
             throw error;
         }
+            
     }
-
+  
+  
     //--------------------------------------------------------------------------------------------------//
-
-    async findAllProduct(page = 1, pageSize = 10) {
+  
+    async findAllMovimentTitle(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
-            const products = await this.Product.findAndCountAll({
+        
+            const allMovementTitle = await this.MovementTitle.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
-            return products;
+            return allMovementTitle;
         } catch (error) {
             throw error;
         }
     }
-
+  
     //--------------------------------------------------------------------------------------------------//
-
-    async findProductById(id) {
+  
+    async findMovimentTitleById(id) {
         try {
-            const product = await this.Product.findOne({ where: { id } });
-            return product;
+            const movement = await this.MovementTitle.findOne({ where: { id } });
+            return movement;
         } catch (error) {
             throw error;
         }
     }
-    //--------------------------------------------------------------------------------------------------//
-
-    async getPosicaoByDeposito(depositoId) {
-        try {
-            const posicao = await this.Product.findAll({
-                include: [{
-                    model: this.Moviments,
-                    where: { depositId: depositoId }
-                }]
-            });
-            return posicao;
-        } catch (error) {
-            throw error;
-        }
-    }
-    
-    //--------------------------------------------------------------------------------------------------//
-
-    async getPosicaoByProdutoDeposito(produtoId, depositoId) {
-        try {
-            const posicao = await this.Product.findOne({
-                include: [{
-                    model: this.Moviments,
-                    where: { productId: produtoId, depositId: depositoId }
-                }]
-            });
-            return posicao;
-        } catch (error) {
-            throw error;
-        }
-    }
-
+  
     //--------------------------------------------------------------------------------------------------//
     
     async delete(id){
-        return this.Product.delete({ where: { id }});
-      }
-}
-
-module.exports = ProductService;
+        return this.MovementTitle.delete({ where: { id }});
+    }
+  
+  }
+  
+  module.exports = MovementTitleService;
+  

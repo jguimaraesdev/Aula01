@@ -1,16 +1,18 @@
-// ./services/departmentService.js
 
-class DepartmentService {
-  constructor(DepartmentModel) {
-      this.Department = DepartmentModel;
+
+// ./services/salesService.js
+
+class SalesService {
+  constructor(SalesModel) {
+      this.Sales = SalesModel;
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(name) {
+  async create(qtdVendida, custoUnitario, parcelas, numeroNotaFiscal) {
       try {
-          const newDepartment = await this.Department.create({ name });
-          return newDepartment;
+          const newSales = await this.Sales.create({ qtdVendida, custoUnitario, parcelas, numeroNotaFiscal });
+          return newSales;
       } catch (error) {
           throw error;
       }
@@ -24,7 +26,7 @@ class DepartmentService {
               throw new Error("ID inválido para atualização");
           }
 
-          const [updatedRowsCount, updatedRows] = await this.Department.update(updates, {
+          const [updatedRowsCount, updatedRows] = await this.Sales.update(updates, {
               where: { id },
           });
 
@@ -40,14 +42,14 @@ class DepartmentService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllDepartments(page = 1, pageSize = 10) {
+  async findAllSales(page = 1, pageSize = 10) {
       try {
           const offset = (page - 1) * pageSize;
-          const departments = await this.Department.findAndCountAll({
+          const sales = await this.Sales.findAndCountAll({
               limit: pageSize,
               offset: offset
           });
-          return departments;
+          return sales;
       } catch (error) {
           throw error;
       }
@@ -55,10 +57,10 @@ class DepartmentService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findDepartmentById(id) {
+  async findSalesById(id) {
       try {
-          const department = await this.Department.findOne({ where: { id } });
-          return department;
+          const sales = await this.Sales.findOne({ where: { id } });
+          return sales;
       } catch (error) {
           throw error;
       }
@@ -67,9 +69,9 @@ class DepartmentService {
   //--------------------------------------------------------------------------------------------------//
 
   async delete(id){
-    return this.Department.delete({ where: { id }});
+    return this.Sales.delete({ where: { id }});
   }
 
 }
 
-module.exports = DepartmentService;
+module.exports = SalesService;

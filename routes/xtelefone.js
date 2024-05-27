@@ -6,8 +6,8 @@ const AuthenticateToken = require('../services/authenticateToken');
 const authenticateToken = new AuthenticateToken('SUA_CHAVE_SECRETA');
 
 const db = require('../models');
-const XtelefoneService = require('../services/xtelefoneService');
-const XtelefoneController = require('../controllers/xtelefoneController');
+const XtelefoneService = require('../services/moduloUsuarios/xtelefoneService');
+const XtelefoneController = require('../controllers/moduloUsuarios/xtelefoneController');
 
 // Instanciando o serviço e o controlador
 const xtelefoneService = new XtelefoneService(db.Xtelefone, authenticateToken);

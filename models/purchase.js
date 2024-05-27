@@ -8,11 +8,11 @@ module.exports = (sequelize) => {
       autoIncrement: true,
     },
     
-    quantity: {
+    quantidade: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    totalCost: {
+    custototal: {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
     },

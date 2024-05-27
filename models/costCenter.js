@@ -7,11 +7,11 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    code: {
+    codigo: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    name: {
+    nome: {
       type: Sequelize.STRING,
       allowNull: false,
     }

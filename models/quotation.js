@@ -8,17 +8,17 @@ module.exports = (sequelize) => {
       autoIncrement: true,
     },
     
-    price: {
+    preco: {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
     },
     
-    quotationDate: {
+    cotacaoData: {
       type: Sequelize.DATE,
       allowNull: false,
     },
     
-    validityDate: {
+    validadeCotacao: {
       type: Sequelize.DATE,
       allowNull: false,
     },

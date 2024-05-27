@@ -6,7 +6,7 @@ class QuotationService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(price, productId, supplierId, requisitionId) {
+  async create(preco, productId, supplierId, requisitionId) {
     try {
         // Obter a data e hora atuais
         const currentDate = new Date();
@@ -17,7 +17,7 @@ class QuotationService {
 
         // Criar o novo registro de cotação com as datas calculadas
         const newQuotation = await this.Quotation.create({
-            price,
+            price: preco,
             quotationDate: currentDate,
             validityDate,
             productId,

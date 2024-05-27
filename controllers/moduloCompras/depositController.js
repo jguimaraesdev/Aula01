@@ -1,4 +1,4 @@
-//./controllers/ depositController.js
+//./controllers/ CepositController.js
 class DepositController {
     constructor(depositService) {
         this.depositService = depositService;

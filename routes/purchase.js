@@ -1,10 +1,11 @@
 // ./routes/purchase.js
+
 const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const PurchaseService = require('../services/purchaseService');
-const PurchaseController = require('../controllers/purchaseController');
+const PurchaseService = require('../services/moduloCompras/purchaseService');
+const PurchaseController = require('../controllers/moduloCompras/purchaseController');
 
 // Instanciando o serviço e o controlador
 const purchaseService = new PurchaseService(db.Purchase);

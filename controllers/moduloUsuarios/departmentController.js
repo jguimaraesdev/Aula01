@@ -7,9 +7,10 @@ class DepartmentController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { name } = req.body;
+      const { nome } = req.body;
+      const UserId = req.userId; // Suponho que você tenha o ID do usuário na requisição
       try {
-          const newDepartment = await this.departmentService.create(name);
+          const newDepartment = await this.departmentService.create(nome, UserId);
           res.status(200).json(newDepartment);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir o novo departamento" });

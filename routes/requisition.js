@@ -5,8 +5,8 @@ const AuthenticateToken = require('../services/authenticateToken');
 const authenticateToken = new AuthenticateToken('SUA_CHAVE_SECRETA');
 
 const db = require('../models');
-const RequisitionService = require('../services/requisitionService');
-const RequisitionController = require('../controllers/requisitionController');
+const RequisitionService = require('../services/moduloCompras/requisitionService');
+const RequisitionController = require('../controllers/moduloCompras/requisitionController');
 
 // Instanciando o serviço e o controlador
 const requisitionService = new RequisitionService(db.Requisition,  authenticateToken);

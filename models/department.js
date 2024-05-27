@@ -7,10 +7,17 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    nome: {
       type: Sequelize.STRING,
       allowNull: false,
     },
   });
+
+  Department.associate = (models) =>{
+    Department.belongsTo(models.User,{
+        foreignKey: 'userId',
+        as: 'User'
+    });
+};
   return Department;
 };

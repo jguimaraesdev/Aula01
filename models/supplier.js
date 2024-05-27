@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    contactInfo: {
+    contato: {
       type: Sequelize.STRING,
       allowNull: false,
     },

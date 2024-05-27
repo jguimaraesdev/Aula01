@@ -7,9 +7,9 @@ class CostCenterService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(code, name) {
+  async create(codigo, nome) {
       try {
-          const newCostCenter = await this.CostCenter.create({ code, name });
+          const newCostCenter = await this.CostCenter.create({ codigo, nome });
           return newCostCenter;
       } catch (error) {
           throw error;

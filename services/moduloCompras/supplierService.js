@@ -7,9 +7,9 @@ class SupplierService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(name, contactInfo) {
+  async create(nome, contato) {
       try {
-          const newSupplier = await this.Supplier.create({ name, contactInfo });
+          const newSupplier = await this.Supplier.create({ nome, contato });
           return newSupplier;
       } catch (error) {
           throw error;

@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
       autoIncrement: true,
     },
    
-    quantity_required: {
+    qtd_requerida: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },

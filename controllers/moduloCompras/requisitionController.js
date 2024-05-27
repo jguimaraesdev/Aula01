@@ -1,4 +1,4 @@
-// ./controllers/requisitionController.js
+// ./controllers/RequisitionController.js
 
 class RequisitionController {
   constructor(requisitionService) {
@@ -8,10 +8,10 @@ class RequisitionController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { quantity_required, status, productId } = req.body;
+      const { qtd_requerida, status, productId } = req.body;
       const userId = req.userId; // Suponho que você tenha o ID do usuário na requisição
       try {
-          const newRequisition = await this.requisitionService.create(quantity_required, status, userId, productId);
+          const newRequisition = await this.requisitionService.create(qtd_requerida, status, userId, productId);
           res.status(200).json(newRequisition);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir a nova requisição" });

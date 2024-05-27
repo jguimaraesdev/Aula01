@@ -11,13 +11,16 @@ const usersRouter = require('./routes/users');
 const productRouter = require('./routes/product');
 const depositRouter = require('./routes/deposit');
 const xtelefoneRouter = require('./routes/xtelefone');
-const movimentsRouter = require('./routes/moviments');
+const movimentsproductRouter = require('./routes/movementproduct');
 const supplierRouter = require('./routes/supplier');
 const costCenterRouter = require('./routes/costCenter');
 const requisitionRouter = require('./routes/requisition');
 const quotationRouter = require('./routes/quotation');
 const purchaseRouter = require('./routes/purchase');
 const departmentRouter = require('./routes/department');
+const movementTitleRouter = require('./routes/movementtitle');
+const titleRouter = require('./routes/title');
+const salesRouter = require('./routes/sales');
 
 const { applyMigrations } = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
@@ -35,13 +38,17 @@ app.use('/users', usersRouter);
 app.use('/product', productRouter);
 app.use('/deposit', depositRouter);
 app.use('/xtelefone', xtelefoneRouter);
-app.use('/moviments', movimentsRouter);
+app.use('/movimentsproduct', movimentsproductRouter);
 app.use('/supplier', supplierRouter);
 app.use('/cost', costCenterRouter);
 app.use('/requisition', requisitionRouter);
 app.use('/quotation', quotationRouter);
 app.use('/purchase', purchaseRouter);
 app.use('/department', departmentRouter);
+app.use('/movementtitle', movementTitleRouter);
+app.use('/title', titleRouter);
+app.use('/sales', salesRouter);
+
 
 // Middleware de tratamento de erros
 app.use(errorHandler);

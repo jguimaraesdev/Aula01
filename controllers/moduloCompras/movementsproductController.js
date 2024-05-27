@@ -1,7 +1,7 @@
-// ./controllers/movimentsController.js
-class MovimentsController {
-    constructor(movimentsService) {
-        this.movimentsService = movimentsService;
+// ./controllers/MovimentsController.js
+class MovementsProductController {
+    constructor(movementsproductService) {
+        this.movementsproductService = movementsproductService;
     }
 
     //--------------------------------------------------------------------------------------------------//
@@ -9,8 +9,8 @@ class MovimentsController {
     async create(req, res) {
         const { movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId  } = req.body;
         try {
-            const newMoviment = await this.movimentsService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
-            res.status(200).json(newMoviment);
+            const newMovement = await this.movementsproductService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
+            res.status(200).json(newMovement);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir novo movimento" });
         }
@@ -19,11 +19,11 @@ class MovimentsController {
     //--------------------------------------------------------------------------------------------------//
 
     async update(req, res) {
-        const movimentId = req.params.id;
+        const movementId = req.params.id;
         const updates = req.body;
         try {
             // Verificar se o ID do depósito é um número válido
-            if (isNaN(movimentId)) {
+            if (isNaN(movementId)) {
                 return res.status(400).json({ error: "ID de movimento inválido" });
             }
     
@@ -33,7 +33,7 @@ class MovimentsController {
             }
     
             // Chamar o método update da DepositService para realizar a atualização
-            const { updatedRowsCount, updatedRows } = await this.movimentsService.update(movimentId, updates);
+            const { updatedRowsCount, updatedRows } = await this.movementsproductService.update(movementId, updates);
     
             // Verificar se o depósito foi encontrado e atualizado com sucesso
             if (updatedRowsCount > 0) {
@@ -50,13 +50,13 @@ class MovimentsController {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllMoviments(req, res) {
+    async findAllMovements(req, res) {
 
         const { page, pageSize } = req.query;
 
         try {
-            const moviments = await this.movimentsService.findAllMoviments(page, pageSize);
-            res.status(200).json(moviments);
+            const movements = await this.movementsproductService.findAllMovements(page, pageSize);
+            res.status(200).json(movements);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao buscar movimentos' });
         }
@@ -64,12 +64,12 @@ class MovimentsController {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findMovimentById(req, res) {
-        const movimentId = req.params.id;
+    async findMovementById(req, res) {
+        const movementId = req.params.id;
         try {
-            const moviment = await this.movimentsService.findMovimentById(movimentId);
-            if (moviment) {
-                res.status(200).json(moviment);
+            const movement = await this.movementsproductService.findMovementById(movementId);
+            if (movement) {
+                res.status(200).json(movement);
             } else {
                 res.status(404).json({ error: "Movimento não encontrado" });
             }
@@ -83,7 +83,7 @@ class MovimentsController {
     async getPosicaoByDeposito(req, res) {
         const { depositoId, page = 1, pageSize = 10 } = req.params;
         try {
-            const posicao = await this.movimentsService.getPosicaoByDeposito(depositoId, page, pageSize);
+            const posicao = await this.movementsproductService.getPosicaoByDeposito(depositoId, page, pageSize);
             res.status(200).json(posicao);
         } catch (error) {
             res.status(500).json({ error: "Erro ao buscar posição por depósito" });
@@ -95,7 +95,7 @@ class MovimentsController {
     async getPosicaoByProdutoDeposito(req, res) {
         const { produtoId, depositoId, page = 1, pageSize = 10 } = req.params;
         try {
-            const posicao = await this.movimentsService.getPosicaoByProdutoDeposito(produtoId, depositoId, page, pageSize);
+            const posicao = await this.movementsproductService.getPosicaoByProdutoDeposito(produtoId, depositoId, page, pageSize);
             res.status(200).json(posicao);
         } catch (error) {
             res.status(500).json({ error: "Erro ao buscar posição por produto e depósito" });
@@ -106,7 +106,7 @@ class MovimentsController {
     
     async delete (req, res){
         try{
-            await this.movimentsService.delete(req.params.id);
+            await this.movementsproductService.delete(req.params.id);
             res.status(204).send();
     
         }catch(erro){
@@ -118,4 +118,4 @@ class MovimentsController {
 
 }
 
-module.exports = MovimentsController;
+module.exports = MovementsProductController;

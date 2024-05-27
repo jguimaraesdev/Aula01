@@ -1,8 +1,8 @@
-// ./models/moviments.js
+// ./models/MovementProduct.js
 const Sequelize = require('sequelize');
 module.exports = (sequelize) => {
 
-    const Moviments = sequelize.define('Moviment',{
+    const MovementProduct = sequelize.define('MovementProduct',{
 
         id: {
             type: Sequelize.INTEGER,
@@ -30,13 +30,13 @@ module.exports = (sequelize) => {
     // criando relacionamento
     
 
-    Moviments.associate = (models) =>{
-        Moviments.belongsTo(models.Product,{
+    MovementProduct .associate = (models) =>{
+        MovementProduct .belongsTo(models.Product,{
             foreignKey: 'productId',
             as: 'Product'
         }),
 
-        Moviments.belongsTo(models.Deposit,{
+        MovementProduct .belongsTo(models.Deposit,{
             foreignKey: 'depositId',
             as: 'Deposit'
         });
@@ -44,5 +44,5 @@ module.exports = (sequelize) => {
     };
 
 
-    return Moviments;
+    return MovementsProduct ;
 };

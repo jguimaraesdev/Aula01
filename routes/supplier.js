@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const SupplierService = require('../services/supplierService');
-const SupplierController = require('../controllers/supplierController');
+const SupplierService = require('../services/moduloCompras/supplierService');
+const SupplierController = require('../controllers/moduloCompras/supplierController');
 
 // Instanciando o serviço e o controlador
 const supplierService = new SupplierService(db.Supplier);

@@ -12,8 +12,8 @@ module.exports= (sequelize) => {
             type: Sequelize.STRING,
             allowNull:false
         },
-        valor:{
-            type: Sequelize.DECIMAL(10,2),
+        descricao:{
+            type: Sequelize.STRING,
             allowNull: false
         },
         status: {
