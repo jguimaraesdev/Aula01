@@ -9,15 +9,11 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    numeroNotaFiscal: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     numeroParcela: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    valorOriginal: {
+    valorParcela: {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
     },
@@ -30,6 +26,13 @@ module.exports = (sequelize) => {
       defaultValue: 'pendente',
     },
   });
+
+  Title.associate = (models) =>{
+    Title.belongsTo(models.NotaFiscal,{
+        foreignKey: 'notafiscalId',
+        as: 'NotaFiscal'
+    });
+};
 
   return Title;
 };

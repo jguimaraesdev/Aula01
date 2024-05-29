@@ -9,10 +9,10 @@ class SalesController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { qtdVendida, custoUnitario, parcelas, numeroNotaFiscal, productId} = req.body;
+      const { qtdVendida, custoUnitario, parcelas, notafiscalId} = req.body;
       
       try {
-          const newSales = await this.salesService.create(qtdVendida, custoUnitario, parcelas, numeroNotaFiscal, productId );
+          const newSales = await this.salesService.create(qtdVendida, custoUnitario, parcelas, notafiscalId);
           res.status(200).json(newSales);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir novo movimento" });

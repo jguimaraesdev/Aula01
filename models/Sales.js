@@ -18,24 +18,20 @@ module.exports = (sequelize) => {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
     },
-    parcelas: {
-      type: Sequelize.INTEGER,
+    tipoVenda: {
+      type: Sequelize.ENUM('AVISTA', 'PARCELADO'),
       allowNull: false,
-    },
-    numeroNotaFiscal: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
+    }
 
   });
 
-    Sales.associate = (models) =>{
-      Sales.belongsTo(models.Product,{
-          foreignKey: 'productId',
-          as: 'Product'
+    Title.associate = (models) =>{
+      Title.belongsTo(models.NotaFiscal,{
+          foreignKey: 'notafiscalId',
+          as: 'NotaFiscal'
       });
-    };
 
+    };
 
   return Sales;
 };

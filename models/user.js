@@ -29,8 +29,10 @@ module.exports= (sequelize) => {
             type: Sequelize.ENUM('ativo', 'desligado'),
             allowNull: false
         },
+
     });
 
+    
 
     return User;
 };

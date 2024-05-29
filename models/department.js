@@ -13,11 +13,5 @@ module.exports = (sequelize) => {
     },
   });
 
-  Department.associate = (models) =>{
-    Department.belongsTo(models.User,{
-        foreignKey: 'userId',
-        as: 'User'
-    });
-};
   return Department;
 };
