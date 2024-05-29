@@ -25,10 +25,10 @@ module.exports = (sequelize) => {
 
   });
 
-    Title.associate = (models) =>{
-      Title.belongsTo(models.NotaFiscal,{
+    Sales.associate = (models) =>{
+      Sales.belongsTo(models.NotaFiscal,{
           foreignKey: 'notafiscalId',
-          as: 'NotaFiscal'
+          as:'NotaFiscal'
       });
 
     };
