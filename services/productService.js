@@ -9,8 +9,8 @@ class ProductService {
 
     async create(nome, descricao, status) {
         try {
-            const newProduct = await this.Product.create({ nome, descricao, status });
-            return newProduct;
+            const result = await this.Product.create({ nome, descricao, status });
+            return result;
         } catch (error) {
             throw error;
         }
@@ -45,14 +45,14 @@ class ProductService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllProduct(page = 1, pageSize = 10) {
+    async findAll(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
-            const products = await this.Product.findAndCountAll({
+            const result = await this.Product.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
-            return products;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -60,14 +60,32 @@ class ProductService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findProductById(id) {
+    async findById(id) {
         try {
-            const product = await this.Product.findOne({ where: { id } });
-            return product;
+            const result = await this.Product.findOne({ where: { id } });
+            return result;
         } catch (error) {
             throw error;
         }
     }
+    //--------------------------------------------------------------------------------------------------//
+    
+    async delete(id) {
+        try {
+          const result = await this.Product.destroy({
+            where: { id: id }
+          });
+      
+          if (result === 0) {
+            throw new Error('Registro não encontrado');
+          }
+      
+          return { message: 'Registro deletado com sucesso' };
+        } catch (error) {
+          throw error;
+        }
+      }
+
     //--------------------------------------------------------------------------------------------------//
 
     async getPosicaoByDeposito(depositoId) {
@@ -101,23 +119,6 @@ class ProductService {
     }
 
     //--------------------------------------------------------------------------------------------------//
-    
-    async delete(id) {
-        try {
-          const result = await this.Product.destroy({
-            where: { id: id }
-          });
-      
-          if (result === 0) {
-            throw new Error('Registro não encontrado');
-          }
-      
-          return { message: 'Registro deletado com sucesso' };
-        } catch (error) {
-          throw error;
-        }
-      }
-      
     
 }
 

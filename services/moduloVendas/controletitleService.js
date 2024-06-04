@@ -10,7 +10,7 @@ class ControleTitleService {
   
     async create( tipoMovimento, valorMovimento, valorMulta, valorJuros, titleId ) {
         try {
-            const newMovement = await this.controleTitle.create({
+            const result = await this.controleTitle.create({
                 tipoMovimento, 
                 valorMovimento, 
                 valorMulta, 
@@ -18,7 +18,7 @@ class ControleTitleService {
                 titleId
             });
             
-            return newMovement;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -54,15 +54,15 @@ class ControleTitleService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findAllControleTitle(page = 1, pageSize = 10) {
+    async findAll(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
         
-            const allMovementTitle = await this.controleTitle.findAndCountAll({
+            const result = await this.controleTitle.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
-            return allMovementTitle;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -70,10 +70,10 @@ class ControleTitleService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findControleTitleById(id) {
+    async findById(id) {
         try {
-            const movement = await this.controleTitle.findOne({ where: { id } });
-            return movement;
+            const result = await this.controleTitle.findOne({ where: { id } });
+            return result;
         } catch (error) {
             throw error;
         }

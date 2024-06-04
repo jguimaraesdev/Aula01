@@ -9,8 +9,8 @@ class XtelefoneService {
 
     async create(DDD, numero, userId) {
         try {
-            const newXtelefone = await this.Xtelefone.create({ DDD, numero, userId });
-            return newXtelefone;
+            const result = await this.Xtelefone.create({ DDD, numero, userId });
+            return result;
         } catch (error) {
             throw error;
         }
@@ -46,15 +46,15 @@ class XtelefoneService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllXtelefones(page = 1, pageSize = 10) {
+    async findAll(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
         
-            const allXtelefones = await this.Xtelefone.findAndCountAll({
+            const result = await this.Xtelefone.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
-            return allXtelefones;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -62,10 +62,10 @@ class XtelefoneService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findXtelefoneById(id) {
+    async findById(id) {
         try {
-            const xtelefone = await this.Xtelefone.findOne({ where: { id } });
-            return xtelefone;
+            const result = await this.Xtelefone.findOne({ where: { id } });
+            return result;
         } catch (error) {
             throw error;
         }

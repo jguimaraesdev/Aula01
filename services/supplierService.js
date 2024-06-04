@@ -9,8 +9,8 @@ class SupplierService {
 
   async create(nome, contato) {
       try {
-          const newSupplier = await this.Supplier.create({ nome, contato });
-          return newSupplier;
+          const result = await this.Supplier.create({ nome, contato });
+          return result;
       } catch (error) {
           throw error;
       }
@@ -40,14 +40,14 @@ class SupplierService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllSuppliers(page = 1, pageSize = 10) {
+  async findAll(page = 1, pageSize = 10) {
       try {
           const offset = (page - 1) * pageSize;
-          const suppliers = await this.Supplier.findAndCountAll({
+          const result = await this.Supplier.findAndCountAll({
               limit: pageSize,
               offset: offset
           });
-          return suppliers;
+          return result;
       } catch (error) {
           throw error;
       }
@@ -55,10 +55,10 @@ class SupplierService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findSupplierById(id) {
+  async findById(id) {
       try {
-          const supplier = await this.Supplier.findOne({ where: { id } });
-          return supplier;
+          const result = await this.Supplier.findOne({ where: { id } });
+          return result;
       } catch (error) {
           throw error;
       }

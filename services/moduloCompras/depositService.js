@@ -9,8 +9,8 @@ class DepositService {
 
     async create(central) {
         try {
-            const newDeposit = await this.Deposit.create({ central });
-            return newDeposit;
+            const result = await this.Deposit.create({ central });
+            return result;
         } catch (error) {
             throw error;
         }
@@ -47,16 +47,16 @@ class DepositService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllDeposits(page = 1, pageSize = 10) {
+    async findAll(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
 
-            const deposits = await this.Deposit.findAndCountAll({
+            const result = await this.Deposit.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
             
-            return deposits;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -64,10 +64,10 @@ class DepositService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findDepositById(id) {
+    async findById(id) {
         try {
-            const deposit = await this.Deposit.findOne({ where: { id } });
-            return deposit;
+            const result = await this.Deposit.findOne({ where: { id } });
+            return result;
         } catch (error) {
             throw error;
         }

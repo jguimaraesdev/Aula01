@@ -8,7 +8,7 @@ class MovementProductService {
 
     async create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId) {
         try {
-            const newMovement = await this.MovementProduct.create({
+            const result = await this.MovementProduct.create({
                 movimento_tipo,
                 qtd_disponivel,
                 qtd_bloqueado,
@@ -16,7 +16,7 @@ class MovementProductService {
                 productId, 
                 depositId
             });
-            return newMovement;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -50,14 +50,14 @@ class MovementProductService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllMovements(page = 1, pageSize = 10) {
+    async findAll(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
-            const allMovements = await this.MovementProduct.findAndCountAll({
+            const result = await this.MovementProduct.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
-            return allMovements;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -65,17 +65,34 @@ class MovementProductService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findMovementById(id) {
+    async findById(id) {
         try {
-            const movement = await this.MovementProduct.findOne({ where: { id } });
-            return movement;
+            const result = await this.MovementProduct.findOne({ where: { id } });
+            return result;
         } catch (error) {
             throw error;
         }
     }
 
     //--------------------------------------------------------------------------------------------------//
-    
+    async delete(id) {
+        try {
+          const result = await this.MovementProduct.destroy({
+            where: { id: id }
+          });
+      
+          if (result === 0) {
+            throw new Error('Registro não encontrado');
+          }
+      
+          return { message: 'Registro deletado com sucesso' };
+        } catch (error) {
+          throw error;
+        }
+      }
+      
+    //--------------------------------------------------------------------------------------------------//
+
     async getPosicaoByDeposito(depositoId, page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
@@ -108,23 +125,7 @@ class MovementProductService {
 
     //--------------------------------------------------------------------------------------------------//
     
-    async delete(id) {
-        try {
-          const result = await this.MovementProduct.destroy({
-            where: { id: id }
-          });
-      
-          if (result === 0) {
-            throw new Error('Registro não encontrado');
-          }
-      
-          return { message: 'Registro deletado com sucesso' };
-        } catch (error) {
-          throw error;
-        }
-      }
-      
-    }
-
+    
+}
 
 module.exports = MovementProductService;

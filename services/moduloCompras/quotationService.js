@@ -16,7 +16,7 @@ class QuotationService {
         validadeCotacao.setDate(currentDate.getDate() + 5);
 
         // Criar o novo registro de cotação com as datas calculadas
-        const newQuotation = await this.Quotation.create({
+        const result = await this.Quotation.create({
             preco,
             cotacaoData: currentDate,
             validadeCotacao,
@@ -25,7 +25,7 @@ class QuotationService {
             requisitionId
         });
 
-        return newQuotation;
+        return result;
     } catch (error) {
         throw error;
     }
@@ -56,14 +56,14 @@ class QuotationService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllQuotations(page = 1, pageSize = 10) {
+  async findAll(page = 1, pageSize = 10) {
       try {
           const offset = (page - 1) * pageSize;
-          const quotations = await this.Quotation.findAndCountAll({
+          const result = await this.Quotation.findAndCountAll({
               limit: pageSize,
               offset: offset
           });
-          return quotations;
+          return result;
       } catch (error) {
           throw error;
       }
@@ -71,28 +71,17 @@ class QuotationService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findQuotationById(id) {
+  async findById(id) {
       try {
-          const quotation = await this.Quotation.findOne({ where: { id } });
-          return quotation;
+          const result = await this.Quotation.findOne({ where: { id } });
+          return result;
       } catch (error) {
           throw error;
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
-
-  async getQuotationsBySupplier(supplierId) {
-      try {
-          const quotations = await this.Quotation.findAll({ where: { supplierId } });
-          return quotations;
-      } catch (error) {
-          throw error;
-      }
-  }
-
-  //--------------------------------------------------------------------------------------------------//
-
+  
   async delete(id) {
     try {
       const result = await this.Quotation.destroy({
@@ -107,7 +96,20 @@ class QuotationService {
     } catch (error) {
       throw error;
     }
-}
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+  
+    async getQuotationsBySupplier(supplierId) {
+      try {
+          const quotations = await this.Quotation.findAll({ where: { supplierId } });
+          return quotations;
+      } catch (error) {
+          throw error;
+      }
+    }
+    //--------------------------------------------------------------------------------------------------//
+
 
 }
 

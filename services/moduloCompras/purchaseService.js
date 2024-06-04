@@ -9,8 +9,8 @@ class PurchaseService {
   
     async create(quantidade, custototal, status, supplierId, quotationId, userId) {
         try {
-            const newPurchase = await this.Purchase.create({quantidade, custototal, status, supplierId, quotationId, userId});
-            return newPurchase;
+            const result = await this.Purchase.create({quantidade, custototal, status, supplierId, quotationId, userId});
+            return result;
         } catch (error) {
             throw error;
         }
@@ -40,14 +40,14 @@ class PurchaseService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findAllPurchases(page = 1, pageSize = 10) {
+    async findAll(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
-            const purchases = await this.Purchase.findAndCountAll({
+            const result = await this.Purchase.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
-            return purchases;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -55,28 +55,17 @@ class PurchaseService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findPurchaseById(id) {
+    async findById(id) {
         try {
-            const purchase = await this.Purchase.findOne({ where: { id } });
-            return purchase;
+            const result = await this.Purchase.findOne({ where: { id } });
+            return result;
         } catch (error) {
             throw error;
         }
     }
   
     //--------------------------------------------------------------------------------------------------//
-  
-    async getPurchasesBySupplier(supplierId) {
-        try {
-            const purchases = await this.Purchase.findAll({ where: { supplierId } });
-            return purchases;
-        } catch (error) {
-            throw error;
-        }
-    }
-  
-    //--------------------------------------------------------------------------------------------------//
-  
+    
     async delete(id) {
         try {
           const result = await this.Purchase.destroy({
@@ -92,8 +81,21 @@ class PurchaseService {
           throw error;
         }
     }
-      
+
+    //--------------------------------------------------------------------------------------------------//
     
+    async getPurchasesBySupplier(supplierId) {
+        try {
+            const purchases = await this.Purchase.findAll({ where: { supplierId } });
+            return purchases;
+        } catch (error) {
+            throw error;
+        }
+    }
+  
+    //--------------------------------------------------------------------------------------------------//
+  
+
   
   }
   

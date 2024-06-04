@@ -18,13 +18,12 @@ const supplierRouter = require('./routes/supplier');
 const costCenterRouter = require('./routes/costCenter');
 const requisitionRouter = require('./routes/requisition');
 const quotationRouter = require('./routes/quotation');
-const salesRouter = require('./routes/sales');
 const departmentRouter = require('./routes/department');
 const controletitleRouter = require('./routes/controletitle');
 const titleRouter = require('./routes/title');
 const purchaseRouter = require('./routes/purchase');
 const notafiscalRouter = require('./routes/notafiscal');
-const payableRouter = require('./routes/payable');
+const payablesalesRouter = require('./routes/payablesales');
 
 const { applyMigrations } = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
@@ -47,13 +46,12 @@ app.use('/supplier', supplierRouter);
 app.use('/cost', costCenterRouter);
 app.use('/requisition', requisitionRouter);
 app.use('/quotation', quotationRouter);
-app.use('/sales', salesRouter);
 app.use('/department', departmentRouter);
 app.use('/controletitle', controletitleRouter);
 app.use('/title', titleRouter);
 app.use('/purchase', purchaseRouter);
 app.use('/notafiscal', notafiscalRouter);
-app.use('/payable', payableRouter);
+app.use('/payablesales', payablesalesRouter);
 
 // Middleware de tratamento de erros
 app.use(errorHandler);

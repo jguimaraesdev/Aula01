@@ -9,8 +9,8 @@ class DepartmentService {
 
   async create(nome, userId) {
       try {
-          const newDepartment = await this.Department.create({ nome, userId });
-          return newDepartment;
+          const result = await this.Department.create({ nome, userId });
+          return result;
       } catch (error) {
           throw error;
       }
@@ -40,14 +40,14 @@ class DepartmentService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllDepartments(page = 1, pageSize = 10) {
+  async findAll(page = 1, pageSize = 10) {
       try {
           const offset = (page - 1) * pageSize;
-          const departments = await this.Department.findAndCountAll({
+          const result = await this.Department.findAndCountAll({
               limit: pageSize,
               offset: offset
           });
-          return departments;
+          return result;
       } catch (error) {
           throw error;
       }
@@ -55,10 +55,10 @@ class DepartmentService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findDepartmentById(id) {
+  async findById(id) {
       try {
-          const department = await this.Department.findOne({ where: { id } });
-          return department;
+          const result = await this.Department.findOne({ where: { id } });
+          return result;
       } catch (error) {
           throw error;
       }

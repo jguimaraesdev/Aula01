@@ -10,8 +10,14 @@ class NotaFiscalService {
   
     async create(nome_razao, CNPJ, cpf, natureza_operacao, productId ) {
         try {
-            const newRegistro = await this.notafiscal.create({nome_razao, CNPJ, cpf, natureza_operacao, productId});
-            return newRegistro;
+            const result = await this.notafiscal.create({
+                nome_razao, 
+                CNPJ, 
+                cpf, 
+                natureza_operacao, 
+                productId
+            });
+            return result;
         } catch (error) {
             throw error;
         }
@@ -47,15 +53,15 @@ class NotaFiscalService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findAllNotafiscal(page = 1, pageSize = 10) {
+    async findAll(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
         
-            const allNotas = await this.notafiscal.findAndCountAll({
+            const result = await this.notafiscal.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
-            return allNotas;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -63,10 +69,10 @@ class NotaFiscalService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findNotaFiscalById(id) {
+    async findById(id) {
         try {
-            const registro = await this.notafiscal.findOne({ where: { id } });
-            return registro;
+            const result = await this.notafiscal.findOne({ where: { id } });
+            return result;
         } catch (error) {
             throw error;
         }

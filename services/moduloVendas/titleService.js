@@ -10,8 +10,14 @@ class TitleService {
   
     async create(notafiscalId, numeroParcela, valorParcela, dataVencimento, situacao ) {
         try {
-            const newTitle = await this.Title.create({ notafiscalId, numeroParcela, valorParcela, dataVencimento, situacao });
-            return newTitle;
+            const result = await this.Title.create({ 
+                notafiscalId, 
+                numeroParcela, 
+                valorParcela, 
+                dataVencimento, 
+                situacao 
+            });
+            return result;
         } catch (error) {
             throw error;
         }
@@ -47,15 +53,15 @@ class TitleService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findAllTitle(page = 1, pageSize = 10) {
+    async findAll(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
         
-            const allTitle = await this.Title.findAndCountAll({
+            const result = await this.Title.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
-            return allTitle;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -63,10 +69,10 @@ class TitleService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findTitleById(id) {
+    async findById(id) {
         try {
-            const title = await this.Title.findOne({ where: { id } });
-            return title;
+            const result = await this.Title.findOne({ where: { id } });
+            return result;
         } catch (error) {
             throw error;
         }

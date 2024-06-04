@@ -14,14 +14,14 @@ class UserService {
     async create(nome, login, email, senha, status) {
         try {
             const senhaHash = await bcrypt.hash(senha, 10);
-            const novoUser = await this.User.create({
+            const result = await this.User.create({
                 nome: nome,
                 login: login,
                 email: email,
                 senha: senhaHash,
                 status: status
             });
-            const { senha: _, ...userWithoutPassword } = novoUser.dataValues;
+            const { senha: _, ...userWithoutPassword } = result.dataValues;
             return userWithoutPassword;
         } catch (error) {
             throw error;
@@ -32,10 +32,10 @@ class UserService {
 
     async verifyUser(login, senha) {
         try {
-            const user = await this.User.findOne({ where: { login } });
-            if (!user) return null;
-            const match = await bcrypt.compare(senha, user.senha);
-            return match ? user : null;
+            const result = await this.User.findOne({ where: { login } });
+            if (!result) return null;
+            const match = await bcrypt.compare(senha, result.senha);
+            return match ? result : null;
         } catch (error) {
             throw error;
         }
@@ -45,10 +45,10 @@ class UserService {
 
     async loginUser(login, senha) {
         try {
-            const user = await this.verifyUser(login, senha);
-            if (user) {
-                const token = this.authenticateToken.generateToken(user.id);
-                return { user: user.id, token };
+            const result = await this.verifyUser(login, senha);
+            if (result) {
+                const token = this.authenticateToken.generateToken(result.id);
+                return { user: result.id, token };
             } else {
                 return null;
             }
@@ -86,17 +86,17 @@ class UserService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllUser(page = 1, pageSize = 10) {
+    async findAll(page = 1, pageSize = 10) {
         try {
             const offset =(page -1) *pageSize;
-            const allUsers = await this.User.findAndCountAll({ 
+            const result = await this.User.findAndCountAll({ 
 
                 attributes: { exclude: ['senha'] },
                 limit: pageSize,
                 offset: offset 
             
             });
-            return allUsers;
+            return result;
         } catch (error) {
             throw error;
         }
@@ -104,14 +104,13 @@ class UserService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findUserbyId(id) {
-        console.log('Procurando usuário com ID:', id);
+    async findbyId(id) {
+
         try {
-            const oneUser = await this.User.findOne({ where: { id }, attributes: { exclude: ['senha'] }});
-            console.log('Usuário encontrado:', oneUser);
-            return oneUser ? oneUser : null;
+            const result = await this.User.findOne({ where: { id }, attributes: { exclude: ['senha'] }});
+            return result ? result : null;
         } catch (error) {
-            console.error('Erro ao procurar usuário por ID:', error);
+            console.error('Erro ao procurar registro por ID:', error);
             throw error;
         }
     }

@@ -11,7 +11,13 @@ class PayableSalesService {
 
   async create(valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId) {
       try {
-          const result = await this.PayableSales.create({ valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId });
+          const result = await this.PayableSales.create({ 
+            valor, 
+            tipoMovimento, 
+            dataVencimento, 
+            tipoPagamento, 
+            notafiscalId 
+        });
           return result;
       } catch (error) {
           throw error;

@@ -9,8 +9,8 @@ class CostCenterService {
 
   async create(codigo, nome) {
       try {
-          const newCostCenter = await this.CostCenter.create({ codigo, nome });
-          return newCostCenter;
+          const result = await this.CostCenter.create({ codigo, nome });
+          return result;
       } catch (error) {
           throw error;
       }
@@ -40,14 +40,14 @@ class CostCenterService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllCostCenters(page = 1, pageSize = 10) {
+  async findAll(page = 1, pageSize = 10) {
       try {
           const offset = (page - 1) * pageSize;
-          const costCenters = await this.CostCenter.findAndCountAll({
+          const result = await this.CostCenter.findAndCountAll({
               limit: pageSize,
               offset: offset
           });
-          return costCenters;
+          return result;
       } catch (error) {
           throw error;
       }
@@ -55,10 +55,10 @@ class CostCenterService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findCostCenterById(id) {
+  async findById(id) {
       try {
-          const costCenter = await this.CostCenter.findOne({ where: { id } });
-          return costCenter;
+          const result = await this.CostCenter.findOne({ where: { id } });
+          return result;
       } catch (error) {
           throw error;
       }
