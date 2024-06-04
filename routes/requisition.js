@@ -14,23 +14,23 @@ const requisitionController = new RequisitionController(requisitionService);
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
-router.post('/newrequisition', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
+router.post('/new', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
   requisitionController.create(req, res);
 });
 
-router.put('/updaterequisition/:id', (req, res, next) => {
+router.put('/update/:id', (req, res, next) => {
   requisitionController.update(req, res);
 });
 
-router.get('/findallrequisitions', (req, res, next) => {
+router.get('/findall', (req, res, next) => {
   requisitionController.findAllRequisition(req, res);
 });
 
-router.get('/findrequisitionbyid/:id', (req, res, next) => {
+router.get('/findbyid/:id', (req, res, next) => {
   requisitionController.findRequisitionById(req, res);
 });
 
-router.delete('/deleterequisition/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
   requisitionController.delete(req, res);
 });
 

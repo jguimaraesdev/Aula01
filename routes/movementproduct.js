@@ -13,20 +13,24 @@ const movementproductController = new MovementProductController(movementproductS
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
-router.post('/newmovement', (req, res, next) => {
+router.post('/new', (req, res, next) => {
   movementproductController.create(req, res);
 });
 
-router.put('/updateMovement/:id', (req, res, next) => {
+router.put('/update/:id', (req, res, next) => {
   movementproductController.update(req, res);
 });
 
-router.get('/findallmovement', (req, res, next) => {
+router.get('/findallt', (req, res, next) => {
   movementproductController.findAllMovements(req, res);
 });
 
-router.get('/findmovementbyid/:id', (req, res, next) => {
+router.get('/findbyid/:id', (req, res, next) => {
   movementproductController.findMovementById(req, res);
+});
+
+router.delete('/delete/:id', (req, res, next) => {
+  movementproductController.delete(req, res);
 });
 
 // Nova rota para buscar posição por depósito
@@ -39,9 +43,7 @@ router.get('/getPosicaoByProdutoDeposito/:produtoId/:depositoId', (req, res, nex
   movementproductController.getPosicaoByProdutoDeposito(req, res);
 });
 
-router.delete('/deletemovement/:id', (req, res, next) => {
-  movementproductController.delete(req, res);
-});
+
 
 
 //--------------------------------------------------------------------------------------------------//

@@ -14,23 +14,23 @@ const xtelefoneService = new XtelefoneService(db.Xtelefone, authenticateToken);
 const xtelefoneController = new XtelefoneController(xtelefoneService);
 
 // Rotas que exigem autenticação
-router.post('/newxtelefone', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
+router.post('/new', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
     xtelefoneController.create(req, res);
 });
 
-router.put('/updateXtelefone/:id', (req, res, next) => {
+router.put('/update/:id', (req, res, next) => {
     xtelefoneController.update(req, res);
 });
 
-router.get('/findallxtelefones', (req, res, next) => {
+router.get('/findall', (req, res, next) => {
     xtelefoneController.findAllXtelefones(req, res);
 });
 
-router.get('/findXtelefonebyId/:id', (req, res, next) => {
+router.get('/findbyId/:id', (req, res, next) => {
     xtelefoneController.findXtelefoneById(req, res);
 });
 
-router.delete('/deletextelefone/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
     xtelefoneController.delete(req, res);
   });
 

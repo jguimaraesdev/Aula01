@@ -17,23 +17,23 @@ const departmentController = new DepartmentController(departmentService);
 //--------------------------------------------------------------------------------------------------//
 
 // Rotas
-router.post('/newdepartment', authenticateToken.verifyToken.bind(authenticateToken),(req, res, next) => {
+router.post('/new', authenticateToken.verifyToken.bind(authenticateToken),(req, res, next) => {
   departmentController.create(req, res);
 });
 
-router.put('/updatedepartment/:id', (req, res, next) => {
+router.put('/update/:id', (req, res, next) => {
   departmentController.update(req, res);
 });
 
-router.get('/findalldepartments', (req, res, next) => {
+router.get('/findall', (req, res, next) => {
   departmentController.findAllDepartments(req, res);
 });
 
-router.get('/finddepartmentbyid/:id', (req, res, next) => {
+router.get('/findbyid/:id', (req, res, next) => {
   departmentController.findDepartmentById(req, res);
 });
 
-router.delete('/deletedepartment/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
   departmentController.delete(req, res);
 });
 

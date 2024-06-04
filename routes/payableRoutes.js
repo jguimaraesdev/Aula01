@@ -1,37 +1,39 @@
-//./routes/notafiscal.js
+// routes/payableRoutes.js
+
+//./routes/product.js
 
 const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const NotaFiscalService = require('../services/notafiscalService');
-const NotaFiscalController = require('../controllers/notafiscalController');
+const PayableService = require('../services/moduloContasPagar/payableService');
+const PayableController = require('../controllers/moduloContasPagar/payableController');
 
 // Instanciando o serviço e o controlador
-const notafiscalService = new NotaFiscalService(db.NotaFiscal);
-const notafiscalController = new NotaFiscalController(notafiscalService);
+const payableService = new PayableService(db.Payable);
+const payableController = new PayableController(payableService);
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  notafiscalController.create(req, res);
+  payableController.create(req, res);
 });
 
 // Rota de atualização
 router.put('/update/:id', (req, res, next) => {
-  notafiscalController.update(req, res);
+  payableController.update(req, res);
 });
 
 router.get('/findall', (req, res, next) => {
-  notafiscalController.findAllProduct(req, res);
+  payableController.findAllProduct(req, res);
 });
 
-router.get('/findall/:id', (req, res, next) => {
-  notafiscalController.findProductById(req, res);
+router.get('/findallbyid/:id', (req, res, next) => {
+  payableController.findProductById(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  notafiscalController.delete(req, res);
+  payableController.delete(req, res);
 });
 
 //--------------------------------------------------------------------------------------------------//

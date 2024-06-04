@@ -19,28 +19,28 @@ router.get('/', (req, res, next) => {
   res.send('Módulo de usuários está rodando');
 });
 
-router.post('/newUser', (req, res, next) => {
+router.post('/new', (req, res, next) => {
   userController.create(req, res);
 });
 
-router.post('/loginUser', (req, res, next) => {
+router.post('/login', (req, res, next) => {
   userController.loginUser(req, res);
 });
 
 // Rota de atualização
-router.put('/updateUser/:id', authenticateToken.verifyToken.bind(authenticateToken),(req, res, next) => {
+router.put('/update/:id', authenticateToken.verifyToken.bind(authenticateToken),(req, res, next) => {
   userController.update(req, res);
 });
 
-router.get('/allUsers', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
+router.get('/findall', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
   userController.findAllUser(req, res);
 })
 
-router.get('/findUserbyId/:id', (req, res, next) => {
+router.get('/findbyId/:id', (req, res, next) => {
   userController.findUserbyId(req, res);
 });
 
-router.delete('/deleteuser/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
   userController.delete(req, res);
 });
 

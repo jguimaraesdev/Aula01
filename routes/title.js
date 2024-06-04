@@ -13,23 +13,23 @@ const titleController = new TitleController(titleService);
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
-router.post('/newtitle', (req, res, next) => {
+router.post('/new', (req, res, next) => {
   titleController.create(req, res);
 });
 
-router.put('/updatetitle/:id', (req, res, next) => {
+router.put('/update/:id', (req, res, next) => {
   titleController.update(req, res);
 });
 
-router.get('/findalltitle', (req, res, next) => {
+router.get('/findall', (req, res, next) => {
   titleController.findAllTitle(req, res);
 });
 
-router.get('/findtitlebyid/:id', (req, res, next) => {
+router.get('/findbyid/:id', (req, res, next) => {
   titleController.findtitlebyid(req, res);
 });
 
-router.delete('/deletetitle/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
   titleController.delete(req, res);
 });
 

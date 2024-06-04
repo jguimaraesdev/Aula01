@@ -13,23 +13,23 @@ const salesController = new SalesController(salesService);
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
-router.post('/newsales', (req, res, next) => {
+router.post('/new', (req, res, next) => {
   salesController.create(req, res);
 });
 
-router.put('/updatesales/:id', (req, res, next) => {
+router.put('/update/:id', (req, res, next) => {
   salesController.update(req, res);
 });
 
-router.get('/findallsales', (req, res, next) => {
+router.get('/findall', (req, res, next) => {
   salesController.findAllSales(req, res);
 });
 
-router.get('/findsalesbyid/:id', (req, res, next) => {
+router.get('/findbyid/:id', (req, res, next) => {
   salesController.findSalesById(req, res);
 });
 
-router.delete('/deletesales/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
   salesController.delete(req, res);
 });
 

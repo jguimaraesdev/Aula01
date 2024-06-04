@@ -13,23 +13,23 @@ const purchaseController = new PurchaseController(purchaseService);
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
-router.post('/newpurchase', (req, res, next) => {
+router.post('/new', (req, res, next) => {
   purchaseController.create(req, res);
 });
 
-router.put('/updatepurchase/:id', (req, res, next) => {
+router.put('/update/:id', (req, res, next) => {
   purchaseController.update(req, res);
 });
 
-router.get('/findallpurchases', (req, res, next) => {
+router.get('/findall', (req, res, next) => {
   purchaseController.findAllPurchases(req, res);
 });
 
-router.get('/findpurchasebyid/:id', (req, res, next) => {
+router.get('/findbyid/:id', (req, res, next) => {
   purchaseController.findPurchaseById(req, res);
 });
 
-router.delete('/deletepurchase/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
   purchaseController.delete(req, res);
 });
 

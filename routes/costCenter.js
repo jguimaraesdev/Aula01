@@ -12,23 +12,23 @@ const costCenterController = new CostCenterController(costCenterService);
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
-router.post('/newcostcenter', (req, res, next) => {
+router.post('/new', (req, res, next) => {
   costCenterController.create(req, res);
 });
 
-router.put('/updatecostcenter/:id', (req, res, next) => {
+router.put('/update/:id', (req, res, next) => {
   costCenterController.update(req, res);
 });
 
-router.get('/findallcostcenters', (req, res, next) => {
+router.get('/findall', (req, res, next) => {
   costCenterController.findAllCostCenters(req, res);
 });
 
-router.get('/findcostcenterbyid/:id', (req, res, next) => {
+router.get('/findbyid/:id', (req, res, next) => {
   costCenterController.findCostCenterById(req, res);
 });
 
-router.delete('/deletecostcenter/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
   costCenterController.delete(req, res);
 });
 

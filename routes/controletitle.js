@@ -13,24 +13,24 @@ const controletitleController = new ControleTitleController(controletitleService
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
-router.post('/newcontrole', (req, res, next) => {
+router.post('/new', (req, res, next) => {
   controletitleController.create(req, res);
 });
 
 // Rota de atualização
-router.put('/updatecontrole/:id', (req, res, next) => {
+router.put('/update/:id', (req, res, next) => {
     controletitleController.update(req, res);
 });
 
-router.get('/findallcontrole', (req, res, next) => {
+router.get('/findall', (req, res, next) => {
     controletitleController.findAllControleTitle(req, res);
 });
 
-router.get('/findallcontrolebyid/:id', (req, res, next) => {
+router.get('/findallbyid/:id', (req, res, next) => {
     controletitleController.findControleTitleById(req, res);
 });
 
-router.delete('/deletecontrole/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
     controletitleController.delete(req, res);
 });
 
