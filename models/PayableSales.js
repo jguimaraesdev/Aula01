@@ -9,16 +9,20 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    
-    qtdVendida: {
-      type: Sequelize.INTEGER,
+  
+    valor: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
+    tipoMovimento: {
+      type: Sequelize.ENUM('Venda', 'Compra'),
       allowNull: false,
     },
-    custoUnitario: {
-      type: Sequelize.DECIMAL(10, 2),
-      allowNull: false,
+    dataVencimento: {
+      type: DataTypes.DATE,
+      allowNull: false
     },
-    tipoVenda: {
+    tipoPagamento: {
       type: Sequelize.ENUM('AVISTA', 'PARCELADO'),
       allowNull: false,
     }

@@ -22,6 +22,10 @@ module.exports= (sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         },
+        quantidade:{
+            type:Sequelize.INTEGER,
+            allowNull: false
+        },
         natureza_operacao: {
             type: Sequelize.ENUM('Devolução', 'Retorno', 'Complementar', 'Remessa', 'Entrega Futura', 'Venda', 'Consignada'),
             allowNull: false
@@ -35,6 +39,13 @@ module.exports= (sequelize) => {
             as: 'Product'
         });
         
+    };
+
+    NotaFiscal.associate = (models) => {
+        NotaFiscal.belongsTo(models.Supplier, {
+            foreignKey: 'supplierId',
+            as: 'supplier'
+        });
     };
 
     return NotaFiscal;
