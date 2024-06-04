@@ -12,22 +12,22 @@ class TitleController {
         const { notafiscalId, numeroParcela, valorParcela, dataVencimento, situacao} = req.body;
         
         try {
-            const newTitle = await this.titleService.create(notafiscalId, numeroParcela, valorParcela, dataVencimento, situacao );
-            res.status(200).json(newTitle);
+            const result = await this.titleService.create(notafiscalId, numeroParcela, valorParcela, dataVencimento, situacao );
+            res.status(200).json(result);
         } catch (error) {
-            res.status(500).json({ error: "Erro ao inserir novo movimento" });
+            res.status(500).json({ error: "Erro ao inserir novo registro" });
         }
     }
   
     //--------------------------------------------------------------------------------------------------//
   
     async update(req, res) {
-        const titleId = req.params.id;
+        const Id = req.params.id;
         const updates = req.body;
         try {
             // Verificar se o ID do depósito é um número válido
-            if (isNaN(titleId)) {
-                return res.status(400).json({ error: "ID de movimento inválido" });
+            if (isNaN(Id)) {
+                return res.status(400).json({ error: "ID de registro inválido" });
             }
     
             // Verificar se os dados de atualização estão presentes
@@ -36,7 +36,7 @@ class TitleController {
             }
     
             // Chamar o método update da DepositService para realizar a atualização
-            const { updatedRowsCount, updatedRows } = await this.titleService.update(titleId, updates);
+            const { updatedRowsCount, updatedRows } = await this.titleService.update(Id, updates);
     
             // Verificar se o depósito foi encontrado e atualizado com sucesso
             if (updatedRowsCount > 0) {
@@ -53,13 +53,13 @@ class TitleController {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findAllTitle(req, res) {
+    async findAll(req, res) {
   
         const { page, pageSize } = req.query;
   
         try {
-            const title = await this.titleService.findAllTitle(page, pageSize);
-            res.status(200).json(title);
+            const result = await this.titleService.findAll(page, pageSize);
+            res.status(200).json(result);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao buscar registros' });
         }
@@ -67,12 +67,12 @@ class TitleController {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findTitleById(req, res) {
-        const titleId = req.params.id;
+    async findById(req, res) {
+        const Id = req.params.id;
         try {
-            const title = await this.titleService.findTitleById(titleId);
-            if (title) {
-                res.status(200).json(title);
+            const result = await this.titleService.findById(Id);
+            if (result) {
+                res.status(200).json(result);
             } else {
                 res.status(404).json({ error: "Registro não encontrado" });
             }
@@ -85,11 +85,11 @@ class TitleController {
     //--------------------------------------------------------------------------------------------------//
     
     async delete (req, res){
-        const titleId = req.params.id;
+        const Id = req.params.id;
     
-        const title = await this.titleService.delete(titleId);
-              if (title) {
-                  res.status(200).json(title);
+        const result = await this.titleService.delete(Id);
+              if (result) {
+                  res.status(200).json(result);
               } else {
                   res.status(404).json({ error: "Registro não deletado" });
               }

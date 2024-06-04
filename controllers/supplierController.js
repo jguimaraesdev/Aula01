@@ -10,20 +10,20 @@ class SupplierController {
   async create(req, res) {
       const { nome, contato } = req.body;
       try {
-          const newSupplier = await this.supplierService.create(nome, contato);
-          res.status(200).json(newSupplier);
+          const result = await this.supplierService.create(nome, contato);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao inserir o novo fornecedor" });
+          res.status(500).json({ error: "Erro ao inserir o novo resgistro" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
   async update(req, res) {
-      const supplierId = req.params.id;
+      const Id = req.params.id;
       const updates = req.body;
       try {
-          if (isNaN(supplierId)) {
+          if (isNaN(Id)) {
               return res.status(400).json({ error: "ID de registro inválido" });
           }
 
@@ -31,7 +31,7 @@ class SupplierController {
               return res.status(400).json({ error: "Dados de atualização inválidos" });
           }
 
-          const { updatedRowsCount, updatedRows } = await this.supplierService.update(supplierId, updates);
+          const { updatedRowsCount, updatedRows } = await this.supplierService.update(Id, updates);
 
           if (updatedRowsCount > 0) {
               return res.status(200).json({ message: "Registro atualizado com sucesso" });
@@ -46,26 +46,26 @@ class SupplierController {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllSuppliers(req, res) {
+  async findAll(req, res) {
       const { page, pageSize } = req.query;
       try {
-          const suppliers = await this.supplierService.findAllSuppliers(page, pageSize);
-          res.status(200).json(suppliers);
+          const result = await this.supplierService.findAll(page, pageSize);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao buscar fornecedores" });
+          res.status(500).json({ error: "Erro ao buscar registros" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findSupplierById(req, res) {
-      const supplierId = req.params.id;
+  async findById(req, res) {
+      const Id = req.params.id;
       try {
-          const supplier = await this.supplierService.findSupplierById(supplierId);
-          if (supplier) {
-              res.status(200).json(supplier);
+          const result = await this.supplierService.findById(Id);
+          if (result) {
+              res.status(200).json(result);
           } else {
-              res.status(404).json({ error: "Fornecedor não encontrado" });
+              res.status(404).json({ error: "Registro não encontrado" });
           }
       } catch (error) {
           res.status(500).json({ error: "Erro interno do servidor" });
@@ -75,11 +75,11 @@ class SupplierController {
   //--------------------------------------------------------------------------------------------------//
 
   async delete (req, res){
-    const supplierId = req.params.id;
+    const Id = req.params.id;
 
-    const supplier = await this.supplierService.delete(supplierId);
-          if (supplier) {
-              res.status(200).json(supplier);
+    const result = await this.supplierService.delete(Id);
+          if (result) {
+              res.status(200).json(result);
           } else {
               res.status(404).json({ error: "Registro não deletado" });
           }

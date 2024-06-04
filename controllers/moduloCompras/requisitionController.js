@@ -11,20 +11,20 @@ class RequisitionController {
       const { qtd_requerida, status, productId, costCenterId} = req.body;
       const userId = req.userId; // Suponho que você tenha o ID do usuário na requisição
       try {
-          const newRequisition = await this.requisitionService.create(qtd_requerida, status, userId, productId, costCenterId);
-          res.status(200).json(newRequisition);
+          const result = await this.requisitionService.create(qtd_requerida, status, userId, productId, costCenterId);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao inserir a nova requisição" });
+          res.status(500).json({ error: "Erro ao inserir a novo registro" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
   async update(req, res) {
-      const requisitionId = req.params.id;
+      const Id = req.params.id;
       const updates = req.body;
       try {
-          if (isNaN(requisitionId)) {
+          if (isNaN(Id)) {
               return res.status(400).json({ error: "ID de registro inválido" });
           }
 
@@ -32,12 +32,12 @@ class RequisitionController {
               return res.status(400).json({ error: "Dados de atualização inválidos" });
           }
 
-          const { updatedRowsCount, updatedRows } = await this.requisitionService.update(requisitionId, updates);
+          const { updatedRowsCount, updatedRows } = await this.requisitionService.update(Id, updates);
 
           if (updatedRowsCount > 0) {
               return res.status(200).json({ message: "Registro atualizado com sucesso" });
           } else {
-              res.status(404).json({ error: "Requisição não encontrada", updatedRowsCount, updatedRows });
+              res.status(404).json({ error: "Registro não encontrada", updatedRowsCount, updatedRows });
           }
       } catch (error) {
           console.error("Erro ao atualizar registro:", error);
@@ -47,26 +47,26 @@ class RequisitionController {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllRequisition(req, res) {
+  async findAll(req, res) {
       const { page, pageSize } = req.query;
       try {
-          const requisitions = await this.requisitionService.findAllRequisition(page, pageSize);
-          res.status(200).json(requisitions);
+          const result = await this.requisitionService.findAll(page, pageSize);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao buscar requisições" });
+          res.status(500).json({ error: "Erro ao buscar registros" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findRequisitionById(req, res) {
-      const requisitionId = req.params.id;
+  async findById(req, res) {
+      const Id = req.params.id;
       try {
-          const requisition = await this.requisitionService.findRequisitionById(requisitionId);
-          if (requisition) {
-              res.status(200).json(requisition);
+          const result = await this.requisitionService.findById(Id);
+          if (result) {
+              res.status(200).json(result);
           } else {
-              res.status(404).json({ error: "Requisição não encontrada" });
+              res.status(404).json({ error: "Registro não encontrado" });
           }
       } catch (error) {
           res.status(500).json({ error: "Erro interno do servidor" });
@@ -75,6 +75,23 @@ class RequisitionController {
 
   //--------------------------------------------------------------------------------------------------//
 
+  async delete (req, res){
+    const Id = req.params.id;
+
+    const result = await this.requisitionService.delete(Id);
+          if (result) {
+              res.status(200).json(result);
+          } else {
+              res.status(404).json({ error: "Registro não deletado" });
+          }
+      } catch (error) {
+          res.status(500).json({ error: error.message });
+      }
+
+
+  //--------------------------------------------------------------------------------------------------//
+
+  
   async getPosicaoByDeposito(req, res) {
       const depositoId = req.params.depositoId;
       try {
@@ -99,21 +116,7 @@ class RequisitionController {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async delete (req, res){
-    const requistionId = req.params.id;
-
-    const requisition = await this.requisitionService.delete(requistionId);
-          if (requisition) {
-              res.status(200).json(requisition);
-          } else {
-              res.status(404).json({ error: "Registro não deletado" });
-          }
-      } catch (error) {
-          res.status(500).json({ error: error.message });
-      }
-
-
-  //--------------------------------------------------------------------------------------------------//
+  
 
 
 }

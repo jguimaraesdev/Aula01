@@ -9,35 +9,34 @@ class XtelefoneController {
     
     async create(req, res) {
         const { DDD, numero } = req.body;
-        const UserId = req.userId; // Suponho que você tenha o ID do usuário na requisição
+        const Id = req.userId; 
         try {
-            const newXtelefone = await this.xtelefoneService.create(DDD, numero, UserId);
-            res.status(200).json(newXtelefone);
+            const result = await this.xtelefoneService.create(DDD, numero, Id);
+            res.status(200).json(result);
             
         } catch (error) {
-            console.error(error); // Adiciona esta linha para ver o erro no console
-            res.status(500).json({ error: "Erro ao inserir o novo telefone" });
+            console.error(error); 
+            res.status(500).json({ error: "Erro ao inserir o novo registro" });
         }
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     async update(req, res) {
-        const xtelefoneId = req.params.id;
+        const Id = req.params.id;
         const updates = req.body;
         try {
-            // Verificar se o ID do registro é um número válido
-            if (isNaN(xtelefoneId)) {
+            
+            if (isNaN(Id)) {
                 return res.status(400).json({ error: "ID de registro inválido" });
             }
     
-            // Verificar se os dados de atualização estão presentes
             if (!updates || Object.keys(updates).length === 0) {
                 return res.status(400).json({ error: "Dados de atualização inválidos" });
             }
     
-            // Chamar o método update da xtelefoneService para realizar a atualização
-            const { updatedRowsCount, updatedRows } = await this.xtelefoneService.update(xtelefoneId, updates);
+            
+            const { updatedRowsCount, updatedRows } = await this.xtelefoneService.update(Id, updates);
            
             if (updatedRowsCount > 0) {
                 return res.status(200).json({ message: "Registro atualizado com sucesso", updatedRowsCount, updatedRows });
@@ -45,7 +44,7 @@ class XtelefoneController {
                 return res.status(404).json({ error: "Registro não encontrado" });
             }
         } catch (error) {
-            // Tratar erros gerais
+            
             console.error("Erro ao atualizar registro:", error);
             return res.status(500).json({ error: "Erro ao atualizar registro" });
         }
@@ -53,28 +52,28 @@ class XtelefoneController {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllXtelefones(req, res) {
+    async findAll(req, res) {
 
         const{ page, pageSize} = req.query;
 
         try {
-            const xtelefones = await this.xtelefoneService.findAllXtelefones(page, pageSize);
-            res.status(200).json(xtelefones);
+            const result = await this.xtelefoneService.findAll(page, pageSize);
+            res.status(200).json(result);
         } catch (error) {
-            res.status(500).json({ error: "Erro ao buscar telefones" });
+            res.status(500).json({ error: "Erro ao buscar registros" });
         }
     }
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findXtelefoneById(req, res) {
-        const xtelefoneId = req.params.id;
+    async findById(req, res) {
+        const Id = req.params.id;
         try {
-            const xtelefone = await this.xtelefoneService.findXtelefoneById(xtelefoneId);
-            if (xtelefone) {
-                res.status(200).json(xtelefone);
+            const result = await this.xtelefoneService.findById(Id);
+            if (result) {
+                res.status(200).json(result);
             } else {
-                res.status(404).json({ error: "Telefone não encontrado" });
+                res.status(404).json({ error: "Registro não encontrado" });
             }
         } catch (error) {
             res.status(500).json({ error: "Erro interno do servidor" });
@@ -84,11 +83,11 @@ class XtelefoneController {
     //--------------------------------------------------------------------------------------------------//
 
     async delete (req, res){
-        const xtelefoneId = req.params.id;
+        const Id = req.params.id;
     
-        const xtelefone = await this.xtelefoneService.delete(xtelefoneId);
-              if (xtelefone) {
-                  res.status(200).json(xtelefone);
+        const result = await this.xtelefoneService.delete(Id);
+              if (result) {
+                  res.status(200).json(result);
               } else {
                   res.status(404).json({ error: "Registro não deletado" });
               }

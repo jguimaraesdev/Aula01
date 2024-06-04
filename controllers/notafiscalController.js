@@ -12,8 +12,8 @@ class NotaFiscalController {
         const { nome_razao, CNPJ, cpf, natureza_operacao, productId} = req.body;
         
         try {
-            const newRegistro = await this.notafiscalService.create(nome_razao, CNPJ, cpf, natureza_operacao, productId);
-            res.status(200).json(newRegistro);
+            const result = await this.notafiscalService.create(nome_razao, CNPJ, cpf, natureza_operacao, productId);
+            res.status(200).json(result);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir novo Registro" });
         }
@@ -22,23 +22,23 @@ class NotaFiscalController {
     //--------------------------------------------------------------------------------------------------//
   
     async update(req, res) {
-        const notafiscalId = req.params.id;
+        const Id = req.params.id;
         const updates = req.body;
         try {
-            // Verificar se o ID do depósito é um número válido
-            if (isNaN(notafiscalId)) {
+            
+            if (isNaN(Id)) {
                 return res.status(400).json({ error: "ID de Registro inválido" });
             }
     
-            // Verificar se os dados de atualização estão presentes
+            
             if (!updates || Object.keys(updates).length === 0) {
                 return res.status(400).json({ error: "Dados de atualização inválidos" });
             }
     
-            // Chamar o método update da DepositService para realizar a atualização
-            const { updatedRowsCount, updatedRows } = await this.notafiscalService.update(notafiscalId, updates);
+            
+            const { updatedRowsCount, updatedRows } = await this.notafiscalService.update(Id, updates);
     
-            // Verificar se o depósito foi encontrado e atualizado com sucesso
+            
             if (updatedRowsCount > 0) {
                 return res.status(200).json({ message: "Registro atualizado com sucesso", updatedRowsCount, updatedRows });
             } else {
@@ -53,12 +53,12 @@ class NotaFiscalController {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findAllNotafiscal(req, res) {
+    async findAll(req, res) {
   
         const { page, pageSize } = req.query;
   
         try {
-            const registro = await this.notafiscalService.findAllNotafiscal(page, pageSize);
+            const registro = await this.notafiscalService.findAll(page, pageSize);
             res.status(200).json(registro);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao buscar registros' });
@@ -67,12 +67,12 @@ class NotaFiscalController {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async findNotafiscalById(req, res) {
-        const notafiscalId = req.params.id;
+    async findById(req, res) {
+        const Id = req.params.id;
         try {
-            const registro = await this.notafiscalService.findNotaFiscalById(notafiscalId);
-            if (registro) {
-                res.status(200).json(registro);
+            const result = await this.notafiscalService.findById(Id);
+            if (result) {
+                res.status(200).json(result);
             } else {
                 res.status(404).json({ error: "Registro não encontrado" });
             }
@@ -85,11 +85,11 @@ class NotaFiscalController {
     //--------------------------------------------------------------------------------------------------//
     
     async delete (req, res){
-      const notafiscalId = req.params.id;
+      const Id = req.params.id;
   
-      const sales = await this.notafiscalService.delete(notafiscalId);
-            if (sales) {
-                res.status(200).json(sales);
+      const result = await this.notafiscalService.delete(Id);
+            if (result) {
+                res.status(200).json(result);
             } else {
                 res.status(404).json({ error: "Registro não deletado" });
             }

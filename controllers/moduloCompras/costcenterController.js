@@ -10,20 +10,20 @@ class CostCenterController {
   async create(req, res) {
       const { codigo, nome } = req.body;
       try {
-          const newCostCenter = await this.costCenterService.create(codigo, nome);
-          res.status(200).json(newCostCenter);
+          const result = await this.costCenterService.create(codigo, nome);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao inserir o novo centro de custo" });
+          res.status(500).json({ error: "Erro ao inserir o novo registro" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
   async update(req, res) {
-      const costCenterId = req.params.id;
+      const Id = req.params.id;
       const updates = req.body;
       try {
-          if (isNaN(costCenterId)) {
+          if (isNaN(Id)) {
               return res.status(400).json({ error: "ID de registro inválido" });
           }
 
@@ -31,12 +31,12 @@ class CostCenterController {
               return res.status(400).json({ error: "Dados de atualização inválidos" });
           }
 
-          const { updatedRowsCount, updatedRows } = await this.costCenterService.update(costCenterId, updates);
+          const { updatedRowsCount, updatedRows } = await this.costCenterService.update(Id, updates);
 
           if (updatedRowsCount > 0) {
               return res.status(200).json({ message: "Registro atualizado com sucesso" });
           } else {
-              res.status(404).json({ error: "Centro de custo não encontrado", updatedRowsCount, updatedRows });
+              res.status(404).json({ error: "Registro não encontrado", updatedRowsCount, updatedRows });
           }
       } catch (error) {
           console.error("Erro ao atualizar registro:", error);
@@ -46,26 +46,26 @@ class CostCenterController {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllCostCenters(req, res) {
+  async findAll(req, res) {
       const { page, pageSize } = req.query;
       try {
-          const costCenters = await this.costCenterService.findAllCostCenters(page, pageSize);
-          res.status(200).json(costCenters);
+          const result = await this.costCenterService.findAll(page, pageSize);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao buscar centros de custo" });
+          res.status(500).json({ error: "Erro ao buscar registros" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findCostCenterById(req, res) {
-      const costCenterId = req.params.id;
+  async findById(req, res) {
+      const Id = req.params.id;
       try {
-          const costCenter = await this.costCenterService.findCostCenterById(costCenterId);
-          if (costCenter) {
-              res.status(200).json(costCenter);
+          const result = await this.costCenterService.findById(Id);
+          if (result) {
+              res.status(200).json(result);
           } else {
-              res.status(404).json({ error: "Centro de custo não encontrado" });
+              res.status(404).json({ error: "Registro não encontrado" });
           }
       } catch (error) {
           res.status(500).json({ error: "Erro interno do servidor" });
@@ -73,13 +73,13 @@ class CostCenterController {
   }
 
   async delete (req, res){
-    const costCenterId = req.params.id;
+    const Id = req.params.id;
 
-    const costCenter = await this.costCenterService.delete(costCenterId);
-          if (costCenter) {
-              res.status(200).json(costCenter);
+    const result = await this.costCenterService.delete(Id);
+          if (result) {
+              res.status(200).json(result);
           } else {
-              res.status(404).json({ error: "Centro de custo não deletado" });
+              res.status(404).json({ error: "Registro não deletado" });
           }
       } catch (error) {
           res.status(500).json({ error: error.message });

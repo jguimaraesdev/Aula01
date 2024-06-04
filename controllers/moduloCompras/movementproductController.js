@@ -9,22 +9,22 @@ class MovementProductController {
     async create(req, res) {
         const { movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId  } = req.body;
         try {
-            const newMovement = await this.movementproductService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
-            res.status(200).json(newMovement);
+            const result = await this.movementproductService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
+            res.status(200).json(result);
         } catch (error) {
-            res.status(500).json({ error: "Erro ao inserir novo movimento" });
+            res.status(500).json({ error: "Erro ao inserir registro" });
         }
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     async update(req, res) {
-        const movementId = req.params.id;
+        const Id = req.params.id;
         const updates = req.body;
         try {
-            // Verificar se o ID do depósito é um número válido
-            if (isNaN(movementId)) {
-                return res.status(400).json({ error: "ID de movimento inválido" });
+            
+            if (isNaN(Id)) {
+                return res.status(400).json({ error: "ID de registro inválido" });
             }
     
             // Verificar se os dados de atualização estão presentes
@@ -33,7 +33,7 @@ class MovementProductController {
             }
     
             // Chamar o método update da DepositService para realizar a atualização
-            const { updatedRowsCount, updatedRows } = await this.movementproductService.update(movementId, updates);
+            const { updatedRowsCount, updatedRows } = await this.movementproductService.update(Id, updates);
     
             // Verificar se o depósito foi encontrado e atualizado com sucesso
             if (updatedRowsCount > 0) {
@@ -50,28 +50,28 @@ class MovementProductController {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllMovements(req, res) {
+    async findAll(req, res) {
 
         const { page, pageSize } = req.query;
 
         try {
-            const movements = await this.movementproductService.findAllMovements(page, pageSize);
-            res.status(200).json(movements);
+            const registro = await this.movementproductService.findAll(page, pageSize);
+            res.status(200).json(registro);
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao buscar movimentos' });
+            res.status(500).json({ error: 'Erro ao buscar registro' });
         }
     }
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findMovementById(req, res) {
-        const movementId = req.params.id;
+    async findById(req, res) {
+        const Id = req.params.id;
         try {
-            const movement = await this.movementproductService.findMovementById(movementId);
-            if (movement) {
-                res.status(200).json(movement);
+            const result = await this.movementproductService.findById(Id);
+            if (result) {
+                res.status(200).json(result);
             } else {
-                res.status(404).json({ error: "Movimento não encontrado" });
+                res.status(404).json({ error: "Registro não encontrado" });
             }
         } catch (error) {
             res.status(500).json({ error: "Erro interno do servidor" });
@@ -80,10 +80,26 @@ class MovementProductController {
 
     //--------------------------------------------------------------------------------------------------//
 
+    async delete (req, res){
+        const Id = req.params.id;
+    
+        const result = await this.movementproductService.delete(Id);
+              if (result) {
+                  res.status(200).json(result);
+              } else {
+                  res.status(404).json({ error: "Registro não deletado" });
+              }
+          } catch (error) {
+              res.status(500).json({ error: error.message });
+          }
+    
+
+    //--------------------------------------------------------------------------------------------------//
+    
     async getPosicaoByDeposito(req, res) {
-        const { depositoId, page = 1, pageSize = 10 } = req.params;
+        const { depositoId: Id, page = 1, pageSize = 10 } = req.params;
         try {
-            const posicao = await this.movementproductService.getPosicaoByDeposito(depositoId, page, pageSize);
+            const posicao = await this.movementproductService.getPosicaoByDeposito(Id, page, pageSize);
             res.status(200).json(posicao);
         } catch (error) {
             res.status(500).json({ error: "Erro ao buscar posição por depósito" });
@@ -103,23 +119,7 @@ class MovementProductController {
     }
 
     //--------------------------------------------------------------------------------------------------//
-    
-    async delete (req, res){
-        const movementId = req.params.id;
-    
-        const movement = await this.movementproductService.delete(movementId);
-              if (movement) {
-                  res.status(200).json(movement);
-              } else {
-                  res.status(404).json({ error: "Registro não deletado" });
-              }
-          } catch (error) {
-              res.status(500).json({ error: error.message });
-          }
-    }
 
-    //--------------------------------------------------------------------------------------------------//
-
-
+}
 
 module.exports = MovementProductController;

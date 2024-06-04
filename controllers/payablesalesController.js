@@ -1,51 +1,51 @@
 //controllers/salesController.js
 
 
-class SalesController {
-  constructor(salesService) {
-      this.salesService = salesService;
+class PayableSalesController {
+  constructor(PayableSalesService) {
+      this.payablesalesService = PayableSalesService;
   }
 
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { qtdVendida, custoUnitario, parcelas, notafiscalId} = req.body;
+      const { valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId} = req.body;
       
       try {
-          const newSales = await this.salesService.create(qtdVendida, custoUnitario, parcelas, notafiscalId);
-          res.status(200).json(newSales);
+          const result = await this.payablesalesService.create(valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao inserir novo movimento" });
+          res.status(500).json({ error: "Erro ao inserir registro" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
   async update(req, res) {
-      const salesId = req.params.id;
+      const Id = req.params.id;
       const updates = req.body;
       try {
-          // Verificar se o ID do depósito é um número válido
-          if (isNaN(salesId)) {
-              return res.status(400).json({ error: "ID de movimento inválido" });
+          
+          if (isNaN(Id)) {
+              return res.status(400).json({ error: "ID de registro inválido" });
           }
   
-          // Verificar se os dados de atualização estão presentes
+          
           if (!updates || Object.keys(updates).length === 0) {
               return res.status(400).json({ error: "Dados de atualização inválidos" });
           }
   
-          // Chamar o método update da DepositService para realizar a atualização
-          const { updatedRowsCount, updatedRows } = await this.salesService.update(salesId, updates);
+          
+          const { updatedRowsCount, updatedRows } = await this.payablesalesService.update(Id, updates);
   
-          // Verificar se o depósito foi encontrado e atualizado com sucesso
+          
           if (updatedRowsCount > 0) {
               return res.status(200).json({ message: "Registro atualizado com sucesso", updatedRowsCount, updatedRows });
           } else {
               return res.status(404).json({ error: "Registro não encontrado" });
           }
       } catch (error) {
-          // Tratar erros gerais
+        
           console.error("Erro ao atualizar registro:", error);
           return res.status(500).json({ error: "Erro ao atualizar registro" });
       }
@@ -53,13 +53,13 @@ class SalesController {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllSales(req, res) {
+  async findAll(req, res) {
 
       const { page, pageSize } = req.query;
 
       try {
-          const sales = await this.salesService.findAllSales(page, pageSize);
-          res.status(200).json(sales);
+          const result = await this.payablesalesService.findAll(page, pageSize);
+          res.status(200).json(result);
       } catch (error) {
           res.status(500).json({ error: 'Erro ao buscar registros' });
       }
@@ -67,12 +67,12 @@ class SalesController {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findSalesById(req, res) {
-      const salesId = req.params.id;
+  async findById(req, res) {
+      const Id = req.params.id;
       try {
-          const sales = await this.salesService.findSalesById(salesId);
-          if (sales) {
-              res.status(200).json(sales);
+          const result = await this.payablesalesService.findById(Id);
+          if (result) {
+              res.status(200).json(result);
           } else {
               res.status(404).json({ error: "Registro não encontrado" });
           }
@@ -85,11 +85,11 @@ class SalesController {
   //--------------------------------------------------------------------------------------------------//
   
   async delete (req, res){
-    const salesId = req.params.id;
+    const Id = req.params.id;
 
-    const sales = await this.salesService.delete(salesId);
-          if (sales) {
-              res.status(200).json(sales);
+    const result = await this.payablesalesService.delete(Id);
+          if (result) {
+              res.status(200).json(result);
           } else {
               res.status(404).json({ error: "Registro não deletado" });
           }
@@ -103,4 +103,4 @@ class SalesController {
 
 }
 
-module.exports = SalesController;
+module.exports = PayableSalesController;

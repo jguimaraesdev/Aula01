@@ -2,17 +2,17 @@
 
 // ./services/salesService.js
 
-class SalesService {
-  constructor(SalesModel) {
-      this.Sales = SalesModel;
+class PayableSalesService {
+  constructor(PayableSalesModel) {
+      this.PayableSales = PayableSalesModel;
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(qtdVendida, custoUnitario, parcelas, numeroNotaFiscal) {
+  async create(valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId) {
       try {
-          const newSales = await this.Sales.create({ qtdVendida, custoUnitario, parcelas, numeroNotaFiscal });
-          return newSales;
+          const result = await this.PayableSales.create({ valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId });
+          return result;
       } catch (error) {
           throw error;
       }
@@ -26,7 +26,7 @@ class SalesService {
               throw new Error("ID inválido para atualização");
           }
 
-          const [updatedRowsCount, updatedRows] = await this.Sales.update(updates, {
+          const [updatedRowsCount, updatedRows] = await this.PayableSales.update(updates, {
               where: { id },
           });
 
@@ -42,14 +42,14 @@ class SalesService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllSales(page = 1, pageSize = 10) {
+  async findAll(page = 1, pageSize = 10) {
       try {
           const offset = (page - 1) * pageSize;
-          const sales = await this.Sales.findAndCountAll({
+          const result = await this.PayableSales.findAndCountAll({
               limit: pageSize,
               offset: offset
           });
-          return sales;
+          return result;
       } catch (error) {
           throw error;
       }
@@ -57,10 +57,10 @@ class SalesService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findSalesById(id) {
+  async findById(id) {
       try {
-          const sales = await this.Sales.findOne({ where: { id } });
-          return sales;
+          const result = await this.PayableSales.findOne({ where: { id } });
+          return result;
       } catch (error) {
           throw error;
       }
@@ -70,7 +70,7 @@ class SalesService {
 
   async delete(id) {
     try {
-      const result = await this.Sales.destroy({
+      const result = await this.PayableSales.destroy({
         where: { id: id }
       });
   
@@ -86,4 +86,4 @@ class SalesService {
 
 }
 
-module.exports = SalesService;
+module.exports = PayableSalesService;

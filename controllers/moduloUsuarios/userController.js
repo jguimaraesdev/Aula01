@@ -10,11 +10,11 @@ class userController{
     async create(req,res){
         const {nome, login, email, senha, status} = req.body;
         try{
-            const novoUser = await this.userService.create(nome, login, email, senha, status);
-            res.status(200).json(novoUser);
+            const result = await this.userService.create(nome, login, email, senha, status);
+            res.status(200).json(result);
         }
         catch(error){
-            res.status(500).json({error:"Erro ao inserir o novo usuário"});
+            res.status(500).json({error:"Erro ao inserir o registro"});
         }
     }
 
@@ -37,54 +37,51 @@ class userController{
     //--------------------------------------------------------------------------------------------------//
     
     async update(req, res) {
-        const userId = req.params.id;
+        const Id = req.params.id;
         const updates = req.body;
         try {
-             // Verificar se o ID do registro é um número válido
-             if (isNaN(userId )) {
+            
+             if (isNaN(Id )) {
                 return res.status(400).json({ error: "ID de registro inválido" });
             }
     
-            // Verificar se os dados de atualização estão presentes
             if (!updates || Object.keys(updates).length === 0) {
                 return res.status(400).json({ error: "Dados de atualização inválidos" });
             }
-    
-            // Chamar o método update da userService para realizar a atualização
-            const { updatedRowsCount, updatedRows } = await this.userService.update(userId, updates);
-            // Verificar se o depósito foi encontrado e atualizado com sucesso
+            const { updatedRowsCount, updatedRows } = await this.userService.update(Id, updates);
+          
             if (updatedRowsCount > 0) {
                 return res.status(200).json({ message: "Registro atualizado com sucesso", updatedRowsCount, updatedRows });
             } else {
                 return res.status(404).json({ error: "Registro não encontrado" });
             }
         } catch (error) {
-            // Tratar erros gerais
+            
             console.error("Erro ao atualizar registro:", error);
             return res.status(500).json({ error: "Erro ao atualizar registro" });
         }
     }
 
     //--------------------------------------------------------------------------------------------------//
-    async findAllUser(req, res) {
+    async findAll(req, res) {
         const {page, pageSize} = req.query;
         try {
-          const users = await this.userService.findAllUser(page, pageSize);
-          res.status(200).json(users);
+          const result = await this.userService.findAll(page, pageSize);
+          res.status(200).json(result);
         } catch (error) {
-          res.status(500).json({ error: 'Erro ao buscar usuários' });
+          res.status(500).json({ error: 'Erro ao buscar registros' });
         }
     }
         
     //--------------------------------------------------------------------------------------------------//
-    async findUserbyId(req, res) {
-        const userId = req.params.id; // Obter o ID do usuário dos parâmetros da URL
+    async findbyId(req, res) {
+        const Id = req.params.id; 
         try {
-            const oneUser = await this.userService.findUserbyId(userId); // Chamar a função do serviço passando apenas o ID
-            if (oneUser) {
-                res.status(200).json(oneUser);
+            const result = await this.userService.findbyId(Id); 
+            if (result) {
+                res.status(200).json(result);
             } else {
-                res.status(404).json({ error: "Usuário não encontrado" });
+                res.status(404).json({ error: "Registtro não encontrado" });
             }
         }catch (error) {
             res.status(500).json({ error: "Erro interno do servidor" });
@@ -94,9 +91,9 @@ class userController{
     //--------------------------------------------------------------------------------------------------//
 
     async delete (req, res){
-        const userId = req.params.id;
+        const Id = req.params.id;
     
-        const user = await this.userService.delete(userId);
+        const user = await this.userService.delete(Id);
               if (user) {
                   res.status(200).json(user);
               } else {

@@ -11,27 +11,27 @@ class ControleTitleController {
         const { tipoMovimento, valorMovimento, valorMulta, valorJuros, titleId} = req.body;
         
         try {
-            const newControleTitle = await this.controletitleService.create(
+            const result = await this.controletitleService.create(
                 tipoMovimento, 
                 valorMovimento, 
                 valorMulta, 
                 valorJuros, 
                 titleId
             );
-            res.status(200).json(newControleTitle);
+            res.status(200).json(result);
         } catch (error) {
-            res.status(500).json({ error: "Erro ao inserir novo movimento" });
+            res.status(500).json({ error: "Erro ao inserir novo Registro" });
         }
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     async update(req, res) {
-        const movementId = req.params.id;
+        const Id = req.params.id;
         const updates = req.body;
         try {
             // Verificar se o ID do depósito é um número válido
-            if (isNaN(movementId)) {
+            if (isNaN(Id)) {
                 return res.status(400).json({ error: "ID de movimento inválido" });
             }
     
@@ -41,7 +41,7 @@ class ControleTitleController {
             }
     
             // Chamar o método update da DepositService para realizar a atualização
-            const { updatedRowsCount, updatedRows } = await this.controletitleService.update(movementId, updates);
+            const { updatedRowsCount, updatedRows } = await this.controletitleService.update(Id, updates);
     
             // Verificar se o depósito foi encontrado e atualizado com sucesso
             if (updatedRowsCount > 0) {
@@ -58,28 +58,28 @@ class ControleTitleController {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findAllControleTitle(req, res) {
+    async findAll(req, res) {
 
         const { page, pageSize } = req.query;
 
         try {
-            const newmovements = await this.controletitleService.findAllControleTitle(page, pageSize);
-            res.status(200).json(newmovements);
+            const result = await this.controletitleService.findAll(page, pageSize);
+            res.status(200).json(result);
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao buscar movimentos' });
+            res.status(500).json({ error: 'Erro ao buscar registros' });
         }
     }
 
     //--------------------------------------------------------------------------------------------------//
 
-    async findControleTitleById(req, res) {
-        const movementId = req.params.id;
+    async findById(req, res) {
+        const Id = req.params.id;
         try {
-            const newmovement = await this.controletitleService.findControleTitleById(movementId);
-            if (newmovement) {
-                res.status(200).json(newmovement);
+            const result = await this.controletitleService.findById(Id);
+            if (result) {
+                res.status(200).json(result);
             } else {
-                res.status(404).json({ error: "Movimento não encontrado" });
+                res.status(404).json({ error: "Registro não encontrado" });
             }
         } catch (error) {
             res.status(500).json({ error: "Erro interno do servidor" });
@@ -91,12 +91,12 @@ class ControleTitleController {
     //--------------------------------------------------------------------------------------------------//
     
     async delete(req, res) {
-        const movementId = req.params.id;
+        const Id = req.params.id;
     
         try {
-            const movement = await this.controletitleService.delete(movementId);
-            if (movement) {
-                res.status(200).json(movement);
+            const result = await this.controletitleService.delete(Id);
+            if (result) {
+                res.status(200).json(result);
             } else {
                 res.status(404).json({ error: "Registro não deletado" });
             }

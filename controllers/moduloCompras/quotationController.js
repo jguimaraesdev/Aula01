@@ -10,20 +10,20 @@ class QuotationController {
   async create(req, res) {
       const { preco, productId, supplierId, requisitionId } = req.body;
       try {
-          const newQuotation = await this.quotationService.create(preco, productId, supplierId, requisitionId);
-          res.status(200).json(newQuotation);
+          const result = await this.quotationService.create(preco, productId, supplierId, requisitionId);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao inserir a nova cotação" });
+          res.status(500).json({ error: "Erro ao inserir a novo Registro" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
   async update(req, res) {
-      const quotationId = req.params.id;
+      const Id = req.params.id;
       const updates = req.body;
       try {
-          if (isNaN(quotationId)) {
+          if (isNaN(Id)) {
               return res.status(400).json({ error: "ID de registro inválido" });
           }
 
@@ -31,12 +31,12 @@ class QuotationController {
               return res.status(400).json({ error: "Dados de atualização inválidos" });
           }
 
-          const { updatedRowsCount, updatedRows } = await this.quotationService.update(quotationId, updates);
+          const { updatedRowsCount, updatedRows } = await this.quotationService.update(Id, updates);
 
           if (updatedRowsCount > 0) {
               return res.status(200).json({ message: "Registro atualizado com sucesso" });
           } else {
-              res.status(404).json({ error: "Cotação não encontrada", updatedRowsCount, updatedRows });
+              res.status(404).json({ error: "Registro não encontrada", updatedRowsCount, updatedRows });
           }
       } catch (error) {
           console.error("Erro ao atualizar registro:", error);
@@ -46,41 +46,29 @@ class QuotationController {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllQuotations(req, res) {
+  async findAll(req, res) {
       const { page, pageSize } = req.query;
       try {
-          const quotations = await this.quotationService.findAllQuotations(page, pageSize);
-          res.status(200).json(quotations);
+          const result = await this.quotationService.findAll(page, pageSize);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao buscar cotações" });
+          res.status(500).json({ error: "Erro ao buscar registros" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findQuotationById(req, res) {
-      const quotationId = req.params.id;
+  async findById(req, res) {
+      const Id = req.params.id;
       try {
-          const quotation = await this.quotationService.findQuotationById(quotationId);
-          if (quotation) {
-              res.status(200).json(quotation);
+          const result = await this.quotationService.finById(Id);
+          if (result) {
+              res.status(200).json(result);
           } else {
-              res.status(404).json({ error: "Cotação não encontrada" });
+              res.status(404).json({ error: "Registro não encontrada" });
           }
       } catch (error) {
           res.status(500).json({ error: "Erro interno do servidor" });
-      }
-  }
-
-  //--------------------------------------------------------------------------------------------------//
-
-  async getQuotationsBySupplier(req, res) {
-      const supplierId = req.params.supplierId;
-      try {
-          const quotations = await this.quotationService.getQuotationsBySupplier(supplierId);
-          res.status(200).json(quotations);
-      } catch (error) {
-          res.status(500).json({ error: "Erro ao buscar cotações por fornecedor" });
       }
   }
 
@@ -102,6 +90,21 @@ class QuotationController {
 
   //--------------------------------------------------------------------------------------------------//
 
+
+
+  async getQuotationsBySupplier(req, res) {
+      const supplierId = req.params.supplierId;
+      try {
+          const quotations = await this.quotationService.getQuotationsBySupplier(supplierId);
+          res.status(200).json(quotations);
+      } catch (error) {
+          res.status(500).json({ error: "Erro ao buscar cotações por fornecedor" });
+      }
+  }
+
+  //--------------------------------------------------------------------------------------------------//
+
+  
 }
 
 module.exports = QuotationController;

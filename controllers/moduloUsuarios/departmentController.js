@@ -10,20 +10,20 @@ class DepartmentController {
       const { nome } = req.body;
       const UserId = req.userId; // Suponho que você tenha o ID do usuário na requisição
       try {
-          const newDepartment = await this.departmentService.create(nome, UserId);
-          res.status(200).json(newDepartment);
+          const result = await this.departmentService.create(nome, UserId);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao inserir o novo departamento" });
+          res.status(500).json({ error: "Erro ao inserir o novo registro" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
   async update(req, res) {
-      const departmentId = req.params.id;
+      const Id = req.params.id;
       const updates = req.body;
       try {
-          if (isNaN(departmentId)) {
+          if (isNaN(Id)) {
               return res.status(400).json({ error: "ID de registro inválido" });
           }
 
@@ -31,12 +31,12 @@ class DepartmentController {
               return res.status(400).json({ error: "Dados de atualização inválidos" });
           }
 
-          const { updatedRowsCount, updatedRows } = await this.departmentService.update(departmentId, updates);
+          const { updatedRowsCount, updatedRows } = await this.departmentService.update(Id, updates);
 
           if (updatedRowsCount > 0) {
               return res.status(200).json({ message: "Registro atualizado com sucesso" });
           } else {
-              res.status(404).json({ error: "Departamento não encontrado", updatedRowsCount, updatedRows });
+              res.status(404).json({ error: "Registro não encontrado", updatedRowsCount, updatedRows });
           }
       } catch (error) {
           console.error("Erro ao atualizar registro:", error);
@@ -46,26 +46,26 @@ class DepartmentController {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findAllDepartments(req, res) {
+  async findAll(req, res) {
       const { page, pageSize } = req.query;
       try {
-          const departments = await this.departmentService.findAllDepartments(page, pageSize);
-          res.status(200).json(departments);
+          const result = await this.departmentService.findAll(page, pageSize);
+          res.status(200).json(result);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao buscar departamentos" });
+          res.status(500).json({ error: "Erro ao buscar registros" });
       }
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async findDepartmentById(req, res) {
-      const departmentId = req.params.id;
+  async findById(req, res) {
+      const Id = req.params.id;
       try {
-          const department = await this.departmentService.findDepartmentById(departmentId);
-          if (department) {
-              res.status(200).json(department);
+          const result = await this.departmentService.findById(Id);
+          if (result) {
+              res.status(200).json(result);
           } else {
-              res.status(404).json({ error: "Departamento não encontrado" });
+              res.status(404).json({ error: "Registros não encontrado" });
           }
       } catch (error) {
           res.status(500).json({ error: "Erro interno do servidor" });
@@ -75,11 +75,11 @@ class DepartmentController {
   //--------------------------------------------------------------------------------------------------//
   
   async delete (req, res){
-    const departamentId = req.params.id;
+    const Id = req.params.id;
 
-    const departament = await this.departmentService.delete(departamentId);
-          if (departament) {
-              res.status(200).json(departament);
+    const result = await this.departmentService.delete(Id);
+          if (result) {
+              res.status(200).json(result);
           } else {
               res.status(404).json({ error: "Registro não deletado" });
           }
