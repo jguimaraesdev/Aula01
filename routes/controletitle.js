@@ -4,8 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const ControleTitleService = require('../services/moduloVendas/controletitleService');
-const ControleTitleController = require('../controllers/moduloVendas/controletitleController');
+const ControleTitleService = require('../services/moduloContas/controletitleService');
+const ControleTitleController = require('../controllers/moduloContas/controletitleController');
 
 // Instanciando o serviço e o controlador
 const controletitleService = new ControleTitleService(db.ControleTitle);

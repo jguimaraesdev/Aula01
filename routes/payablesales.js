@@ -4,8 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const PayableSalesService = require('../services/payablesalesService');
-const PayableSalesController = require('../controllers/payablesalesController');
+const PayableSalesService = require('../services/moduloContas/payablesalesService');
+const PayableSalesController = require('../controllers/moduloContas/payablesalesController');
 
 // Instanciando o serviço e o controlador
 const payablesalesService = new PayableSalesService(db.Sales);

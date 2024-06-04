@@ -4,8 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const TitleService = require('../services/moduloVendas/titleService');
-const TitleController = require('../controllers/moduloVendas/titleController');
+const TitleService = require('../services/moduloContas/titleService');
+const TitleController = require('../controllers/moduloContas/titleController');
 
 // Instanciando o serviço e o controlador
 const titleService = new TitleService(db.Title);

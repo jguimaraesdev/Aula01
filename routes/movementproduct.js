@@ -4,8 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const MovementProductService = require('../services/moduloCompras/movementproductService');
-const MovementProductController = require('../controllers/moduloCompras/movementproductController');
+const MovementProductService = require('../services/movementproductService');
+const MovementProductController = require('../controllers/movementproductController');
 
 // Instanciando o serviço e o controlador
 const movementproductService = new MovementProductService(db.MovementProduct);
