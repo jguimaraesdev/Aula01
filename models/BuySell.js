@@ -37,5 +37,13 @@ module.exports = (sequelize) => {
 
     };
 
+    BuySell.associate = (models) =>{
+      BuySell.belongsTo(models.User,{
+          foreignKey: 'userlId',
+          as:'User'
+      });
+
+    };
+
   return BuySell;
 };

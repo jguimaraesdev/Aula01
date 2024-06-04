@@ -12,10 +12,13 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
     },
-    nome: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    }
+    
   });
+  CostCenter.associate = (models) => {
+    CostCenter.belongsTo(models.Department, {
+        foreignKey: 'departmentId',
+        as: 'Department'
+    });
+};
   return CostCenter;
 };
