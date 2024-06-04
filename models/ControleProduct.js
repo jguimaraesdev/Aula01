@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
-    const MovementProduct = sequelize.define('MovementProduct',{
+    const ControleProduct = sequelize.define('ControleProduct',{
 
         id: {
             type: Sequelize.INTEGER,
@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
             autoIncrement: true
         },
         movimento_tipo: {
-            type: Sequelize.ENUM('entrada', 'saida'),
+            type: Sequelize.ENUM('Entrada', 'Saida'),
             allowNull: false
         },
         qtd_disponivel: {
@@ -30,13 +30,13 @@ module.exports = (sequelize) => {
     // criando relacionamento
     
 
-    MovementProduct .associate = (models) =>{
-        MovementProduct .belongsTo(models.Product,{
+    ControleProduct .associate = (models) =>{
+        ControleProduct .belongsTo(models.Product,{
             foreignKey: 'productId',
             as: 'Product'
         }),
 
-        MovementProduct .belongsTo(models.Deposit,{
+        ControleProduct .belongsTo(models.Deposit,{
             foreignKey: 'depositId',
             as: 'Deposit'
         });
@@ -44,5 +44,5 @@ module.exports = (sequelize) => {
     };
 
 
-    return MovementProduct ;
+    return ControleProduct ;
 };

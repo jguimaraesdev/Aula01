@@ -1,9 +1,9 @@
 //controllers/salesController.js
 
 
-class PayableSalesController {
-  constructor(PayableSalesService) {
-      this.payablesalesService = PayableSalesService;
+class BuySellController {
+  constructor(BuySellService) {
+      this.buysellService = BuySellService;
   }
 
   //--------------------------------------------------------------------------------------------------//
@@ -12,7 +12,7 @@ class PayableSalesController {
       const { valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId} = req.body;
       
       try {
-          const result = await this.payablesalesService.create(valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId);
+          const result = await this.buysellService.create(valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId);
           res.status(200).json(result);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir registro" });
@@ -36,7 +36,7 @@ class PayableSalesController {
           }
   
           
-          const { updatedRowsCount, updatedRows } = await this.payablesalesService.update(Id, updates);
+          const { updatedRowsCount, updatedRows } = await this.buysellService.update(Id, updates);
   
           
           if (updatedRowsCount > 0) {
@@ -58,7 +58,7 @@ class PayableSalesController {
       const { page, pageSize } = req.query;
 
       try {
-          const result = await this.payablesalesService.findAll(page, pageSize);
+          const result = await this.buysellService.findAll(page, pageSize);
           res.status(200).json(result);
       } catch (error) {
           res.status(500).json({ error: 'Erro ao buscar registros' });
@@ -70,7 +70,7 @@ class PayableSalesController {
   async findById(req, res) {
       const Id = req.params.id;
       try {
-          const result = await this.payablesalesService.findById(Id);
+          const result = await this.buysellService.findById(Id);
           if (result) {
               res.status(200).json(result);
           } else {
@@ -87,7 +87,7 @@ class PayableSalesController {
   async delete (req, res){
     const Id = req.params.id;
 
-    const result = await this.payablesalesService.delete(Id);
+    const result = await this.buysellService.delete(Id);
           if (result) {
               res.status(200).json(result);
           } else {
@@ -103,4 +103,4 @@ class PayableSalesController {
 
 }
 
-module.exports = PayableSalesController;
+module.exports = BuySellController;

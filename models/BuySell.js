@@ -3,7 +3,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Sales = sequelize.define('Sales', {
+  const BuySell = sequelize.define('BuySell', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -29,13 +29,13 @@ module.exports = (sequelize) => {
 
   });
 
-    Sales.associate = (models) =>{
-      Sales.belongsTo(models.NotaFiscal,{
+    BuySell.associate = (models) =>{
+      BuySell.belongsTo(models.NotaFiscal,{
           foreignKey: 'notafiscalId',
           as:'NotaFiscal'
       });
 
     };
 
-  return Sales;
+  return BuySell;
 };

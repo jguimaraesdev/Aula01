@@ -1,7 +1,7 @@
 // ./controllers/MovimentsController.js
-class MovementProductController {
-    constructor(movementproductService) {
-        this.movementproductService = movementproductService;
+class ControleProductController {
+    constructor(controleproductService) {
+        this.controleproductService = controleproductService;
     }
 
     //--------------------------------------------------------------------------------------------------//
@@ -9,7 +9,7 @@ class MovementProductController {
     async create(req, res) {
         const { movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId  } = req.body;
         try {
-            const result = await this.movementproductService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
+            const result = await this.controleproductService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
             res.status(200).json(result);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir registro" });
@@ -33,7 +33,7 @@ class MovementProductController {
             }
     
             // Chamar o método update da DepositService para realizar a atualização
-            const { updatedRowsCount, updatedRows } = await this.movementproductService.update(Id, updates);
+            const { updatedRowsCount, updatedRows } = await this.controleproductService.update(Id, updates);
     
             // Verificar se o depósito foi encontrado e atualizado com sucesso
             if (updatedRowsCount > 0) {
@@ -55,7 +55,7 @@ class MovementProductController {
         const { page, pageSize } = req.query;
 
         try {
-            const registro = await this.movementproductService.findAll(page, pageSize);
+            const registro = await this.controleproductService.findAll(page, pageSize);
             res.status(200).json(registro);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao buscar registro' });
@@ -67,7 +67,7 @@ class MovementProductController {
     async findById(req, res) {
         const Id = req.params.id;
         try {
-            const result = await this.movementproductService.findById(Id);
+            const result = await this.controleproductService.findById(Id);
             if (result) {
                 res.status(200).json(result);
             } else {
@@ -83,7 +83,7 @@ class MovementProductController {
     async delete (req, res){
         const Id = req.params.id;
     
-        const result = await this.movementproductService.delete(Id);
+        const result = await this.controleproductService.delete(Id);
               if (result) {
                   res.status(200).json(result);
               } else {
@@ -99,7 +99,7 @@ class MovementProductController {
     async getPosicaoByDeposito(req, res) {
         const { depositoId: Id, page = 1, pageSize = 10 } = req.params;
         try {
-            const posicao = await this.movementproductService.getPosicaoByDeposito(Id, page, pageSize);
+            const posicao = await this.controleproductService.getPosicaoByDeposito(Id, page, pageSize);
             res.status(200).json(posicao);
         } catch (error) {
             res.status(500).json({ error: "Erro ao buscar posição por depósito" });
@@ -111,7 +111,7 @@ class MovementProductController {
     async getPosicaoByProdutoDeposito(req, res) {
         const { produtoId, depositoId, page = 1, pageSize = 10 } = req.params;
         try {
-            const posicao = await this.movementproductService.getPosicaoByProdutoDeposito(produtoId, depositoId, page, pageSize);
+            const posicao = await this.controleproductService.getPosicaoByProdutoDeposito(produtoId, depositoId, page, pageSize);
             res.status(200).json(posicao);
         } catch (error) {
             res.status(500).json({ error: "Erro ao buscar posição por produto e depósito" });
@@ -122,4 +122,4 @@ class MovementProductController {
 
 }
 
-module.exports = MovementProductController;
+module.exports = ControleProductController;

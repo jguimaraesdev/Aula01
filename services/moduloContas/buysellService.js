@@ -2,16 +2,16 @@
 
 // ./services/salesService.js
 
-class PayableSalesService {
-  constructor(PayableSalesModel) {
-      this.PayableSales = PayableSalesModel;
+class BuySellService {
+  constructor(BuySellModel) {
+      this.BuySell = BuySellModel;
   }
 
   //--------------------------------------------------------------------------------------------------//
 
   async create(valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId) {
       try {
-          const result = await this.PayableSales.create({ 
+          const result = await this.BuySell.create({ 
             valor, 
             tipoMovimento, 
             dataVencimento, 
@@ -32,7 +32,7 @@ class PayableSalesService {
               throw new Error("ID inválido para atualização");
           }
 
-          const [updatedRowsCount, updatedRows] = await this.PayableSales.update(updates, {
+          const [updatedRowsCount, updatedRows] = await this.BuySell.update(updates, {
               where: { id },
           });
 
@@ -51,7 +51,7 @@ class PayableSalesService {
   async findAll(page = 1, pageSize = 10) {
       try {
           const offset = (page - 1) * pageSize;
-          const result = await this.PayableSales.findAndCountAll({
+          const result = await this.BuySell.findAndCountAll({
               limit: pageSize,
               offset: offset
           });
@@ -65,7 +65,7 @@ class PayableSalesService {
 
   async findById(id) {
       try {
-          const result = await this.PayableSales.findOne({ where: { id } });
+          const result = await this.BuySell.findOne({ where: { id } });
           return result;
       } catch (error) {
           throw error;
@@ -76,7 +76,7 @@ class PayableSalesService {
 
   async delete(id) {
     try {
-      const result = await this.PayableSales.destroy({
+      const result = await this.BuySell.destroy({
         where: { id: id }
       });
   
@@ -92,4 +92,4 @@ class PayableSalesService {
 
 }
 
-module.exports = PayableSalesService;
+module.exports = BuySellService;

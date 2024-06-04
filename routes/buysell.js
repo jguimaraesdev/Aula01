@@ -4,33 +4,33 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const PayableSalesService = require('../services/moduloContas/payablesalesService');
-const PayableSalesController = require('../controllers/moduloContas/payablesalesController');
+const BuySellService = require('../services/moduloContas/buysellService');
+const BuySellController = require('../controllers/moduloContas/buysellController');
 
 // Instanciando o serviço e o controlador
-const payablesalesService = new PayableSalesService(db.Sales);
-const payablesalesController = new PayableSalesController(payablesalesService);
+const buysellService = new BuySellService(db.BuySell);
+const buysellController = new BuySellController(buysellService);
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  payablesalesController.create(req, res);
+  buysellController.create(req, res);
 });
 
 router.put('/update/:id', (req, res, next) => {
-  payablesalesController.update(req, res);
+  buysellController.update(req, res);
 });
 
 router.get('/findall', (req, res, next) => {
-  payablesalesController.findAllSales(req, res);
+  buysellController.findAllSales(req, res);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  payablesalesController.findSalesById(req, res);
+  buysellController.findSalesById(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  payablesalesController.delete(req, res);
+  buysellController.delete(req, res);
 });
 
 //--------------------------------------------------------------------------------------------------//

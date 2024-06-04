@@ -1,14 +1,14 @@
 // ./services/movimentsProductService.js
-class MovementProductService {
-    constructor(MovementProductModel) {
-        this.MovementProduct = MovementProductModel;
+class ControleProductService {
+    constructor(ControleProductModel) {
+        this.ControleProduct = ControleProductModel;
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     async create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId) {
         try {
-            const result = await this.MovementProduct.create({
+            const result = await this.ControleProduct.create({
                 movimento_tipo,
                 qtd_disponivel,
                 qtd_bloqueado,
@@ -31,7 +31,7 @@ class MovementProductService {
                 throw new Error("ID inválido para atualização");
             }
             // Atualizar os registros na tabela
-            const [updatedRowsCount, updatedRows] = await this.MovementProduct.update(updates, {
+            const [updatedRowsCount, updatedRows] = await this.ControleProduct.update(updates, {
                 where: { id },
             });
             // Verificar se algum registro foi atualizado
@@ -53,7 +53,7 @@ class MovementProductService {
     async findAll(page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
-            const result = await this.MovementProduct.findAndCountAll({
+            const result = await this.ControleProduct.findAndCountAll({
                 limit: pageSize,
                 offset: offset
             });
@@ -67,7 +67,7 @@ class MovementProductService {
 
     async findById(id) {
         try {
-            const result = await this.MovementProduct.findOne({ where: { id } });
+            const result = await this.ControleProduct.findOne({ where: { id } });
             return result;
         } catch (error) {
             throw error;
@@ -77,7 +77,7 @@ class MovementProductService {
     //--------------------------------------------------------------------------------------------------//
     async delete(id) {
         try {
-          const result = await this.MovementProduct.destroy({
+          const result = await this.ControleProduct.destroy({
             where: { id: id }
           });
       
@@ -96,7 +96,7 @@ class MovementProductService {
     async getPosicaoByDeposito(depositoId, page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
-            const posicao = await this.MovementProduct.findAndCountAll({
+            const posicao = await this.ControleProduct.findAndCountAll({
                 where: { depositId: depositoId },
                 limit: pageSize,
                 offset: offset
@@ -112,7 +112,7 @@ class MovementProductService {
     async getPosicaoByProdutoDeposito(produtoId, depositoId, page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
-            const posicao = await this.MovementProduct.findAndCountAll({
+            const posicao = await this.ControleProduct.findAndCountAll({
                 where: { productId: produtoId, depositId: depositoId },
                 limit: pageSize,
                 offset: offset
@@ -128,4 +128,4 @@ class MovementProductService {
     
 }
 
-module.exports = MovementProductService;
+module.exports = ControleProductService;
