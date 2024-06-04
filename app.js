@@ -24,6 +24,7 @@ const controletitleRouter = require('./routes/controletitle');
 const titleRouter = require('./routes/title');
 const purchaseRouter = require('./routes/purchase');
 const notafiscalRouter = require('./routes/notafiscal');
+const payableRouter = require('./routes/payable');
 
 const { applyMigrations } = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
@@ -52,7 +53,7 @@ app.use('/controletitle', controletitleRouter);
 app.use('/title', titleRouter);
 app.use('/purchase', purchaseRouter);
 app.use('/notafiscal', notafiscalRouter);
-
+app.use('/payable', payableRouter);
 
 // Middleware de tratamento de erros
 app.use(errorHandler);
