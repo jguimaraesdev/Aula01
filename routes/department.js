@@ -1,8 +1,6 @@
 // ./routes/department.js
 const express = require('express');
 const router = express.Router();
-const AuthenticateToken = require('../services/authenticateToken');
-const authenticateToken = new AuthenticateToken('SUA_CHAVE_SECRETA');
 
 const db = require('../models');
 const DepartmentService = require('../services/departmentService');
@@ -17,7 +15,7 @@ const departmentController = new DepartmentController(departmentService);
 //--------------------------------------------------------------------------------------------------//
 
 // Rotas
-router.post('/new', authenticateToken.verifyToken.bind(authenticateToken),(req, res, next) => {
+router.post('/new',(req, res, next) => {
   departmentController.create(req, res);
 });
 
@@ -26,11 +24,11 @@ router.put('/update/:id', (req, res, next) => {
 });
 
 router.get('/findall', (req, res, next) => {
-  departmentController.findAllDepartments(req, res);
+  departmentController.findAll(req, res);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  departmentController.findDepartmentById(req, res);
+  departmentController.findById(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {

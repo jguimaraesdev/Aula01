@@ -10,6 +10,7 @@ module.exports = (sequelize) => {
     nome: {
       type: Sequelize.STRING,
       allowNull: false,
+      unique:true
     },
   });
 

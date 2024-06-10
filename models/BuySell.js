@@ -1,4 +1,4 @@
-//models/Sales.js
+//models/BuySell.js
 
 const Sequelize = require('sequelize');
 
@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
     },
   
     valor: {
-      type: DataTypes.DECIMAL,
+      type: Sequelize.DECIMAL,
       allowNull: false
     },
     tipoMovimento: {
@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     dataVencimento: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
       allowNull: false
     },
     tipoPagamento: {

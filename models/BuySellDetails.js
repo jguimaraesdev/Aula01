@@ -1,4 +1,4 @@
-//models/NotaFiscal.js
+//models/BuySellDetails.js
 
 const Sequelize = require('sequelize');
 

@@ -3,14 +3,18 @@
 class DepartmentService {
   constructor(DepartmentModel) {
       this.Department = DepartmentModel;
+    
+    
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(nome, userId) {
-      try {
-          const result = await this.Department.create({ nome, userId });
-          return result;
+  async create(nome) {
+    try {
+        const department = await this.Department.create({ nome });
+        
+        return department;
+
       } catch (error) {
           throw error;
       }
@@ -80,7 +84,11 @@ class DepartmentService {
     } catch (error) {
       throw error;
     }
-}
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    
 
 }
 

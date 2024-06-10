@@ -8,9 +8,9 @@ class CostCenterController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { codigo, nome } = req.body;
+      const { codigo, departmentId } = req.body;
       try {
-          const result = await this.costCenterService.create(codigo, nome);
+          const result = await this.costCenterService.create(codigo, departmentId );
           res.status(200).json(result);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir o novo registro" });
