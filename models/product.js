@@ -34,9 +34,6 @@ module.exports= (sequelize) => {
             foreignKey: 'notafiscalId',
             as: 'NotaFiscal'
 
-    }),Product.hasMany(models.ControleProduct,{
-        foreignKey: 'productId',
-        as: 'ControleProduct'
     });
         
     };

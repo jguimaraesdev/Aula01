@@ -23,9 +23,9 @@ const controletitleRouter = require('./routes/controletitle');
 const titleRouter = require('./routes/title');
 const purchaseRouter = require('./routes/purchase');
 const notafiscalRouter = require('./routes/notafiscal');
-const buysellRouter = require('./routes/buysell');
-const buyselldetailsRouter = require('./routes/buyselldetails');
-
+const sellRouter = require('./routes/sell');
+const selldetailsRouter = require('./routes/selldetails');
+const clienteRouter = require('./routes/cliente');
 
 const { applyMigrations } = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
@@ -53,9 +53,9 @@ app.use('/controletitle', controletitleRouter);
 app.use('/title', titleRouter);
 app.use('/purchase', purchaseRouter);
 app.use('/notafiscal', notafiscalRouter);
-app.use('/buysell', buysellRouter);
-app.use('/buyselldetails', buyselldetailsRouter);
-
+app.use('/sell', sellRouter);
+app.use('/selldetails', selldetailsRouter);
+app.use('/cliente', clienteRouter);
 
 // Middleware de tratamento de erros
 app.use(errorHandler);

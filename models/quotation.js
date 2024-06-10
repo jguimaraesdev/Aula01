@@ -25,6 +25,7 @@ module.exports = (sequelize) => {
     },
   });
 
+  Quotation.associate = (models) =>{
     Quotation.belongsTo(models.Supplier, { 
       foreignKey: 'supplierId', 
       as: 'Supplier' 
@@ -34,7 +35,7 @@ module.exports = (sequelize) => {
       as: 'Requisition' 
     });
 
-  
+  };
 
   return Quotation;
 };

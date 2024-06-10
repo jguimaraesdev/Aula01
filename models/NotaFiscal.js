@@ -33,17 +33,5 @@ module.exports= (sequelize) => {
      
     });
 
-    NotaFiscal.associate = (models) =>{
-        NotaFiscal.hasMany(models.Product,{
-            foreignKey: 'notafiscalId',
-            as: 'Product'
-    }),
-        NotaFiscal.hasMany(models.Title,{
-            foreignKey: 'notafiscalId',
-            as: 'Title'
-        });
-      
-    };
-
     return NotaFiscal;
 };

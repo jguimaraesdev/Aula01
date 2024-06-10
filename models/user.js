@@ -36,11 +36,8 @@ module.exports= (sequelize) => {
         User.hasMany(models.Xtelefone,{
             foreignKey: 'userId',
             as: 'Xtelefone'
-    }),
-        User.hasMany(models.Requisition, { 
-          foreignKey: 'userId', 
-          as: 'Requisition' 
     });
+    };
 
     return User;
 };

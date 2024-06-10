@@ -22,11 +22,7 @@ module.exports = (sequelize) => {
     Supplier.hasMany(models.Product,{
         foreignKey: 'supplierId',
         as: 'Product'
-    }),
-    Supplier.hasMany(models.Quotation, { 
-      foreignKey: 'supplierId', 
-      as: 'Quotation' 
-    })
+    });
   };
  
   

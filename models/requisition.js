@@ -33,10 +33,6 @@ module.exports = (sequelize) => {
     Requisition.belongsTo(models.CostCenter, {
       foreignKey: 'costCenterId', 
       as: 'CostCenter' 
-    }),
-    Requisition.hasMany(models.Quitation, { 
-      foreignKey: 'requisitionId', 
-      as: 'Quotation' 
     });
   };
 

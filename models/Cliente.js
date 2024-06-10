@@ -19,11 +19,6 @@ module.exports = (sequelize) => {
       }
     });
 
-    Cliente.associate = (models) =>{
-      Cliente.hasMany(models.Sell,{
-          foreignKey: 'clienteId',
-          as:'Sell'
-      });
-    };
+    
     return Cliente;
 };

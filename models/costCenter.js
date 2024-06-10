@@ -20,10 +20,6 @@ module.exports = (sequelize) => {
         constraint:true,
         foreignKey: 'departmentId',
         as: 'Department'
-    }),
-    CostCenter.hasMany(models.Requisition, {
-      foreignKey: 'costCenterId', 
-      as: 'Requisition' 
     });
 };
   return CostCenter;

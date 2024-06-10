@@ -31,11 +31,7 @@ module.exports = (sequelize) => {
     Title.belongsTo(models.NotaFiscal,{
         foreignKey: 'notafiscalId',
         as: 'NotaFiscal'
-  }),
-    Title.hasMany(models.ControleTitle,{
-        foreignKey: 'titleId',
-        as: 'ControleTitle'
-    });
+  });
   };
 
   return Title;
