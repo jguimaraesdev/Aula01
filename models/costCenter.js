@@ -14,10 +14,16 @@ module.exports = (sequelize) => {
     },
     
   });
+  
   CostCenter.associate = (models) => {
     CostCenter.belongsTo(models.Department, {
+        constraint:true,
         foreignKey: 'departmentId',
         as: 'Department'
+    }),
+    CostCenter.hasMany(models.Requisition, {
+      foreignKey: 'costCenterId', 
+      as: 'Requisition' 
     });
 };
   return CostCenter;

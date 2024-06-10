@@ -3,22 +3,18 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
-  const BuySell = sequelize.define('BuySell', {
+  const Sell = sequelize.define('Sell', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
   
-    valor: {
-      type: Sequelize.DECIMAL,
-      allowNull: false
-    },
     tipoMovimento: {
       type: Sequelize.ENUM('Venda', 'Compra'),
       allowNull: false,
     },
-    dataVencimento: {
+    dataVenda: {
       type: Sequelize.DATE,
       allowNull: false
     },
@@ -33,17 +29,14 @@ module.exports = (sequelize) => {
       BuySell.belongsTo(models.NotaFiscal,{
           foreignKey: 'notafiscalId',
           as:'NotaFiscal'
+      }),
+      
+      BuySell.belongsTo(models.Cliente,{
+          foreignKey: 'clienteId',
+          as:'Cliente'
       });
 
     };
 
-    BuySell.associate = (models) =>{
-      BuySell.belongsTo(models.User,{
-          foreignKey: 'userlId',
-          as:'User'
-      });
-
-    };
-
-  return BuySell;
+  return Sell;
 };

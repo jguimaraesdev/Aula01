@@ -1,35 +1,36 @@
-// ./routes/supplier.js
+// ./routes/sales.js
+
 const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const SupplierService = require('../services/aprovisionamento/supplierService');
-const SupplierController = require('../controllers/aprovisionamento/supplierController');
+const SellService = require('../services/moduloVendas/sellService');
+const SellController = require('../controllers/moduloVendas/sellController');
 
 // Instanciando o serviço e o controlador
-const supplierService = new SupplierService(db.Supplier);
-const supplierController = new SupplierController(supplierService);
+const sellService = new SellService(db.Sell);
+const sellController = new SellController(sellService);
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  supplierController.create(req, res);
+  sellController.create(req, res);
 });
 
 router.put('/update/:id', (req, res, next) => {
-  supplierController.update(req, res);
+  sellController.update(req, res);
 });
 
 router.get('/findall', (req, res, next) => {
-  supplierController.findAllSuppliers(req, res);
+  sellController.findAllSales(req, res);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  supplierController.findSupplierById(req, res);
+  sellController.findSalesById(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  supplierController.delete(req, res);
+  sellController.delete(req, res);
 });
 
 //--------------------------------------------------------------------------------------------------//

@@ -1,21 +1,21 @@
-//controllers/salesController.js
+//controllers/notafiscalController.js
 
 
-class BuySellDetailsController {
-    constructor(BuySellDetailsService) {
-        this.buyselldetailsController = BuySellDetailsService;
+class ClienteController {
+    constructor(ClienteService) {
+        this.clienteService = ClienteService;
     }
   
     //--------------------------------------------------------------------------------------------------//
   
     async create(req, res) {
-        const { quantidade, preco, productId, buysellId} = req.body;
+        const { nome, CPF} = req.body;
         
         try {
-            const result = await this.buyselldetailsController.create(quantidade, preco, productId, buysellId);
+            const result = await this.clienteService.create(nome, CPF);
             res.status(200).json(result);
         } catch (error) {
-            res.status(500).json({ error: "Erro ao inserir registro" });
+            res.status(500).json({ error: "Erro ao inserir novo Registro" });
         }
     }
   
@@ -27,7 +27,7 @@ class BuySellDetailsController {
         try {
             
             if (isNaN(Id)) {
-                return res.status(400).json({ error: "ID de registro inválido" });
+                return res.status(400).json({ error: "ID de Registro inválido" });
             }
     
             
@@ -36,7 +36,7 @@ class BuySellDetailsController {
             }
     
             
-            const { updatedRowsCount, updatedRows } = await this.buyselldetailsController.update(Id, updates);
+            const { updatedRowsCount, updatedRows } = await this.clienteService.update(Id, updates);
     
             
             if (updatedRowsCount > 0) {
@@ -45,7 +45,7 @@ class BuySellDetailsController {
                 return res.status(404).json({ error: "Registro não encontrado" });
             }
         } catch (error) {
-          
+            // Tratar erros gerais
             console.error("Erro ao atualizar registro:", error);
             return res.status(500).json({ error: "Erro ao atualizar registro" });
         }
@@ -58,8 +58,8 @@ class BuySellDetailsController {
         const { page, pageSize } = req.query;
   
         try {
-            const result = await this.buyselldetailsController.findAll(page, pageSize);
-            res.status(200).json(result);
+            const registro = await this.clienteService.findAll(page, pageSize);
+            res.status(200).json(registro);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao buscar registros' });
         }
@@ -70,7 +70,7 @@ class BuySellDetailsController {
     async findById(req, res) {
         const Id = req.params.id;
         try {
-            const result = await this.buyselldetailsController.findById(Id);
+            const result = await this.clienteService.findById(Id);
             if (result) {
                 res.status(200).json(result);
             } else {
@@ -87,7 +87,7 @@ class BuySellDetailsController {
     async delete (req, res){
       const Id = req.params.id;
   
-      const result = await this.buyselldetailsController.delete(Id);
+      const result = await this.clienteService.delete(Id);
             if (result) {
                 res.status(200).json(result);
             } else {
@@ -103,5 +103,5 @@ class BuySellDetailsController {
   
   }
   
-  module.exports = BuySellDetailsController;
+  module.exports = ClienteController;
   

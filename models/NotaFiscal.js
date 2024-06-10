@@ -34,18 +34,15 @@ module.exports= (sequelize) => {
     });
 
     NotaFiscal.associate = (models) =>{
-        NotaFiscal.belongsTo(models.Product,{
-            foreignKey: 'productId',
+        NotaFiscal.hasMany(models.Product,{
+            foreignKey: 'notafiscalId',
             as: 'Product'
+    }),
+        NotaFiscal.hasMany(models.Title,{
+            foreignKey: 'notafiscalId',
+            as: 'Title'
         });
-        
-    };
-
-    NotaFiscal.associate = (models) => {
-        NotaFiscal.belongsTo(models.Supplier, {
-            foreignKey: 'supplierId',
-            as: 'supplier'
-        });
+      
     };
 
     return NotaFiscal;

@@ -17,18 +17,13 @@ module.exports = (sequelize) => {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
     },
-    status: {
-      type: Sequelize.ENUM('pendente', 'finalizado', 'cancelado'),
-      defaultValue: 'pendente',
+    tipoPagamento: {
+      type: Sequelize.ENUM('AVISTA', 'PARCELADO'),
       allowNull: false,
-    },
+    }
   });
 
   Purchase.associate = (models) => {
-    Purchase.belongsTo(models.Supplier, { 
-      foreignKey: 'supplierId', 
-      as: 'Supplier' 
-    }),
     Purchase.belongsTo(models.Quotation, { 
       foreignKey: 'quotationId', 
       as: 'Quotation' 

@@ -1,38 +1,38 @@
-// ./routes/sales.js
+//./routes/product.js
 
 const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const BuySellService = require('../services/moduloContas/buysellService');
-const BuySellController = require('../controllers/moduloContas/buysellController');
+const ClienteService = require('../services/clienteService');
+const ClienteController = require('../controllers/clienteController');
 
 // Instanciando o serviço e o controlador
-const buysellService = new BuySellService(db.BuySell);
-const buysellController = new BuySellController(buysellService);
+const clienteService = new ClienteService(db.Cliente);
+const clienteController = new ClienteController(clienteService);
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  buysellController.create(req, res);
+  clienteController.create(req, res);
 });
 
+// Rota de atualização
 router.put('/update/:id', (req, res, next) => {
-  buysellController.update(req, res);
+  clienteController.update(req, res);
 });
 
 router.get('/findall', (req, res, next) => {
-  buysellController.findAllSales(req, res);
+  clienteController.findAll(req, res);
 });
 
-router.get('/findbyid/:id', (req, res, next) => {
-  buysellController.findSalesById(req, res);
+router.get('/findallbyid/:id', (req, res, next) => {
+  clienteController.findById(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  buysellController.delete(req, res);
+  clienteController.delete(req, res);
 });
 
 //--------------------------------------------------------------------------------------------------//
-
 module.exports = router;

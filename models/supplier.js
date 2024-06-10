@@ -17,6 +17,18 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
   });
+
+  Supplier.associate = (models) =>{
+    Supplier.hasMany(models.Product,{
+        foreignKey: 'supplierId',
+        as: 'Product'
+    }),
+    Supplier.hasMany(models.Quotation, { 
+      foreignKey: 'supplierId', 
+      as: 'Quotation' 
+    })
+  };
+ 
   
   return Supplier;
 };

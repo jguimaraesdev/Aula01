@@ -9,11 +9,11 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    numeroParcela: {
+    qtd_Parcela: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    valorParcela: {
+    valorOriginal: {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
     },
@@ -31,8 +31,12 @@ module.exports = (sequelize) => {
     Title.belongsTo(models.NotaFiscal,{
         foreignKey: 'notafiscalId',
         as: 'NotaFiscal'
+  }),
+    Title.hasMany(models.ControleTitle,{
+        foreignKey: 'titleId',
+        as: 'ControleTitle'
     });
-};
+  };
 
   return Title;
 };

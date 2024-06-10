@@ -2,17 +2,17 @@
 
 
 class BuySellController {
-  constructor(BuySellService) {
-      this.buysellService = BuySellService;
+  constructor(SellService) {
+      this.sellService = SellService;
   }
 
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId} = req.body;
+      const { valor, tipoMovimento, dataVenda, tipoPagamento, notafiscalId, clienteId} = req.body;
       
       try {
-          const result = await this.buysellService.create(valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId);
+          const result = await this.sellService.create(valor, tipoMovimento, dataVenda, tipoPagamento, notafiscalId, clienteId);
           res.status(200).json(result);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir registro" });
@@ -36,7 +36,7 @@ class BuySellController {
           }
   
           
-          const { updatedRowsCount, updatedRows } = await this.buysellService.update(Id, updates);
+          const { updatedRowsCount, updatedRows } = await this.sellService.update(Id, updates);
   
           
           if (updatedRowsCount > 0) {
@@ -58,7 +58,7 @@ class BuySellController {
       const { page, pageSize } = req.query;
 
       try {
-          const result = await this.buysellService.findAll(page, pageSize);
+          const result = await this.sellService.findAll(page, pageSize);
           res.status(200).json(result);
       } catch (error) {
           res.status(500).json({ error: 'Erro ao buscar registros' });
@@ -70,7 +70,7 @@ class BuySellController {
   async findById(req, res) {
       const Id = req.params.id;
       try {
-          const result = await this.buysellService.findById(Id);
+          const result = await this.sellService.findById(Id);
           if (result) {
               res.status(200).json(result);
           } else {
@@ -87,7 +87,7 @@ class BuySellController {
   async delete (req, res){
     const Id = req.params.id;
 
-    const result = await this.buysellService.delete(Id);
+    const result = await this.sellService.delete(Id);
           if (result) {
               res.status(200).json(result);
           } else {

@@ -24,5 +24,23 @@ module.exports= (sequelize) => {
         
         
     });
+
+    Product.associate = (models) =>{
+        Product.belongsTo(models.Supplier,{
+            foreignKey: 'supplierId',
+            as: 'Supplier'
+        
+    }),Product.belongsTo(models.NotaFiscal,{
+            foreignKey: 'notafiscalId',
+            as: 'NotaFiscal'
+
+    }),Product.hasMany(models.ControleProduct,{
+        foreignKey: 'productId',
+        as: 'ControleProduct'
+    });
+        
+    };
+
+
     return Product;
 };

@@ -1,24 +1,20 @@
+// ./services/departmentService.js
 
-
-// ./services/salesService.js
-
-class BuySellService {
-  constructor(BuySellModel) {
-      this.BuySell = BuySellModel;
+class DepartmentService {
+  constructor(DepartmentModel) {
+      this.Department = DepartmentModel;
+    
+    
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(valor, tipoMovimento, dataVencimento, tipoPagamento, notafiscalId) {
-      try {
-          const result = await this.BuySell.create({ 
-            valor, 
-            tipoMovimento, 
-            dataVencimento, 
-            tipoPagamento, 
-            notafiscalId 
-        });
-          return result;
+  async create(nome) {
+    try {
+        const department = await this.Department.create({ nome });
+        
+        return department;
+
       } catch (error) {
           throw error;
       }
@@ -32,7 +28,7 @@ class BuySellService {
               throw new Error("ID inválido para atualização");
           }
 
-          const [updatedRowsCount, updatedRows] = await this.BuySell.update(updates, {
+          const [updatedRowsCount, updatedRows] = await this.Department.update(updates, {
               where: { id },
           });
 
@@ -51,7 +47,7 @@ class BuySellService {
   async findAll(page = 1, pageSize = 10) {
       try {
           const offset = (page - 1) * pageSize;
-          const result = await this.BuySell.findAndCountAll({
+          const result = await this.Department.findAndCountAll({
               limit: pageSize,
               offset: offset
           });
@@ -65,7 +61,7 @@ class BuySellService {
 
   async findById(id) {
       try {
-          const result = await this.BuySell.findOne({ where: { id } });
+          const result = await this.Department.findOne({ where: { id } });
           return result;
       } catch (error) {
           throw error;
@@ -76,7 +72,7 @@ class BuySellService {
 
   async delete(id) {
     try {
-      const result = await this.BuySell.destroy({
+      const result = await this.Department.destroy({
         where: { id: id }
       });
   
@@ -88,8 +84,11 @@ class BuySellService {
     } catch (error) {
       throw error;
     }
-}
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
 
 }
 
-module.exports = BuySellService;
+module.exports = DepartmentService;

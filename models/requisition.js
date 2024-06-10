@@ -8,6 +8,11 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
+
+    produto_requerido: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    }, 
    
     qtd_requerida: {
       type: Sequelize.INTEGER,
@@ -15,7 +20,7 @@ module.exports = (sequelize) => {
     },
     
     status: {
-      type: Sequelize.ENUM('pendente', 'processada', 'cancelada'),
+      type: Sequelize.ENUM('pendente', 'comprado', 'cancelado'),
       defaultValue: 'pendente',
     },
   });
@@ -25,13 +30,13 @@ module.exports = (sequelize) => {
       foreignKey: 'userId', 
       as: 'User' 
     }),
-    Requisition.belongsTo(models.Product, {
-      foreignKey: 'productId', 
-      as: 'Product' 
-    }),
     Requisition.belongsTo(models.CostCenter, {
       foreignKey: 'costCenterId', 
       as: 'CostCenter' 
+    }),
+    Requisition.hasMany(models.Quitation, { 
+      foreignKey: 'requisitionId', 
+      as: 'Quotation' 
     });
   };
 

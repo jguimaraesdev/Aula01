@@ -4,8 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const ControleProductService = require('../services/controleproductService');
-const ControleProductController = require('../controllers/controleproductController');
+const ControleProductService = require('../services/aprovisionamento/controleproductService');
+const ControleProductController = require('../controllers/aprovisionamento/controleproductController');
 
 // Instanciando o serviço e o controlador
 const controleproductService = new ControleProductService(db.ControleProduct);

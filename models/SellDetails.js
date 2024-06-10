@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 
 module.exports= (sequelize) => {
     
-    const BuySellDetails = sequelize.define('NotaFiscal',{
+    const SellDetails = sequelize.define('SellDetails',{
         id:{
             type: Sequelize.INTEGER,
             primaryKey:true,
@@ -21,20 +21,20 @@ module.exports= (sequelize) => {
      
     });
 
-    BuySellDetails.associate = (models) =>{
-        BuySellDetails.belongsTo(models.Product,{
+    SellDetails.associate = (models) =>{
+        SellDetails.belongsTo(models.Product,{
             foreignKey: 'productId',
             as: 'Product'
         });
         
     };
 
-    BuySellDetails.associate = (models) => {
-        BuySellDetails.belongsTo(models.BuySell, {
-            foreignKey: 'buysellId',
-            as: 'BuySell'
+    SellDetails.associate = (models) => {
+        SellDetails.belongsTo(models.Sell, {
+            foreignKey: 'sellId',
+            as: 'Sell'
         });
     };
 
-    return BuySellDetails;
+    return SellDetails;
 };

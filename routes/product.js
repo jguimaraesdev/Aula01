@@ -4,8 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
-const ProductService = require('../services/productService');
-const ProductController = require('../controllers/productController');
+const ProductService = require('../services/aprovisionamento/productService');
+const ProductController = require('../controllers/aprovisionamento/productController');
 
 // Instanciando o serviço e o controlador
 const productService = new ProductService(db.Product);
@@ -23,11 +23,11 @@ router.put('/update/:id', (req, res, next) => {
 });
 
 router.get('/findall', (req, res, next) => {
-  productController.findAllProduct(req, res);
+  productController.findAll(req, res);
 });
 
 router.get('/findallbyid/:id', (req, res, next) => {
-  productController.findProductById(req, res);
+  productController.findById(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
