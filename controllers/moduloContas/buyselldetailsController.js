@@ -103,5 +103,5 @@ class BuySellDetailsController {
   
   }
   
-  module.exports = BuySellController;
+  module.exports = BuySellDetailsController;
   

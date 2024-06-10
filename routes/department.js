@@ -5,8 +5,8 @@ const AuthenticateToken = require('../services/authenticateToken');
 const authenticateToken = new AuthenticateToken('SUA_CHAVE_SECRETA');
 
 const db = require('../models');
-const DepartmentService = require('../services/moduloUsuarios/departmentService');
-const DepartmentController = require('../controllers/moduloUsuarios/departmentController');
+const DepartmentService = require('../services/departmentService');
+const DepartmentController = require('../controllers/departmentController');
 
 
 // Instanciando o serviço e o controlador
