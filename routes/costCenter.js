@@ -21,11 +21,11 @@ router.put('/update/:id', (req, res, next) => {
 });
 
 router.get('/findall', (req, res, next) => {
-  costCenterController.findAllCostCenters(req, res);
+  costCenterController.findAll(req, res);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  costCenterController.findCostCenterById(req, res);
+  costCenterController.findById(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {

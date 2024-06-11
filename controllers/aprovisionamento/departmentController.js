@@ -13,9 +13,8 @@ class DepartmentController {
       
       try {
         const result = await this.departmentService.create(nome);
-        const result2 = await this.costcenterService.create(nome, parseInt(result.id));
 
-        res.status(201).json(result, result2);
+        res.status(201).json(result);
       } catch (error) {
         console.error("Erro ao inserir o novo registro:", error);
         res.status(500).json({ error: "Erro ao inserir o novo registro", details: error.message });
