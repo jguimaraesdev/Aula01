@@ -6,7 +6,7 @@ class QuotationService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(preco, productId, supplierId, requisitionId) {
+  async create(preco, supplierId, requisitionId) {
     try {
         // Obter a data e hora atuais
         const currentDate = new Date();
@@ -20,7 +20,6 @@ class QuotationService {
             preco,
             cotacaoData: currentDate,
             validadeCotacao,
-            productId,
             supplierId,
             requisitionId
         });

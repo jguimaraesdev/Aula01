@@ -13,7 +13,7 @@ const depositController = new DepositController(depositService);
 
 //--------------------------------------------------------------------------------------------------//
 // Rotas
-router.post('/newd', (req, res, next) => {
+router.post('/new', (req, res, next) => {
   depositController.create(req, res);
 });
 
@@ -23,11 +23,11 @@ router.put('/update/:id', (req, res, next) => {
 });
 
 router.get('/findall', (req, res, next) => {
-  depositController.findAllDeposits(req, res);
+  depositController.findAll(req, res);
 });
 
 router.get('/findabyid/:id', (req, res, next) => {
-  depositController.findDepositById(req, res);
+  depositController.findById(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {

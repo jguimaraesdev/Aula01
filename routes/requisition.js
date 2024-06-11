@@ -23,11 +23,11 @@ router.put('/update/:id', (req, res, next) => {
 });
 
 router.get('/findall', (req, res, next) => {
-  requisitionController.findAllRequisition(req, res);
+  requisitionController.findAll(req, res);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  requisitionController.findRequisitionById(req, res);
+  requisitionController.findById(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
