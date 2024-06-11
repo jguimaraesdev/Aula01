@@ -112,13 +112,13 @@ class QuotationController {
   //--------------------------------------------------------------------------------------------------//
 
   async getquotationbyrequisition(req, res) {
-    const requisitionId = req.params.requisitionId;
+    const { requisitionId, page = 1, pageSize = 10 } = req.params;
     if (!requisitionId) {
       return res.status(400).json({ error: "O ID da requisição é obrigatório" });
     }
   
     try {
-      const quotations = await this.quotationService.getQuotationsByRequisition(requisitionId);
+      const quotations = await this.quotationService.getQuotationsByRequisition(requisitionId, page, pageSize);
       if (!quotations || quotations.length === 0) {
         return res.status(404).json({ error: "Nenhuma cotação encontrada para a requisição" });
       }

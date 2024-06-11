@@ -93,9 +93,15 @@ class RequisitionController {
 
   
   async RequisitionByCostCenter (req, res) {
-    const { Id , page = 1, pageSize = 10 } = req.params
+    const { costCenterId , page = 1, pageSize = 10 } = req.params
+    if (!costCenterId) {
+        return res.status(400).json({ error: "O ID da requisição é obrigatório" });
+      }
       try {
-          const posicao = await this.requisitionService.getRequisitionByCostCenter(Id, page, pageSize);
+          const posicao = await this.requisitionService.getRequisitionByCostCenter(costCenterId, page, pageSize);
+          if (!posicao || posicao .length === 0) {
+            return res.status(404).json({ error: "Nenhuma posicao encontrada para a requisição" });
+          }
           res.status(200).json(posicao);
       } catch (error) {
           res.status(500).json({ error: "Erro ao buscar centro de custo por requisição" });
