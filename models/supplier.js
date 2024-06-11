@@ -17,14 +17,6 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
   });
-
-  Supplier.associate = (models) =>{
-    Supplier.hasMany(models.Product,{
-        foreignKey: 'supplierId',
-        as: 'Product'
-    });
-  };
- 
   
   return Supplier;
 };

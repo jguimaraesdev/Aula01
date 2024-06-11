@@ -14,24 +14,24 @@ const notafiscalController = new NotaFiscalController(notafiscalService);
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  notafiscalController.create(req, res);
+  notafiscalController.create(req, res).catch(next);
 });
 
 // Rota de atualização
 router.put('/update/:id', (req, res, next) => {
-  notafiscalController.update(req, res);
+  notafiscalController.update(req, res).catch(next);
 });
 
 router.get('/findall', (req, res, next) => {
-  notafiscalController.findAllProduct(req, res);
+  notafiscalController.findAllProduct(req, res).catch(next);
 });
 
 router.get('/findall/:id', (req, res, next) => {
-  notafiscalController.findProductById(req, res);
+  notafiscalController.findProductById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  notafiscalController.delete(req, res);
+  notafiscalController.delete(req, res).catch(next);
 });
 
 //--------------------------------------------------------------------------------------------------//

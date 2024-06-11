@@ -29,19 +29,19 @@ router.post('/login', (req, res, next) => {
 
 // Rota de atualização
 router.put('/update/:id', authenticateToken.verifyToken.bind(authenticateToken),(req, res, next) => {
-  userController.update(req, res);
+  userController.update(req, res).catch(next);
 });
 
 router.get('/findall', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
-  userController.findAll(req, res);
+  userController.findAll(req, res).catch(next);
 })
 
 router.get('/findbyId/:id', (req, res, next) => {
-  userController.findbyId(req, res);
+  userController.findbyId(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  userController.delete(req, res);
+  userController.delete(req, res).catch(next);
 });
 
 //--------------------------------------------------------------------------------------------------//

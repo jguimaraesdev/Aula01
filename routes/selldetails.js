@@ -14,23 +14,23 @@ const selldetailsController = new SellDetailsController(selldetailsService);
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  selldetailsController.create(req, res);
+  selldetailsController.create(req, res).catch(next);
 });
 
 router.put('/update/:id', (req, res, next) => {
-  selldetailsController.update(req, res);
+  selldetailsController.update(req, res).catch(next);
 });
 
 router.get('/findall', (req, res, next) => {
-  selldetailsController.findAllSales(req, res);
+  selldetailsController.findAllSales(req, res).catch(next);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  selldetailsController.findSalesById(req, res);
+  selldetailsController.findSalesById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  selldetailsController.delete(req, res);
+  selldetailsController.delete(req, res).catch(next);
 });
 
 //--------------------------------------------------------------------------------------------------//

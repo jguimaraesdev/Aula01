@@ -14,24 +14,24 @@ const productController = new ProductController(productService);
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  productController.create(req, res);
+  productController.create(req, res).catch(next);
 });
 
 // Rota de atualização
 router.put('/update/:id', (req, res, next) => {
-  productController.update(req, res);
+  productController.update(req, res).catch(next);
 });
 
 router.get('/findall', (req, res, next) => {
-  productController.findAll(req, res);
+  productController.findAll(req, res).catch(next);
 });
 
 router.get('/findallbyid/:id', (req, res, next) => {
-  productController.findById(req, res);
+  productController.findById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  productController.delete(req, res);
+  productController.delete(req, res).catch(next);
 });
 
 //--------------------------------------------------------------------------------------------------//

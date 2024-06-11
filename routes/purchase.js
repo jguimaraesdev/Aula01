@@ -14,23 +14,23 @@ const purchaseController = new PurchaseController(purchaseService);
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  purchaseController.create(req, res);
+  purchaseController.create(req, res).catch(next);
 });
 
 router.put('/update/:id', (req, res, next) => {
-  purchaseController.update(req, res);
+  purchaseController.update(req, res).catch(next);
 });
 
 router.get('/findall', (req, res, next) => {
-  purchaseController.findAllPurchases(req, res);
+  purchaseController.findAllPurchases(req, res).catch(next);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  purchaseController.findPurchaseById(req, res);
+  purchaseController.findPurchaseById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  purchaseController.delete(req, res);
+  purchaseController.delete(req, res).catch(next);
 });
 
 //--------------------------------------------------------------------------------------------------//

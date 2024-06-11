@@ -14,24 +14,24 @@ const depositController = new DepositController(depositService);
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  depositController.create(req, res);
+  depositController.create(req, res).catch(next);
 });
 
 // Rota de atualização
 router.put('/update/:id', (req, res, next) => {
-  depositController.update(req, res);
+  depositController.update(req, res).catch(next);
 });
 
 router.get('/findall', (req, res, next) => {
-  depositController.findAll(req, res);
+  depositController.findAll(req, res).catch(next);
 });
 
 router.get('/findabyid/:id', (req, res, next) => {
-  depositController.findById(req, res);
+  depositController.findById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  depositController.delete(req, res);
+  depositController.delete(req, res).catch(next);
 });
 
 

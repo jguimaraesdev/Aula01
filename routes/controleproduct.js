@@ -14,33 +14,33 @@ const controleproductController = new ControleProductController(controleproductS
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  controleproductController.create(req, res);
+  controleproductController.create(req, res).catch(next);
 });
 
 router.put('/update/:id', (req, res, next) => {
-  controleproductController.update(req, res);
+  controleproductController.update(req, res).catch(next);
 });
 
 router.get('/findallt', (req, res, next) => {
-  controleproductController.findAllMovements(req, res);
+  controleproductController.findAllMovements(req, res).catch(next);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  controleproductController.findMovementById(req, res);
+  controleproductController.findMovementById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  controleproductController.delete(req, res);
+  controleproductController.delete(req, res).catch(next);
 });
 
 // Nova rota para buscar posição por depósito
 router.get('/getPosicaoByDeposito/:depositoId', (req, res, next) => {
-  controleproductController.getPosicaoByDeposito(req, res);
+  controleproductController.getPosicaoByDeposito(req, res).catch(next);
 });
 
 // Nova rota para buscar posição por produto e depósito
 router.get('/getPosicaoByProdutoDeposito/:produtoId/:depositoId', (req, res, next) => {
-  controleproductController.getPosicaoByProdutoDeposito(req, res);
+  controleproductController.getPosicaoByProdutoDeposito(req, res).catch(next);
 });
 
 

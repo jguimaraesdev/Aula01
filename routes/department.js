@@ -13,23 +13,23 @@ const departmentController = new DepartmentController(departmentService);
 //--------------------------------------------------------------------------------------------------//
 
 router.post('/new', (req, res, next) => {
-departmentController.create(req, res);
+departmentController.create(req, res).catch(next);
 });
 
 router.put('/update/:id', (req, res, next) => {
-  departmentController.update(req, res);
+  departmentController.update(req, res).catch(next);
 });
 
 router.get('/findall', (req, res, next) => {
-  departmentController.findAll(req, res);
+  departmentController.findAll(req, res).catch(next);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  departmentController.findById(req, res);
+  departmentController.findById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  departmentController.delete(req, res);
+  departmentController.delete(req, res).catch(next);
 });
 
 

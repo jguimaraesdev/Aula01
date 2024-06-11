@@ -13,23 +13,23 @@ const supplierController = new SupplierController(supplierService);
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  supplierController.create(req, res);
+  supplierController.create(req, res).catch(next);
 });
 
 router.put('/update/:id', (req, res, next) => {
-  supplierController.update(req, res);
+  supplierController.update(req, res).catch(next);
 });
 
 router.get('/findall', (req, res, next) => {
-  supplierController.findAll(req, res);
+  supplierController.findAll(req, res).catch(next);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  supplierController.findById(req, res);
+  supplierController.findById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  supplierController.delete(req, res);
+  supplierController.delete(req, res).catch(next);
 });
 
 //--------------------------------------------------------------------------------------------------//

@@ -19,19 +19,19 @@ router.post('/new', authenticateToken.verifyToken.bind(authenticateToken), (req,
 });
 
 router.put('/update/:id', (req, res, next) => {
-  requisitionController.update(req, res);
+  requisitionController.update(req, res).catch(next);
 });
 
 router.get('/findall', (req, res, next) => {
-  requisitionController.findAll(req, res);
+  requisitionController.findAll(req, res).catch(next);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  requisitionController.findById(req, res);
+  requisitionController.findById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  requisitionController.delete(req, res);
+  requisitionController.delete(req, res).catch(next);
 });
 
 

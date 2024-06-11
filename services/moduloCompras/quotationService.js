@@ -100,13 +100,22 @@ class QuotationService {
     //--------------------------------------------------------------------------------------------------//
   
     async getQuotationsBySupplier(supplierId) {
-      try {
-          const quotations = await this.Quotation.findAll({ where: { supplierId } });
+        try {
+          const quotations = await this.Quotation.findAll({
+            include: [{
+                model: this.Supplier,
+                where: { id: supplierId }
+            }]
+            
+            });
           return quotations;
-      } catch (error) {
-          throw error;
+        } catch (error) {
+          console.error('Error fetching quotations for supplier:', error);
+          throw new Error('Failed to fetch quotations for supplier');
+        }
       }
-    }
+      
+
     //--------------------------------------------------------------------------------------------------//
 
 

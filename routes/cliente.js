@@ -19,19 +19,19 @@ router.post('/new', (req, res, next) => {
 
 // Rota de atualização
 router.put('/update/:id', (req, res, next) => {
-  clienteController.update(req, res);
+  clienteController.update(req, res).catch(next);
 });
 
 router.get('/findall', (req, res, next) => {
-  clienteController.findAll(req, res);
+  clienteController.findAll(req, res).catch(next);
 });
 
 router.get('/findallbyid/:id', (req, res, next) => {
-  clienteController.findById(req, res);
+  clienteController.findById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  clienteController.delete(req, res);
+  clienteController.delete(req, res).catch(next);
 });
 
 //--------------------------------------------------------------------------------------------------//

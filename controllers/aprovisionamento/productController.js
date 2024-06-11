@@ -93,29 +93,6 @@ class ProductController {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async getPosicaoByDeposito(req, res) {
-        const depositoId = req.params.depositoId;
-        try {
-            const posicao = await this.productService.getPosicaoByDeposito(depositoId);
-            res.status(200).json(posicao);
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao buscar posição por depósito" });
-        }
-    }
-    
-    //--------------------------------------------------------------------------------------------------//
-
-    async getPosicaoByProdutoDeposito(req, res) {
-        const { produtoId, depositoId } = req.params;
-        try {
-            const posicao = await this.productService.getPosicaoByProdutoDeposito(produtoId, depositoId);
-            res.status(200).json(posicao);
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao buscar posição por produto e depósito" });
-        }
-    }
-
-    //--------------------------------------------------------------------------------------------------//
     
 }
 

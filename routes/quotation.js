@@ -13,25 +13,28 @@ const quotationController = new QuotationController(quotationService);
 //--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', (req, res, next) => {
-  quotationController.create(req, res);
+  quotationController.create(req, res).catch(next);
 });
 
 router.put('/update/:id', (req, res, next) => {
-  quotationController.update(req, res);
+  quotationController.update(req, res).catch(next);
 });
 
 router.get('/findall', (req, res, next) => {
-  quotationController.findAllQuotations(req, res);
+  quotationController.findAll(req, res).catch(next);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  quotationController.findQuotationById(req, res);
+  quotationController.findById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {
-  quotationController.delete(req, res);
+  quotationController.delete(req, res).catch(next);
 });
 
+router.get('/findquotationsbysupplier/:supplierId', (req, res, next) => {
+  quotationController.getQuotationsBySupplier(req, res).catch(next);
+});
 
 //--------------------------------------------------------------------------------------------------//
 

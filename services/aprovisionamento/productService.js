@@ -88,37 +88,7 @@ class ProductService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async getPosicaoByDeposito(depositoId) {
-        try {
-            const posicao = await this.Product.findAll({
-                include: [{
-                    model: this.Moviments,
-                    where: { depositId: depositoId }
-                }]
-            });
-            return posicao;
-        } catch (error) {
-            throw error;
-        }
-    }
     
-    //--------------------------------------------------------------------------------------------------//
-
-    async getPosicaoByProdutoDeposito(produtoId, depositoId) {
-        try {
-            const posicao = await this.Product.findOne({
-                include: [{
-                    model: this.Moviments,
-                    where: { productId: produtoId, depositId: depositoId }
-                }]
-            });
-            return posicao;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    //--------------------------------------------------------------------------------------------------//
     
 }
 
