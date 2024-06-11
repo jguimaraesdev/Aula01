@@ -93,27 +93,34 @@ class ControleProductService {
       
     //--------------------------------------------------------------------------------------------------//
 
-    async getPosicaoByDeposito(depositoId, page = 1, pageSize = 10) {
+    async getPosicaoByDeposito(depositId, page = 1, pageSize = 10) {
         try {
-            const offset = (page - 1) * pageSize;
-            const posicao = await this.ControleProduct.findAndCountAll({
-                where: { depositId: depositoId },
-                limit: pageSize,
-                offset: offset
-            });
-            return posicao;
+          const offset = (page - 1) * pageSize;
+          
+          const posicao = await this.ControleProduct.findAndCountAll({
+            where: { depositId: depositId },
+            limit: pageSize,
+            offset: offset
+          });
+      
+          return posicao;
         } catch (error) {
-            throw error;
+        
+          throw error;
         }
-    }
+      }
+      
     
     //--------------------------------------------------------------------------------------------------//
 
     async getPosicaoByProdutoDeposito(produtoId, depositoId, page = 1, pageSize = 10) {
         try {
             const offset = (page - 1) * pageSize;
+            
             const posicao = await this.ControleProduct.findAndCountAll({
-                where: { productId: produtoId, depositId: depositoId },
+                where: { productId: produtoId, 
+                         depositId: depositoId 
+                },
                 limit: pageSize,
                 offset: offset
             });

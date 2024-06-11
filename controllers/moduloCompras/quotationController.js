@@ -90,14 +90,14 @@ class QuotationController {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async getQuotationsBySupplier(req, res) {
-    const supplierId = req.params.supplierId;
+  async getquotationsbysupplier(req, res) {
+    const { supplierId, page = 1, pageSize = 10 } = req.params;
     if (!supplierId) {
       return res.status(400).json({ error: "O ID do fornecedor é obrigatório" });
     }
   
     try {
-      const quotations = await this.quotationService.getQuotationsBySupplier(supplierId);
+      const quotations = await this.quotationService.getQuotationsBySupplier(supplierId, page, pageSize);
       if (!quotations || quotations.length === 0) {
         return res.status(404).json({ error: "Nenhuma cotação encontrada para o fornecedor" });
       }
@@ -111,6 +111,26 @@ class QuotationController {
 
   //--------------------------------------------------------------------------------------------------//
 
+  async getquotationbyrequisition(req, res) {
+    const requisitionId = req.params.requisitionId;
+    if (!requisitionId) {
+      return res.status(400).json({ error: "O ID da requisição é obrigatório" });
+    }
+  
+    try {
+      const quotations = await this.quotationService.getQuotationsByRequisition(requisitionId);
+      if (!quotations || quotations.length === 0) {
+        return res.status(404).json({ error: "Nenhuma cotação encontrada para a requisição" });
+      }
+      res.status(200).json(quotations);
+    } catch (error) {
+      console.error('Erro ao buscar cotações por requisição:', error);
+      res.status(500).json({ error: "Erro ao buscar cotações por requisição" });
+    }
+  }
+  
+
+  //--
   
 }
 

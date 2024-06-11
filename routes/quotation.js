@@ -33,7 +33,11 @@ router.delete('/delete/:id', (req, res, next) => {
 });
 
 router.get('/findquotationsbysupplier/:supplierId', (req, res, next) => {
-  quotationController.getQuotationsBySupplier(req, res).catch(next);
+  quotationController.getquotationsbysupplier(req, res).catch(next);
+});
+
+router.get('/findquotationsbyrequisition/:rquisitionId', (req, res, next) => {
+  quotationController.getquotationbyrequisition(req, res).catch(next);
 });
 
 //--------------------------------------------------------------------------------------------------//

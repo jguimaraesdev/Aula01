@@ -99,13 +99,13 @@ class QuotationService {
 
     //--------------------------------------------------------------------------------------------------//
   
-    async getQuotationsBySupplier(supplierId) {
+    async getQuotationsBySupplier(supplierId, page = 1, pageSize = 10) {
         try {
-          const quotations = await this.Quotation.findAll({
-            include: [{
-                model: this.Supplier,
-                where: { id: supplierId }
-            }]
+          const offset = (page - 1) * pageSize;
+          const quotations = await this.Quotation.findAndCountAll({
+            where: { supplierId: supplierId },
+                limit: pageSize,
+                offset: offset
             
             });
           return quotations;
@@ -117,7 +117,24 @@ class QuotationService {
       
 
     //--------------------------------------------------------------------------------------------------//
+    
+    async getQuotationsByRequisition(requisitionId, page = 1, pageSize = 10) {
+        try {
+          const offset = (page - 1) * pageSize;
+          const quotations = await this.Quotation.findAndCountAll({
+            where: { requisitionId: requisitionId },
+                limit: pageSize,
+                offset: offset
+            });
+          return quotations;
+        } catch (error) {
+          console.error('Error fetching quotations for requisition:', error);
+          throw new Error('Failed to fetch quotations for requisition');
+        }
+      }
+      
 
+    //--------------------------------------------------------------------------------------------------//
 
 }
 

@@ -34,7 +34,7 @@ router.delete('/delete/:id', (req, res, next) => {
 });
 
 // Nova rota para buscar posição por depósito
-router.get('/getPosicaoByDeposito/:depositoId', (req, res, next) => {
+router.get('/getPosicaoByDeposito/:depositId', (req, res, next) => {
   controleproductController.getPosicaoByDeposito(req, res).catch(next);
 });
 

@@ -88,37 +88,23 @@ class RequisitionController {
           res.status(500).json({ error: error.message });
       }
 
-
+    
   //--------------------------------------------------------------------------------------------------//
 
   
-  async getPosicaoByDeposito(req, res) {
-      const depositoId = req.params.depositoId;
+  async RequisitionByCostCenter (req, res) {
+    const { Id , page = 1, pageSize = 10 } = req.params
       try {
-          const posicao = await this.requisitionService.getPosicaoByDeposito(depositoId);
+          const posicao = await this.requisitionService.getRequisitionByCostCenter(Id, page, pageSize);
           res.status(200).json(posicao);
       } catch (error) {
-          res.status(500).json({ error: "Erro ao buscar posição por depósito" });
+          res.status(500).json({ error: "Erro ao buscar centro de custo por requisição" });
       }
-  }
+    }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async getPosicaoByProdutoDeposito(req, res) {
-      const { produtoId, depositoId } = req.params;
-      try {
-          const posicao = await this.requisitionService.getPosicaoByProdutoDeposito(produtoId, depositoId);
-          res.status(200).json(posicao);
-      } catch (error) {
-          res.status(500).json({ error: "Erro ao buscar posição por produto e depósito" });
-      }
-  }
 
-  //--------------------------------------------------------------------------------------------------//
-
-  
-
-
-}
+};
 
 module.exports = RequisitionController;

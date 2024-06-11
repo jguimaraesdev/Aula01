@@ -82,13 +82,14 @@ class RequisitionService {
     }
   //--------------------------------------------------------------------------------------------------//
 
-  async getPosicaoByDeposito(depositoId) {
+  async getRequisitionByCostCenter(costcenterId, page = 1, pageSize = 10) {
       try {
-          const posicao = await this.Requisition.findAll({
-              include: [{
-                  model: this.Moviments,
-                  where: { depositId: depositoId }
-              }]
+        const offset = (page - 1) * pageSize;
+          const posicao = await this.Requisition.findAndCountAll({
+            where: { costCenterId: costcenterId },
+            limit: pageSize,
+            offset: offset
+              
           });
           return posicao;
       } catch (error) {
@@ -98,21 +99,6 @@ class RequisitionService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async getPosicaoByProdutoDeposito(produtoId, depositoId) {
-      try {
-          const posicao = await this.Requisition.findOne({
-              include: [{
-                  model: this.Moviments,
-                  where: { productId: produtoId, depositId: depositoId }
-              }]
-          });
-          return posicao;
-      } catch (error) {
-          throw error;
-      }
-  }
-
-  //--------------------------------------------------------------------------------------------------//
 
 
 }

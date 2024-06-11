@@ -97,9 +97,9 @@ class ControleProductController {
     //--------------------------------------------------------------------------------------------------//
     
     async getPosicaoByDeposito(req, res) {
-        const { depositoId: Id, page = 1, pageSize = 10 } = req.params;
+        const { depositoId, page = 1, pageSize = 10 } = req.params;
         try {
-            const posicao = await this.controleproductService.getPosicaoByDeposito(Id, page, pageSize);
+            const posicao = await this.controleproductService.getPosicaoByDeposito(depositoId, page, pageSize);
             res.status(200).json(posicao);
         } catch (error) {
             res.status(500).json({ error: "Erro ao buscar posição por depósito" });

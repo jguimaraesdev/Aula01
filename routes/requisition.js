@@ -34,6 +34,10 @@ router.delete('/delete/:id', (req, res, next) => {
   requisitionController.delete(req, res).catch(next);
 });
 
+router.get('/getrequisitionbycostcenter/:costcenterid', (req, res, next) =>{
+  requisitionController.RequisitionByCostCenter(req, res).catch(next);
+});
+
 
 //--------------------------------------------------------------------------------------------------//
 
