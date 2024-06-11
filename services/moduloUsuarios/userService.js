@@ -43,7 +43,7 @@ class UserService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async loginUser(login, senha) {
+    async login(login, senha) {
         try {
             const result = await this.verifyUser(login, senha);
             if (result) {

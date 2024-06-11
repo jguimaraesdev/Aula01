@@ -24,7 +24,7 @@ router.post('/new', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-  userController.loginUser(req, res);
+  userController.login(req, res);
 });
 
 // Rota de atualização
@@ -33,11 +33,11 @@ router.put('/update/:id', authenticateToken.verifyToken.bind(authenticateToken),
 });
 
 router.get('/findall', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
-  userController.findAllUser(req, res);
+  userController.findAll(req, res);
 })
 
 router.get('/findbyId/:id', (req, res, next) => {
-  userController.findUserbyId(req, res);
+  userController.findbyId(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {

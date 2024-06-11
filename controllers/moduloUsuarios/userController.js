@@ -1,8 +1,8 @@
 // ./controllers/userController.js
 
 class userController{
-    constructor(userService){
-        this.userService = userService;
+    constructor(UserService){
+        this.userService = UserService;
     }
 
     //--------------------------------------------------------------------------------------------------//
@@ -20,10 +20,10 @@ class userController{
 
     //--------------------------------------------------------------------------------------------------//
 
-    async loginUser(req, res){
+    async login(req, res){
         const { login, senha } = req.body;
         try{
-            const result = await this.userService.loginUser(login, senha);
+            const result = await this.userService.login(login, senha);
             if (result) {
                 res.status(200).json(result);
             } else {

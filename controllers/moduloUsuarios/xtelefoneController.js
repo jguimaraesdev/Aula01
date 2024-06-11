@@ -1,8 +1,8 @@
 // ./controllers/xtelefoneController.js
 class XtelefoneController {
     
-    constructor(xtelefoneService) {
-        this.xtelefoneService = xtelefoneService;
+    constructor(XtelefoneService) {
+        this.xtelefoneService = XtelefoneService;
     }
 
     //--------------------------------------------------------------------------------------------------//

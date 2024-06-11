@@ -32,12 +32,5 @@ module.exports= (sequelize) => {
 
     });
 
-    User.associate = (models) =>{
-        User.hasMany(models.Xtelefone,{
-            foreignKey: 'userId',
-            as: 'Xtelefone'
-    });
-    };
-
     return User;
 };

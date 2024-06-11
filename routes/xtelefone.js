@@ -23,11 +23,11 @@ router.put('/update/:id', (req, res, next) => {
 });
 
 router.get('/findall', (req, res, next) => {
-    xtelefoneController.findAllXtelefones(req, res);
+    xtelefoneController.findAll(req, res);
 });
 
 router.get('/findbyId/:id', (req, res, next) => {
-    xtelefoneController.findXtelefoneById(req, res);
+    xtelefoneController.findById(req, res);
 });
 
 router.delete('/delete/:id', (req, res, next) => {

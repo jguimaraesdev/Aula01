@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
   });
 
     Sell.associate = (models) =>{
-      BuySell.belongsTo(models.NotaFiscal,{
+      Sell.belongsTo(models.NotaFiscal,{
           foreignKey: 'notafiscalId',
           as:'NotaFiscal'
       }),
