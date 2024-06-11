@@ -7,7 +7,7 @@ const db = require('../models');
 
 const DepartmentService = require('../services/aprovisionamento/departmentService');
 const DepartmentController = require('../controllers/aprovisionamento/departmentController');
-const departmentService = new DepartmentService(db.Department);
+const departmentService = new DepartmentService(db.Department, db.CostCenter);
 const departmentController = new DepartmentController(departmentService);
 
 //--------------------------------------------------------------------------------------------------//
