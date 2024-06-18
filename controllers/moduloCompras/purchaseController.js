@@ -9,9 +9,10 @@ class PurchaseController {
     //--------------------------------------------------------------------------------------------------//
   
     async create(req, res) {
-        const {quantidade, custototal, status, supplierId, quotationId, userId} = req.body;
+        const {quantidade, custototal, tipoPagamento, supplierId, quotationId} = req.body;
+        const Id = req.userId; 
         try {
-            const result = await this.purchaseService.create(quantidade, custototal, status, supplierId, quotationId, userId);
+            const result = await this.purchaseService.create(quantidade, custototal, tipoPagamento, supplierId, quotationId, Id);
             res.status(200).json(result);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir a novo registro" });

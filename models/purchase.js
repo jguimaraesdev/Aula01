@@ -26,11 +26,13 @@ module.exports = (sequelize) => {
   Purchase.associate = (models) => {
     Purchase.belongsTo(models.Quotation, { 
       foreignKey: 'quotationId', 
-      as: 'Quotation' 
+      as: 'Quotation',
+      allowNull: false 
     }),
     Purchase.belongsTo(models.User, { 
       foreignKey: 'userId', 
-      as: 'User' 
+      as: 'User' ,
+      allowNull: false
     })
   };
 

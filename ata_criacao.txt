@@ -1,0 +1,21 @@
+//sequencia de decisões do projeto.
+//1° logica inserida(departmentService):
+
+Ao inserir novo department o metodo department.create pega a 1° letra do nome do departamento
+junta com CC+01 e cria novo centro de custo.
+
+//2° lógica inserida(purchase service):
+
+Ao inserir uma nova compra peloo purchase.create, é feito um select na quotation para pegar o id da requisição 
+e depois atualizar o status da requisição para "comprado".
+
+Foi ultilizado a mesma logica para pegar dados da requisição e criar um novo produto.
+
+Foi reaproveitado os dados dos outros metodos para criar um movimento de controle (controleproducts).
+
+Finalizado lógicas de compras.
+
+//3°Lógica
+defini a chave estrangeira de notafiscal como pode ser nula até definir como se dará criação da nota.
+
+//

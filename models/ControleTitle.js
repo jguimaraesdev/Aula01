@@ -30,7 +30,8 @@ module.exports = (sequelize) => {
   ControleTitle.associate = (models) =>{
     ControleTitle.belongsTo(models.Title,{
         foreignKey: 'titleId',
-        as: 'Title'
+        as: 'Title',
+        allowNull: false
     });
   };
 

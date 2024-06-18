@@ -28,11 +28,13 @@ module.exports = (sequelize) => {
   Quotation.associate = (models) =>{
     Quotation.belongsTo(models.Supplier, { 
       foreignKey: 'supplierId', 
-      as: 'Supplier' 
+      as: 'Supplier',
+      allowNull: false 
     }),
     Quotation.belongsTo(models.Requisition, { 
       foreignKey: 'requisitionId', 
-      as: 'Requisition' 
+      as: 'Requisition',
+      allowNull: false 
     });
 
   };

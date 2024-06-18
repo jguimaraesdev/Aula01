@@ -21,12 +21,12 @@ router.put('/update/:id', (req, res, next) => {
   controleproductController.update(req, res).catch(next);
 });
 
-router.get('/findallt', (req, res, next) => {
-  controleproductController.findAllMovements(req, res).catch(next);
+router.get('/findall', (req, res, next) => {
+  controleproductController.findAll(req, res).catch(next);
 });
 
 router.get('/findbyid/:id', (req, res, next) => {
-  controleproductController.findMovementById(req, res).catch(next);
+  controleproductController.findById(req, res).catch(next);
 });
 
 router.delete('/delete/:id', (req, res, next) => {

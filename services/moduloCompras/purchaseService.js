@@ -1,20 +1,67 @@
 // ./services/purchaseService.js
 
 class PurchaseService {
-    constructor(PurchaseModel) {
+    constructor(PurchaseModel, RequisitionModel, QuotationModel, ProductModel, ControleProductModel) {
         this.Purchase = PurchaseModel;
+        this.Requisition = RequisitionModel;
+        this.Quotation = QuotationModel;
+        this.Product = ProductModel;
+        this.ControleProduct = ControleProductModel;
     }
   
     //--------------------------------------------------------------------------------------------------//
   
-    async create(quantidade, custototal, status, supplierId, quotationId, userId) {
+    async create(quantidade, custototal, tipoPagamento, supplierId, quotationId, userId) {
+        const transaction = await this.Purchase.sequelize.transaction();
         try {
-            const result = await this.Purchase.create({quantidade, custototal, status, supplierId, quotationId, userId});
-            return result;
+            // Insere dados na tabela purchase
+            const result = await this.Purchase.create({ quantidade, custototal, tipoPagamento, supplierId, quotationId, userId }, { transaction });
+    
+            // Procura cotação para pegar id da requisição
+            const data = await this.Quotation.findByPk(quotationId, { transaction });
+    
+            if (!data) {
+                throw new Error('Cotação não encontrada');
+            }
+    
+            const status = 'comprado';
+    
+            // Atualiza o status da requisição
+            const result2 = await this.Requisition.update(
+                { status },
+                { where: { id: data.requisitionId }, transaction }
+            );
+    
+            // Recebe dados da requisição para criação de produto
+            const result3 = await this.Requisition.findByPk(data.requisitionId, { transaction });
+    
+            if (!result3) {
+                throw new Error('Requisição não encontrada');
+            }
+    
+            // Criando produto
+            const result4 = await this.Product.create(
+                { nome: result3.produto_requerido, descricao: '', status: 'ATIVO', supplierId: data.supplierId },
+                { transaction }
+            );
+            
+            //criando  um controle de produto
+            const result5 = await this.ControleProduct.create(
+                {movimento_tipo: 'Entrada', qtd_disponivel: quantidade, qtd_bloqueado: 0, valor_faturado: 0, productId: result4.id, depositId: 1 },
+                {transaction}
+            );
+
+            await transaction.commit();
+    
+            return { result, data, result2, result3, result4, result5 };
         } catch (error) {
+            await transaction.rollback();
+            console.error('Erro ao criar e atualizar dados:', error);
             throw error;
         }
     }
+    
+     
   
     //--------------------------------------------------------------------------------------------------//
   

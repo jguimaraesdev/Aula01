@@ -28,11 +28,13 @@ module.exports = (sequelize) => {
   Requisition.associate = (models) => {
     Requisition.belongsTo(models.User, { 
       foreignKey: 'userId', 
-      as: 'User' 
+      as: 'User' ,
+      allowNull: false
     }),
     Requisition.belongsTo(models.CostCenter, {
       foreignKey: 'costCenterId', 
-      as: 'CostCenter' 
+      as: 'CostCenter' ,
+      allowNull: false
     });
   };
 

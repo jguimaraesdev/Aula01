@@ -18,19 +18,19 @@ router.post('/new', authenticateToken.verifyToken.bind(authenticateToken), (req,
     xtelefoneController.create(req, res).catch(next);
 });
 
-router.put('/update/:id', (req, res, next) => {
+router.put('/update/:id', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
     xtelefoneController.update(req, res).catch(next);
 });
 
-router.get('/findall', (req, res, next) => {
+router.get('/findall', authenticateToken.verifyToken.bind(authenticateToken),(req, res, next) => {
     xtelefoneController.findAll(req, res).catch(next);
 });
 
-router.get('/findbyId/:id', (req, res, next) => {
+router.get('/findbyId/:id',authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
     xtelefoneController.findById(req, res).catch(next);
 });
 
-router.delete('/delete/:id', (req, res, next) => {
+router.delete('/delete/:id',authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
     xtelefoneController.delete(req, res).catch(next);
   });
 

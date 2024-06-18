@@ -19,7 +19,8 @@ module.exports = (sequelize) => {
     CostCenter.belongsTo(models.Department, {
         constraint:true,
         foreignKey: 'departmentId',
-        as: 'Department'
+        as: 'Department',
+        allowNull: false
     });
 };
   return CostCenter;

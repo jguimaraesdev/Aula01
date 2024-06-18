@@ -9,7 +9,7 @@ const RequisitionService = require('../services/moduloCompras/requisitionService
 const RequisitionController = require('../controllers/moduloCompras/requisitionController');
 
 // Instanciando o serviço e o controlador
-const requisitionService = new RequisitionService(db.Requisition,  authenticateToken);
+const requisitionService = new RequisitionService(db.Requisition, db.Product,  authenticateToken);
 const requisitionController = new RequisitionController(requisitionService);
 
 //--------------------------------------------------------------------------------------------------//

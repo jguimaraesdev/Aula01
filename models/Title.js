@@ -30,7 +30,8 @@ module.exports = (sequelize) => {
   Title.associate = (models) =>{
     Title.belongsTo(models.NotaFiscal,{
         foreignKey: 'notafiscalId',
-        as: 'NotaFiscal'
+        as: 'NotaFiscal',
+        allowNull: true
   });
   };
 

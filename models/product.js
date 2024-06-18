@@ -15,7 +15,7 @@ module.exports= (sequelize) => {
         },
         descricao:{
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: true
         },
         status: {
             type: Sequelize.ENUM('Ativo', 'Inativo'),
@@ -28,11 +28,13 @@ module.exports= (sequelize) => {
     Product.associate = (models) =>{
         Product.belongsTo(models.Supplier,{
             foreignKey: 'supplierId',
-            as: 'Supplier'
+            as: 'Supplier',
+            allowNull: false
         
     }),Product.belongsTo(models.NotaFiscal,{
             foreignKey: 'notafiscalId',
-            as: 'NotaFiscal'
+            as: 'NotaFiscal',
+            allowNull: true
 
     });
         

@@ -33,12 +33,14 @@ module.exports = (sequelize) => {
     ControleProduct .associate = (models) =>{
         ControleProduct .belongsTo(models.Product,{
             foreignKey: 'productId',
-            as: 'Product'
+            as: 'Product',
+            allowNull: false
         }),
 
         ControleProduct .belongsTo(models.Deposit,{
             foreignKey: 'depositId',
-            as: 'Deposit'
+            as: 'Deposit',
+            allowNull: false
         });
         
     };

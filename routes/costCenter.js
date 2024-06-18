@@ -4,7 +4,7 @@ const router = express.Router();
 
 const db = require('../models');
 const CostCenterService = require('../services/moduloCompras/costCenterService');
-const CostCenterController = require('../controllers/moduloCompras/costCenterController');
+const CostCenterController = require('../controllers/moduloCompras/costcenterController');
 
 // Instanciando o serviço e o controlador
 const costCenterService = new CostCenterService(db.CostCenter);
