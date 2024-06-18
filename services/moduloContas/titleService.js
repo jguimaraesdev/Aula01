@@ -5,16 +5,20 @@ class TitleService {
     constructor(TitleModel) {
         this.Title = TitleModel;
     }
-  
+    
+   
+
     //--------------------------------------------------------------------------------------------------//
-  
+    
     async create(notafiscalId, numeroParcela, valorParcela, dataVencimento, situacao ) {
         try {
+           
+
             const result = await this.Title.create({ 
                 notafiscalId, 
                 numeroParcela, 
                 valorParcela, 
-                dataVencimento, 
+                dataVencimento,
                 situacao 
             });
             return result;

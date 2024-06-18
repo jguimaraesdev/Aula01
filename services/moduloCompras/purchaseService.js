@@ -1,13 +1,15 @@
 // ./services/purchaseService.js
+const dayjs = require('dayjs'); //npm install dayjs
 
 class PurchaseService {
-    constructor(PurchaseModel, RequisitionModel, QuotationModel, ProductModel, ControleProductModel) {
+    constructor(PurchaseModel, RequisitionModel, QuotationModel, ProductModel, ControleProductModel, TitleModel) {
         this.Purchase = PurchaseModel;
         this.Requisition = RequisitionModel;
         this.Quotation = QuotationModel;
         this.Product = ProductModel;
         this.ControleProduct = ControleProductModel;
-    }
+        this.Title = TitleModel;
+    }   
   
     //--------------------------------------------------------------------------------------------------//
   
@@ -45,15 +47,33 @@ class PurchaseService {
                 { transaction }
             );
             
-            //criando  um controle de produto
+            // criando  um controle de produto
             const result5 = await this.ControleProduct.create(
                 {movimento_tipo: 'Entrada', qtd_disponivel: quantidade, qtd_bloqueado: 0, valor_faturado: 0, productId: result4.id, depositId: 1 },
                 {transaction}
             );
 
+            // definindo quantas parcelas o title vai receber
+            const parcela= 1;
+
+            if(tipoPagamento!='AVISTA'){
+                parcela = 3;
+            }
+
+            //criando data de vencimento
+            const novadata = dayjs().add(30, 'day').format('YYYY-MM-DD');
+
+            // criando um novo titulo de divida
+            const result6 = await this.Title.create(
+                {qtd_Parcela: parcela, valorOriginal: custototal, dataVencimento: novadata, situacao: 'pendente' },
+                {transaction}
+            );
+
             await transaction.commit();
-    
-            return { result, data, result2, result3, result4, result5 };
+            
+            // retornando todos as transações
+            return { result, data, result2, result3, result4, result5, result6 };
+
         } catch (error) {
             await transaction.rollback();
             console.error('Erro ao criar e atualizar dados:', error);
