@@ -12,6 +12,7 @@ module.exports = (sequelize) => {
         },
         central: {
             type: Sequelize.STRING,
+            allowNull: false,
             unique:true
         },
         status: {

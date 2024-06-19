@@ -10,15 +10,24 @@ module.exports= (sequelize) => {
             primaryKey:true,
             autoIncrement: true
         },
-        nome_razao:{
-            type: Sequelize.STRING,
-            allowNull:false
+        natureza_operacao: {
+            type: Sequelize.ENUM('Devolução', 'Retorno', 'Complementar', 'Remessa', 'Entrega Futura', 'Venda', 'Consignada'),
+            allowNull: false
         },
-        CNPJ:{
+        cnpj_cpf_comprador:{
             type:Sequelize.STRING,
             allowNull:false
         },
+        nome_razao_comprador:{
+            type: Sequelize.STRING,
+            allowNull:false
+        },
+        
         cpf:{
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        descricao_produto:{
             type: Sequelize.STRING,
             allowNull: false
         },
@@ -26,10 +35,19 @@ module.exports= (sequelize) => {
             type:Sequelize.INTEGER,
             allowNull: false
         },
-        natureza_operacao: {
-            type: Sequelize.ENUM('Devolução', 'Retorno', 'Complementar', 'Remessa', 'Entrega Futura', 'Venda', 'Consignada'),
-            allowNull: false
-        }
+        cnpj_cpf_emitente:{
+            type:Sequelize.STRING,
+            allowNull:false
+        },
+        nome_razao_emitente:{
+            type: Sequelize.STRING,
+            allowNull:false
+        },
+        valor_nota:{
+            type:Sequelize.DOUBLE,
+            allowNull:false
+        },
+        
      
     });
 

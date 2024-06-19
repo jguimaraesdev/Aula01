@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
     codigo: {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true,
+      unique:true
     },
     
   });

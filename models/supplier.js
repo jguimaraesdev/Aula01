@@ -12,6 +12,10 @@ module.exports = (sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    cnpj:{
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     contato: {
       type: Sequelize.STRING,
       allowNull: false,

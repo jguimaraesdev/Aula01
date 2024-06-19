@@ -9,7 +9,7 @@ class SupplierService {
 
   async create(nome, contato) {
       try {
-          const result = await this.Supplier.create({ nome, contato });
+          const result = await this.Supplier.create({ nome, contato, cnpj });
           return result;
       } catch (error) {
           throw error;
