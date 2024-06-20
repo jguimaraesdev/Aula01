@@ -11,7 +11,7 @@ module.exports= (sequelize) => {
             autoIncrement: true
         },
         natureza_operacao: {
-            type: Sequelize.ENUM('Devolução', 'Retorno', 'Complementar', 'Remessa', 'Entrega Futura', 'Venda', 'Consignada'),
+            type: Sequelize.ENUM('Devolução', 'Retorno', 'Complementar', 'Remessa', 'Entrega Futura', 'Venda', 'Consignada', 'Compra'),
             allowNull: false
         },
         cnpj_cpf_comprador:{
@@ -21,11 +21,6 @@ module.exports= (sequelize) => {
         nome_razao_comprador:{
             type: Sequelize.STRING,
             allowNull:false
-        },
-        
-        cpf:{
-            type: Sequelize.STRING,
-            allowNull: false
         },
         descricao_produto:{
             type: Sequelize.STRING,

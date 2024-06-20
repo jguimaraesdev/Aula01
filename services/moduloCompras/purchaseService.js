@@ -2,13 +2,15 @@
 const dayjs = require('dayjs'); //npm install dayjs
 
 class PurchaseService {
-    constructor(PurchaseModel, RequisitionModel, QuotationModel, ProductModel, ControleProductModel, TitleModel) {
+    constructor(PurchaseModel, RequisitionModel, QuotationModel, ProductModel, ControleProductModel, TitleModel, NotaFiscalModel, SupplierModel) {
         this.Purchase = PurchaseModel;
         this.Requisition = RequisitionModel;
         this.Quotation = QuotationModel;
         this.Product = ProductModel;
         this.ControleProduct = ControleProductModel;
         this.Title = TitleModel;
+        this.NotaFiscal = NotaFiscalModel;
+        this.Supplier = SupplierModel;
     }   
   
     //--------------------------------------------------------------------------------------------------//
@@ -16,8 +18,15 @@ class PurchaseService {
     async create(quantidade, custototal, tipoPagamento, supplierId, quotationId, userId) {
         const transaction = await this.Purchase.sequelize.transaction();
         try {
+    
+            //---------------------------------------------------------------------------------------//
+            // Comprando um produto e inserindo no estoque
+    
             // Insere dados na tabela purchase
-            const result = await this.Purchase.create({ quantidade, custototal, tipoPagamento, supplierId, quotationId, userId }, { transaction });
+            const result = await this.Purchase.create(
+                { quantidade, custototal, tipoPagamento, supplierId, quotationId, userId },
+                { transaction }
+            );
     
             // Procura cotação para pegar id da requisição
             const data = await this.Quotation.findByPk(quotationId, { transaction });
@@ -46,34 +55,70 @@ class PurchaseService {
                 { nome: result3.produto_requerido, descricao: '', status: 'ATIVO', supplierId: data.supplierId },
                 { transaction }
             );
-            
-            // criando  um controle de produto
+    
+            // Criando um controle de produto
             const result5 = await this.ControleProduct.create(
-                {movimento_tipo: 'Entrada', qtd_disponivel: quantidade, qtd_bloqueado: 0, valor_faturado: 0, productId: result4.id, depositId: 1 },
-                {transaction}
+                { movimento_tipo: 'Entrada', qtd_disponivel: quantidade, qtd_bloqueado: 0, valor_faturado: 0, productId: result4.id, depositId: 1 },
+                { transaction }
             );
-
-            // definindo quantas parcelas o title vai receber
-            const parcela= 1;
-
-            if(tipoPagamento!='AVISTA'){
+    
+            // Definindo quantas parcelas o title vai receber
+            let parcela = 1;
+    
+            if (tipoPagamento !== 'AVISTA') {
                 parcela = 3;
             }
-
-            //criando data de vencimento
+    
+            // Criando data de vencimento
             const novadata = dayjs().add(30, 'day').format('YYYY-MM-DD');
-
-            // criando um novo titulo de divida
+    
+            // Criando um novo título de dívida
             const result6 = await this.Title.create(
-                {qtd_Parcela: parcela, valorOriginal: custototal, dataVencimento: novadata, situacao: 'pendente' },
-                {transaction}
+                { qtd_Parcela: parcela, valorOriginal: custototal, dataVencimento: novadata, situacao: 'pendente' },
+                { transaction }
             );
-
+    
+            //---------------------------------------------------------------------------------------//
+            // Agora vamos criar nota de entrada
+    
+            // Procura fornecedor para pegar dados necessários
+            const supplier = await this.Supplier.findByPk(data.supplierId, { transaction });
+    
+            if (!supplier) {
+                throw new Error('Supplier não encontrado');
+            }
+    
+            // Cria nota fiscal
+            const result7 = await this.NotaFiscal.create({
+                natureza_operacao: 'Compra',
+                cnpj_cpf_comprador: '123456/0001-10',
+                nome_razao_comprador: 'JG Muambas',
+                descricao_produto: result3.produto_requerido,
+                quantidade: quantidade,
+                cnpj_cpf_emitente: supplier.cnpj,
+                nome_razao_emitente: supplier.nome,
+                valor_nota: custototal,
+            }, { transaction });
+    
+            // Inserindo id de nota fiscal no produto por update
+            await this.Product.update(
+                { notafiscalId: result7.id },
+                { where: { id: result4.id }, transaction }
+            );
+    
+            // Inserindo id de nota fiscal no título por update
+            await this.Title.update(
+                { notafiscalId: result7.id },
+                { where: { id: result6.id }, transaction }
+            );
+    
+            //---------------------------------------------------------------------------------------//
+            
             await transaction.commit();
             
-            // retornando todos as transações
-            return { result, data, result2, result3, result4, result5, result6 };
-
+            // Retornando todas as transações
+            return { result, data, result2, result3, result4, result5, result6, result7 };
+    
         } catch (error) {
             await transaction.rollback();
             console.error('Erro ao criar e atualizar dados:', error);
@@ -81,7 +126,6 @@ class PurchaseService {
         }
     }
     
-     
   
     //--------------------------------------------------------------------------------------------------//
   

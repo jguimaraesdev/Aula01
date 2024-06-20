@@ -9,10 +9,27 @@ class NotaFiscalController {
     //--------------------------------------------------------------------------------------------------//
   
     async create(req, res) {
-        const { nome_razao, CNPJ, cpf, natureza_operacao, productId} = req.body;
+        const {
+            natureza_operacao, 
+            cnpj_cpf_comprador, 
+            nome_razao_comprador, 
+            descricao_produto, 
+            quantidade, 
+            cnpj_cpf_emitente, 
+            nome_razao_emitente, 
+            valor_nota} = req.body;
         
         try {
-            const result = await this.notafiscalService.create(nome_razao, CNPJ, cpf, natureza_operacao, productId);
+            const result = await this.notafiscalService.create(
+                natureza_operacao, 
+                cnpj_cpf_comprador, 
+                nome_razao_comprador, 
+                descricao_produto, 
+                quantidade, 
+                cnpj_cpf_emitente, 
+                nome_razao_emitente, 
+                valor_nota
+        );
             res.status(200).json(result);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir novo Registro" });

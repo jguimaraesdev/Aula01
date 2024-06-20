@@ -8,15 +8,28 @@ class NotaFiscalService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async create(nome_razao, CNPJ, cpf, natureza_operacao, productId ) {
+    async create(
+        natureza_operacao, 
+        cnpj_cpf_comprador, 
+        nome_razao_comprador, 
+        descricao_produto, 
+        quantidade, 
+        cnpj_cpf_emitente, 
+        nome_razao_emitente, 
+        valor_nota
+        ) {
         try {
             const result = await this.notafiscal.create({
-                nome_razao, 
-                CNPJ, 
-                cpf, 
                 natureza_operacao, 
-                productId
-            });
+                cnpj_cpf_comprador, 
+                nome_razao_comprador,
+                 descricao_produto, 
+                 quantidade, 
+                 cnpj_cpf_emitente, 
+                 nome_razao_emitente, 
+                 valor_nota
+                }
+            );
             return result;
         } catch (error) {
             throw error;
