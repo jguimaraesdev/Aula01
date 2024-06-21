@@ -37,4 +37,4 @@ no caso 30 dias. não é preciso informar a dataVencimento na requisição.
 //abre um no title
 //cria nota fiscal
 //insere id da nota fiscal no produto / titulo
-
+//cria movimnetação de titulos AVISTA/PARCELADO
