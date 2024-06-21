@@ -35,7 +35,7 @@ class PurchaseService {
                 throw new Error('Cotação não encontrada');
             }
     
-            const status = 'comprado';
+            const status = 'Concluido';
     
             // Atualiza o status da requisição
             const result2 = await this.Requisition.update(
@@ -49,10 +49,10 @@ class PurchaseService {
             if (!result3) {
                 throw new Error('Requisição não encontrada');
             }
-    
+            
             // Criando produto
             const result4 = await this.Product.create(
-                { nome: result3.produto_requerido, descricao: '', status: 'ATIVO', supplierId: data.supplierId },
+                { nome: result3.produto_requerido, preco_custo: custototal / quantidade, status: 'ATIVO', supplierId: data.supplierId },
                 { transaction }
             );
     
@@ -90,7 +90,7 @@ class PurchaseService {
     
             // Cria nota fiscal
             const result7 = await this.NotaFiscal.create({
-                natureza_operacao: 'Compra',
+                natureza_operacao: supplier.natureza_operacao,
                 cnpj_cpf_comprador: '123456/0001-10',
                 nome_razao_comprador: 'JG Muambas',
                 descricao_produto: result3.produto_requerido,

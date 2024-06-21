@@ -8,10 +8,10 @@ class RequisitionController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { produto_requerido, qtd_requerida, status, costCenterId} = req.body;
+      const { produto_requerido, qtd_requerida, natureza_operacao, costCenterId} = req.body;
       const userId = req.userId; // Suponho que você tenha o ID do usuário na requisição
       try {
-          const result = await this.requisitionService.create(produto_requerido, qtd_requerida, status, userId, costCenterId);
+          const result = await this.requisitionService.create(produto_requerido, qtd_requerida, natureza_operacao, userId, costCenterId);
           res.status(200).json(result);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir a novo registro" });

@@ -13,8 +13,8 @@ module.exports= (sequelize) => {
             type: Sequelize.STRING,
             allowNull:false
         },
-        descricao:{
-            type: Sequelize.STRING,
+        preco_custo:{
+            type: Sequelize.DOUBLE,
             allowNull: true
         },
         status: {

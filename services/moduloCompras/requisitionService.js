@@ -1,18 +1,32 @@
+const { Transaction } = require("sequelize");
+
 // ./services/requisitionService.js
 class RequisitionService {
-  constructor(RequisitionModel) {
+  constructor(RequisitionModel, QuotationModel, ControleProductModel) {
       this.Requisition = RequisitionModel;
+      this.Quotation = QuotationModel; 
+      this.ControleProduct = ControleProductModel;
   }
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(produto_requerido, qtd_requerida, status, userId, costCenterId) {
+  async create(produto_requerido, qtd_requerida, natureza_operacao, userId, costCenterId) {
+    const transaction = await this.Requisition.sequelize.transaction();
       try {
-          const result = await this.Requisition.create({ produto_requerido, qtd_requerida, status, userId, costCenterId });
-          return result;
-      } catch (error) {
-          throw error;
-      }
+
+            const result = await this.Requisition.create({ produto_requerido, qtd_requerida, natureza_operacao, userId, costCenterId },{transaction});
+
+
+            await transaction.commit();
+    
+            // Retornando todas as transações
+            return { result };
+    
+        } catch (error) {
+            await transaction.rollback();
+            console.error('Erro ao criar e atualizar dados:', error);
+            throw error;
+        }
   }
 
   //--------------------------------------------------------------------------------------------------//

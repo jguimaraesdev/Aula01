@@ -12,16 +12,19 @@ module.exports = (sequelize) => {
     produto_requerido: {
       type: Sequelize.STRING,
       allowNull: false,
+    },
+    natureza_operacao: {
+      type: Sequelize.ENUM('Devolução', 'Retorno', 'Complementar', 'Remessa', 'Consignada', 'Venda', 'Exportaçao', 'Importação'),
+      allowNull: false
     }, 
-   
     qtd_requerida: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
     
     status: {
-      type: Sequelize.ENUM('pendente', 'comprado', 'cancelado'),
-      defaultValue: 'pendente',
+      type: Sequelize.ENUM('Em Processamento', 'Concluida', 'Rejeitada'),
+      defaultValue: 'Em Processamento',
     },
   });
 

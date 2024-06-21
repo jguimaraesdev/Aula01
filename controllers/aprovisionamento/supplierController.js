@@ -8,9 +8,9 @@ class SupplierController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { nome, contato, cnpj } = req.body;
+      const { nome, cnpj, contato,  natureza_operacao } = req.body;
       try {
-          const result = await this.supplierService.create(nome, contato, cnpj);
+          const result = await this.supplierService.create(nome, cnpj, contato,  natureza_operacao );
           res.status(200).json(result);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir o novo resgistro" });

@@ -11,7 +11,7 @@ module.exports= (sequelize) => {
             autoIncrement: true
         },
         natureza_operacao: {
-            type: Sequelize.ENUM('Devolução', 'Retorno', 'Complementar', 'Remessa', 'Entrega Futura', 'Venda', 'Consignada', 'Compra'),
+            type: Sequelize.ENUM('Devolução', 'Retorno', 'Complementar', 'Remessa', 'Consignada', 'Venda', 'Exportaçao', 'Importação'),
             allowNull: false
         },
         cnpj_cpf_comprador:{

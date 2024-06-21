@@ -8,9 +8,9 @@ class ProductController {
     //--------------------------------------------------------------------------------------------------//
 
     async create(req, res) {
-        const { nome, descricao, status } = req.body;
+        const { nome, preco_custo, status } = req.body;
         try {
-            const result = await this.productService.create(nome, descricao, status);
+            const result = await this.productService.create(nome, preco_custo, status);
             res.status(200).json(result);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir o novo registro" });

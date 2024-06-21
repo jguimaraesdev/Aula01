@@ -7,9 +7,9 @@ class ProductService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async create(nome, descricao, status) {
+    async create(nome, preco_custo, status) {
         try {
-            const result = await this.Product.create({ nome, descricao, status });
+            const result = await this.Product.create({ nome, preco_custo, status });
             return result;
         } catch (error) {
             throw error;

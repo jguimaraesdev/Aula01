@@ -20,6 +20,11 @@ module.exports = (sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    natureza_operacao: {
+      type: Sequelize.ENUM('Consignada', 'Venda', 'Exportaçao', 'Importação'),
+      defaultValue: 'Importação',
+      allowNull: false
+    },
   });
   
   return Supplier;
