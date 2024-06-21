@@ -2,7 +2,7 @@
 const dayjs = require('dayjs'); //npm install dayjs
 
 class PurchaseService {
-    constructor(PurchaseModel, RequisitionModel, QuotationModel, ProductModel, ControleProductModel, TitleModel, NotaFiscalModel, SupplierModel) {
+    constructor(PurchaseModel, RequisitionModel, QuotationModel, ProductModel, ControleProductModel, TitleModel, NotaFiscalModel, SupplierModel, ControleTitleModel) {
         this.Purchase = PurchaseModel;
         this.Requisition = RequisitionModel;
         this.Quotation = QuotationModel;
@@ -11,6 +11,7 @@ class PurchaseService {
         this.Title = TitleModel;
         this.NotaFiscal = NotaFiscalModel;
         this.Supplier = SupplierModel;
+        this.ControleTitle =ControleTitleModel;
     }   
   
     //--------------------------------------------------------------------------------------------------//
@@ -18,7 +19,6 @@ class PurchaseService {
     async create(quantidade, custototal, tipoPagamento, supplierId, quotationId, userId) {
         const transaction = await this.Purchase.sequelize.transaction();
         try {
-    
             //---------------------------------------------------------------------------------------//
             // Comprando um produto e inserindo no estoque
     
@@ -113,11 +113,46 @@ class PurchaseService {
             );
     
             //---------------------------------------------------------------------------------------//
-            
+            // Controle de Títulos para Parcelamento
+    
+            let results = [];
+    
+            if (parcela === 3) {
+                let valor = custototal / parcela;
+    
+                for (let i = 0; i < parcela; i++) {
+                    const result8 = await this.ControleTitle.create(
+                        {
+                            tipoMovimento: 'abertura',
+                            valorMovimento: valor,
+                            valorMulta: 0,
+                            valorJuros: 0,
+                            titleId: result6.id
+                        },
+                        { transaction }
+                    );
+                    console.log(`Created ControleTitle ${i + 1}: `, result8);
+                    results.push(result8);
+                }
+            } else {
+                const result8 = await this.ControleTitle.create(
+                    {
+                        tipoMovimento: 'abertura',
+                        valorMovimento: custototal,
+                        valorMulta: 0,
+                        valorJuros: 0,
+                        titleId: result6.id
+                    },
+                    { transaction }
+                );
+                console.log('Created single ControleTitle: ', result8);
+                results.push(result8);
+            }
+    
             await transaction.commit();
-            
+    
             // Retornando todas as transações
-            return { result, data, result2, result3, result4, result5, result6, result7 };
+            return { result, data, result2, result3, result4, result5, result6, result7, controleTitles: results };
     
         } catch (error) {
             await transaction.rollback();
@@ -125,6 +160,7 @@ class PurchaseService {
             throw error;
         }
     }
+    
     
   
     //--------------------------------------------------------------------------------------------------//

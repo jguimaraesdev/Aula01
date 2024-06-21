@@ -10,7 +10,7 @@ const PurchaseService = require('../services/moduloCompras/purchaseService');
 const PurchaseController = require('../controllers/moduloCompras/purchaseController');
 
 // Instanciando o serviço e o controlador
-const purchaseService = new PurchaseService(db.Purchase, db.Requisition, db.Quotation, db.Product, db.ControleProduct, db.Title, db.NotaFiscal, db.Supplier,  authenticateToken);
+const purchaseService = new PurchaseService(db.Purchase, db.Requisition, db.Quotation, db.Product, db.ControleProduct, db.Title, db.NotaFiscal, db.Supplier, db.ControleTitle, authenticateToken);
 const purchaseController = new PurchaseController(purchaseService);
 
 
