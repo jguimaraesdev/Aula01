@@ -1,11 +1,11 @@
 // ./controllers/DepartmentController.js
 
 
-
 class DepartmentController {
-    constructor(departmentService, CostCenterService) {
+  
+    constructor(departmentService) {
       this.departmentService = departmentService;
-      this.costcenterService = CostCenterService;
+    
     }
   
     //--------------------------------------------------------------------------------------------------//
