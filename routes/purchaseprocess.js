@@ -19,3 +19,6 @@ const purchaseprocessController = new PurchaseProcessController(purchaseprocessS
 router.post('/new', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
   purchaseprocessController.create(req, res).catch(next);
 });
+
+
+module.exports = router;

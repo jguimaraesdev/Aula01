@@ -26,6 +26,8 @@ const notafiscalRouter = require('./routes/notafiscal');
 const sellRouter = require('./routes/sell');
 const selldetailsRouter = require('./routes/selldetails');
 const clienteRouter = require('./routes/cliente');
+const purchaseprocessRouter = require('./routes/purchaseprocess');
+const departmentprocessRouter = require('./routes/DepartmentProcess');
 
 const { applyMigrations } = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
@@ -56,6 +58,8 @@ app.use('/notafiscal', notafiscalRouter);
 app.use('/sell', sellRouter);
 app.use('/selldetails', selldetailsRouter);
 app.use('/cliente', clienteRouter);
+app.use('/purchaseprocess', purchaseprocessRouter);
+app.use('/departmentprocess', departmentprocessRouter);
 
 // Middleware de tratamento de erros
 app.use(errorHandler);

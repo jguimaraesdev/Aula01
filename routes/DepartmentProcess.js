@@ -16,3 +16,6 @@ router.post('/new', (req, res, next) => {
 departmentprocessController.create(req, res).catch(next);
 
 });
+
+
+module.exports = router;
