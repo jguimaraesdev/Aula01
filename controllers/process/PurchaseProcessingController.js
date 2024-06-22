@@ -1,33 +1,30 @@
 //controllers/process/PurchaseProcessingController.js
 
-class PurchaseProcessingController{
-    constructor(PurchaseProcessingService){
-        this.PurchaseProcessService = PurchaseProcessingService;
+
+class PurchaseProcessingController {
+    constructor(PurchaseProcessingService) {
+        this.PurchaseProcessingService = PurchaseProcessingService;
     }
 
+    async create(req, res) {
+        const { quantidade, custototal, tipoPagamento, quotationId} = req.body;
+        const userId = req.userId;
 
-    async create(req, res){
-        const{quantidade, custototal, tipoPagamento, supplierId, quotationId, userId} = req.body;
-
-        try{
-
-            const result = await this.PurchaseProcessSercice.create({
+        try {
+            console.log('Iniciando criação de PurchaseProcessing');
+            const result = await this.PurchaseProcessingService.create(
                 quantidade, 
                 custototal, 
-                tipoPagamento, 
-                supplierId, 
+                tipoPagamento,  
                 quotationId, 
-                userId
-            });
+                userId,
+            );
             res.status(200).json(result);
-
-        } catch(error){
-
-            res.status(500).json({ error: "Erro ao inserir novo Registro" });
-
+        } catch (error) {
+            console.error('Erro no controlador ao criar PurchaseProcessing:', error);
+            res.status(500).json({ error: "Erro ao inserir novo Registro", detalhes: error.message });
         }
     }
-
 }
 
 module.exports = PurchaseProcessingController;

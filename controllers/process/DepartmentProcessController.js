@@ -1,7 +1,7 @@
 //controllers/process/DepartmentProcessController.js
 
 
-class DepartmentProcessController{
+class DepartmentProcessingController{
     
     constructor(DepartmentProcessService){
         this.DepartmentProcess = DepartmentProcessService;
@@ -27,4 +27,4 @@ class DepartmentProcessController{
 }}
 
 
-module.exports = DepartmentProcessController;
+module.exports = DepartmentProcessingController;

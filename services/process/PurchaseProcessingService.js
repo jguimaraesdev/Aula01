@@ -3,29 +3,29 @@ const dayjs = require('dayjs'); //npm install dayjs
 
 
 class PurchaseProcessingService {
-    constructor(purchaseService, requisitionService, productService, controleProductService, titleService, controleTitleService, quotationService, supplierService, notaFiscalService, sequelize) {
-        this.purchaseService = purchaseService;
-        this.requisitionService = requisitionService;
-        this.productService = productService;
-        this.controleProductService = controleProductService;
-        this.titleService = titleService;
-        this.controleTitleService = controleTitleService;
-        this.quotationService = quotationService;
-        this.supplierService = supplierService;
-        this.notaFiscalService = notaFiscalService;
+    constructor(PurchaseModel, RequisitionModel, ProductModel, ControleProductModel, TitleModel, ControleTitleModel, QuotationModel, SupplierModel, NotaFiscalModel, sequelize) {
+        this.Purchase = PurchaseModel;
+        this.Requisition = RequisitionModel;
+        this.Product = ProductModel;
+        this.ControleProduct = ControleProductModel;
+        this.Title = TitleModel;
+        this.ControleTitle = ControleTitleModel;
+        this.Quotation = QuotationModel;
+        this.Supplier = SupplierModel;
+        this.NotaFiscal = NotaFiscalModel;
         this.sequelize = sequelize;
     }
 
 
-async create(quantidade, custototal, tipoPagamento, supplierId, quotationId, userId) {
-    const transaction = await this.Purchase.sequelize.transaction();
+async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
+    const transaction = await this.sequelize.transaction();
     try {
         //---------------------------------------------------------------------------------------//
         // Comprando um produto e inserindo no estoque
 
         // Insere dados na tabela purchase
         const result = await this.Purchase.create(
-            { quantidade, custototal, tipoPagamento, supplierId, quotationId, userId },
+            { quantidade, custototal, tipoPagamento, quotationId, userId },
             { transaction }
         );
 
@@ -36,7 +36,7 @@ async create(quantidade, custototal, tipoPagamento, supplierId, quotationId, use
             throw new Error('Cotação não encontrada');
         }
 
-        const status = 'Concluido';
+        const status = 'Concluida';
 
         // Atualiza o status da requisição
         const result2 = await this.Requisition.update(

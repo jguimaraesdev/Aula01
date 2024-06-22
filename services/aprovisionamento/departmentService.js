@@ -1,10 +1,8 @@
 // ./services/departmentService.js
 
 class DepartmentService {
-  constructor(DepartmentModel, CostCenterModel) {
+  constructor(DepartmentModel) {
       this.Department = DepartmentModel;
-      this.CostCenter = CostCenterModel;
-    
     
   }
 
@@ -13,13 +11,14 @@ class DepartmentService {
   async create(nome) {
 
     try {
-        const result = await this.Department.create({ nome });
-        return result;
 
+        const result = await this.Department.create({ nome });
+
+        return result;
     } catch (error) {
         throw error;
     }
-}
+    }
 
   //--------------------------------------------------------------------------------------------------//
 
