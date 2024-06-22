@@ -25,6 +25,11 @@ module.exports = (sequelize) => {
       defaultValue: 'Importação',
       allowNull: false
     },
+    categoria:{
+      type: Sequelize.ENUM('Eletronico', 'Papelaria', 'Acessórios', 'Roupa', 'Diversos'),
+      defaultValue: 'Diversos',
+      allowNull: false
+    }
   });
   
   return Supplier;

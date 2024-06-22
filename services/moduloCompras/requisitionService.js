@@ -10,11 +10,11 @@ class RequisitionService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(produto_requerido, qtd_requerida, natureza_operacao, userId, costCenterId) {
+  async create(produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId) {
     const transaction = await this.Requisition.sequelize.transaction();
       try {
 
-            const result = await this.Requisition.create({ produto_requerido, qtd_requerida, natureza_operacao, userId, costCenterId },{transaction});
+            const result = await this.Requisition.create({ produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId },{transaction});
 
 
             await transaction.commit();

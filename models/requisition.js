@@ -13,6 +13,11 @@ module.exports = (sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    categoria:{
+      type: Sequelize.ENUM('Eletronico', 'Papelaria', 'Acessórios', 'Roupa', 'Diversos'),
+      defaultValue: 'Diversos',
+      allowNull: false
+    },
     natureza_operacao: {
       type: Sequelize.ENUM('Devolução', 'Retorno', 'Complementar', 'Remessa', 'Consignada', 'Venda', 'Exportaçao', 'Importação'),
       allowNull: false
