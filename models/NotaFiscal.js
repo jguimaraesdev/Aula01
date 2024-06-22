@@ -44,6 +44,13 @@ module.exports= (sequelize) => {
         },
         
      
+    }, {
+        indexes: [
+            {
+                fields: ['natureza_operacao', 'cnpj_cpf_comprador', 'nome_razao_emitente']
+            }
+            // Adicione outros índices conforme necessário
+        ]
     });
 
     return NotaFiscal;

@@ -9,10 +9,10 @@ class SellDetailsController {
     //--------------------------------------------------------------------------------------------------//
   
     async create(req, res) {
-        const { quantidade, preco, productId, sellId} = req.body;
+        const { quantidade, preco_venda, productId, sellId, clienteId, notafiscalId} = req.body;
         
         try {
-            const result = await this.selldetailsController.create(quantidade, preco, productId, sellId);
+            const result = await this.selldetailsController.create(quantidade, preco_venda, productId, sellId, clienteId, notafiscalId);
             res.status(200).json(result);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir registro" });

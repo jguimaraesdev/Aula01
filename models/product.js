@@ -11,7 +11,8 @@ module.exports= (sequelize) => {
         },
         nome:{
             type: Sequelize.STRING,
-            allowNull:false
+            allowNull:false,
+            unique:true
         },
         preco_custo:{
             type: Sequelize.DOUBLE,
@@ -23,6 +24,13 @@ module.exports= (sequelize) => {
         }
         
         
+    }, {
+        indexes: [
+            {
+                fields: ['nome', 'status']
+            }
+            // Adicione outros índices conforme necessário
+        ]
     });
 
     Product.associate = (models) =>{

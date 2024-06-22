@@ -14,7 +14,7 @@ module.exports= (sequelize) => {
             type:Sequelize.INTEGER,
             allowNull: false
         },
-        preco:{
+        preco_venda:{
             type: Sequelize.INTEGER,
             allowNull: false
         }
@@ -27,12 +27,17 @@ module.exports= (sequelize) => {
             as: 'Product'
         });
         
-    };
-
-    SellDetails.associate = (models) => {
         SellDetails.belongsTo(models.Sell, {
             foreignKey: 'sellId',
             as: 'Sell'
+        });
+        SellDetails.belongsTo(models.Cliente, {
+            foreignKey: 'clienteId',
+            as: 'Cliente'
+        });
+        SellDetails.belongsTo(models.NotaFiscal, {
+            foreignKey: 'notafiscalId',
+            as: 'NotaFiscal'
         });
     };
 

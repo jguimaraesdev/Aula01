@@ -21,7 +21,13 @@ module.exports = (sequelize) => {
             allowNull: false
         }
         
-    });
+    }, {
+        indexes: [
+          {
+            fields: ['central']
+          }
+        ]
+      });
 
 
     return Deposit;

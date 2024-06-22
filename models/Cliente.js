@@ -17,7 +17,21 @@ module.exports = (sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       }
+    }, {
+      indexes: [
+        {
+          fields: ['CPF']
+        }
+      ]
     });
+    
+    Cliente.associate = (models) =>{
+      Cliente.belongsTo(models.User,{
+          foreignKey: 'userId',
+          as: 'User',
+          allowNull: false
+      });
+  };
 
     
     return Cliente;

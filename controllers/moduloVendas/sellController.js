@@ -9,10 +9,10 @@ class BuySellController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { valor, tipoMovimento, dataVenda, tipoPagamento, notafiscalId, clienteId} = req.body;
+      const { quantidade, dataVenda, tipoPagamento, requisitionId, userId} = req.body;
       
       try {
-          const result = await this.sellService.create(valor, tipoMovimento, dataVenda, tipoPagamento, notafiscalId, clienteId);
+          const result = await this.sellService.create(quantidade, dataVenda, tipoPagamento, requisitionId, userId);
           res.status(200).json(result);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir registro" });

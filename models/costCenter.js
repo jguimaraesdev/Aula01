@@ -13,6 +13,12 @@ module.exports = (sequelize) => {
       unique:true
     },
     
+  }, {
+    indexes: [
+      {
+        fields: ['codigo']
+      }
+    ]
   });
   
   CostCenter.associate = (models) => {

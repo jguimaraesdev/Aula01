@@ -9,10 +9,10 @@ class TitleController {
     //--------------------------------------------------------------------------------------------------//
   
     async create(req, res) {
-        const { notafiscalId, numeroParcela, valorParcela, dataVencimento, situacao} = req.body;
+        const { notafiscalId, numeroParcela, valorParcela, dataVencimento, status} = req.body;
         
         try {
-            const result = await this.titleService.create(notafiscalId, numeroParcela, valorParcela, dataVencimento, situacao );
+            const result = await this.titleService.create(notafiscalId, numeroParcela, valorParcela, dataVencimento, status );
             res.status(200).json(result);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir novo registro" });

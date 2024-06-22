@@ -23,10 +23,17 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
         //---------------------------------------------------------------------------------------//
         // Comprando um produto e inserindo no estoque
 
+       
         // Insere dados na tabela purchase
         const result = await this.Purchase.create(
-            { quantidade, custototal, tipoPagamento, quotationId, userId },
-            { transaction }
+            { 
+                dataCompra: dayjs().format('YYYY-MM-DD'),
+                quantidade, 
+                custototal, 
+                tipoPagamento, 
+                quotationId,
+                 userId 
+            },{ transaction }
         );
 
         // Procura cotação para pegar id da requisição
@@ -75,7 +82,7 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
 
         // Criando um novo título de dívida
         const result6 = await this.Title.create(
-            { qtd_Parcela: parcela, valorOriginal: custototal, dataVencimento: novadata, situacao: 'pendente' },
+            { qtd_Parcela: parcela, valorOriginal: custototal, dataVencimento: novadata, status: 'pendente' },
             { transaction }
         );
 

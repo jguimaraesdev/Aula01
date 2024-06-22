@@ -30,7 +30,12 @@ module.exports = (sequelize) => {
       defaultValue: 'Diversos',
       allowNull: false
     }
+  }, {
+    indexes: [
+      {
+        fields: ['categoria', 'natureza_operacao']
+      }
+    ]
   });
-  
   return Supplier;
 };

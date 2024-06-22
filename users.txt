@@ -13,3 +13,9 @@
     "senha": "jg123",
     "status": "ativo"
 }
+
+
+
+DROP INDEX central_50 ON deposits;
+
+SET FOREIGN_KEY_CHECKS = 0;

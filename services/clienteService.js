@@ -6,9 +6,9 @@ class ClienteService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async create(nome, CPF) {
+    async create(nome, CPF, userId) {
         try {
-            const result = await this.clienteservice.create({nome, CPF});
+            const result = await this.clienteservice.create({nome, CPF, userId});
             return result;
         } catch (error) {
             throw error;

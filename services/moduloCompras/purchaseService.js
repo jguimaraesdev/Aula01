@@ -10,12 +10,13 @@ class PurchaseService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async create(quantidade, custototal, tipoPagamento, supplierId, quotationId, userId) {
+    async create(dataCompra, quantidade, custototal, tipoPagamento, supplierId, quotationId, userId) {
 
         try {
             
             const result = await this.Purchase.create(
-                { quantidade, 
+                { dataCompra,
+                    quantidade, 
                     custototal, 
                     tipoPagamento, 
                     supplierId, 

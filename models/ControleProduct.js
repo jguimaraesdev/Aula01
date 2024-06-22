@@ -25,7 +25,13 @@ module.exports = (sequelize) => {
             type: Sequelize.DECIMAL(10, 2),
             allowNull: false
         }
-    });
+    }, {
+        indexes: [
+          {
+            fields: ['movimento_tipo']
+          }
+        ]
+      });
 
     // criando relacionamento
     

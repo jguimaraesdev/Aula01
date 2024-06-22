@@ -30,7 +30,13 @@ module.exports= (sequelize) => {
             allowNull: false
         },
 
-    });
+    }, {
+        indexes: [
+          {
+            fields: ['status']
+          }
+        ]
+      });
 
     return User;
 };

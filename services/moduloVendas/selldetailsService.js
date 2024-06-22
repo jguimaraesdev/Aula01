@@ -9,13 +9,15 @@ class SellDetailsService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async create(quantidade, preco, productId, sellId) {
+    async create(quantidade, preco_venda, productId, sellId, clienteId, notafiscalId) {
         try {
             const result = await this.SellDetails.create({ 
                 quantidade, 
-                preco, 
+                preco_venda, 
                 productId, 
-                sellId 
+                sellId, 
+                clienteId, 
+                notafiscalId
           });
             return result;
         } catch (error) {

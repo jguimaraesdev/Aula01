@@ -21,10 +21,16 @@ module.exports = (sequelize) => {
       type: Sequelize.DATE,
       allowNull: false,
     },
-    situacao: {
+    status: {
       type: Sequelize.ENUM('pendente', 'pago', 'cancelado'),
       defaultValue: 'pendente',
     },
+  }, {
+    indexes: [
+      {
+        fields: ['qtd_Parcela', 'situacao']
+      }
+    ]
   });
 
   Title.associate = (models) =>{

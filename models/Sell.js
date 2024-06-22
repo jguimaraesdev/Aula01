@@ -10,8 +10,8 @@ module.exports = (sequelize) => {
       autoIncrement: true,
     },
   
-    tipoMovimento: {
-      type: Sequelize.ENUM('Venda', 'Compra'),
+    quantidade: {
+      type: Sequelize.INTEGER,
       allowNull: false,
     },
     dataVenda: {
@@ -22,20 +22,24 @@ module.exports = (sequelize) => {
       type: Sequelize.ENUM('AVISTA', 'PARCELADO'),
       allowNull: false,
     }
-
+  }, {
+    indexes: [
+      {
+        fields: ['tipoPagamento']
+      }
+    ]
   });
 
     Sell.associate = (models) =>{
       Sell.belongsTo(models.NotaFiscal,{
-          foreignKey: 'notafiscalId',
-          as:'NotaFiscal'
+          foreignKey: 'requisitionId',
+          as:'Requisition'
       }),
-      
-      Sell.belongsTo(models.Cliente,{
-          foreignKey: 'clienteId',
-          as:'Cliente'
-      });
-
+      Sell.belongsTo(models.User, { 
+        foreignKey: 'userId', 
+        as: 'User' ,
+        allowNull: false
+      })
     };
 
   return Sell;

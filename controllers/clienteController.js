@@ -10,9 +10,10 @@ class ClienteController {
   
     async create(req, res) {
         const { nome, CPF} = req.body;
+        const userId = req.userId;
         
         try {
-            const result = await this.clienteService.create(nome, CPF);
+            const result = await this.clienteService.create(nome, CPF, userId);
             res.status(200).json(result);
         } catch (error) {
             res.status(500).json({ error: "Erro ao inserir novo Registro" });

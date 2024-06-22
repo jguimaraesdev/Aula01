@@ -20,7 +20,8 @@ const purchaseProcessingService = new PurchaseProcessingService(
     db.Quotation, 
     db.Supplier, 
     db.NotaFiscal, 
-    db.sequelize
+    db.sequelize,
+    authenticateToken
 );
 const purchaseProcessingController = new PurchaseProcessingController(purchaseProcessingService);
 

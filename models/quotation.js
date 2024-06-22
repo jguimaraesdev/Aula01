@@ -23,7 +23,14 @@ module.exports = (sequelize) => {
       type: Sequelize.DATE,
       allowNull: false,
     },
-  });
+  }, {
+    indexes: [
+        {
+            fields: ['validadeCotacao']
+        }
+        // Adicione outros índices conforme necessário
+    ]
+});
 
   Quotation.associate = (models) =>{
     Quotation.belongsTo(models.Supplier, { 

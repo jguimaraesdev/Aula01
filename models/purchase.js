@@ -8,6 +8,10 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
+    dataCompra: {
+      type: Sequelize.DATE,
+      allowNull: false
+    },
     
     quantidade: {
       type: Sequelize.INTEGER,
@@ -21,7 +25,14 @@ module.exports = (sequelize) => {
       type: Sequelize.ENUM('AVISTA', 'PARCELADO'),
       allowNull: false,
     }
-  });
+  }, {
+    indexes: [
+        {
+            fields: ['tipoPagamento']
+        }
+        // Adicione outros índices conforme necessário
+    ]
+});
 
   Purchase.associate = (models) => {
     Purchase.belongsTo(models.Quotation, { 

@@ -12,6 +12,12 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique:true
     },
+  }, {
+    indexes: [
+      {
+        fields: ['nome']
+      }
+    ]
   });
 
 

@@ -25,6 +25,12 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
 
+  }, {
+    indexes: [
+      {
+        fields: ['tipoMovimento']
+      }
+    ]
   });
 
   ControleTitle.associate = (models) =>{
