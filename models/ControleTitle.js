@@ -16,6 +16,10 @@ module.exports = (sequelize) => {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
     },
+    dataVencimento: {
+      type: Sequelize.DATE,
+      allowNull: false,
+    },
     valorMulta: {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: true,
