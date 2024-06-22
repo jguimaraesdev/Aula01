@@ -3,7 +3,7 @@
 const dayjs = require('dayjs'); // npm install dayjs
 
 class SellProcessingService {
-  constructor(SellModel, RequisitionModel, ProductModel, ControleProductModel, TitleModel, ControleTitleModel, SellDetailsModel, NotaFiscalModel, sequelize) {
+  constructor(SellModel, RequisitionModel, ProductModel, ControleProductModel, TitleModel, ControleTitleModel, SellDetailsModel, NotaFiscalModel, ClienteModel, sequelize) {
     this.Sell = SellModel;
     this.Requisition = RequisitionModel;
     this.Product = ProductModel;
@@ -12,6 +12,7 @@ class SellProcessingService {
     this.ControleTitle = ControleTitleModel;
     this.SellDetails = SellDetailsModel;
     this.NotaFiscal = NotaFiscalModel;
+    this.Cliente = ClienteModel;
     this.sequelize = sequelize;
   }
 
@@ -81,7 +82,7 @@ class SellProcessingService {
         transaction
       });
 
-      const lucrovenda = (produto.preco_custo / qtd_requerida) * 2 ;// Calculando o preço de venda com 100% de lucro
+      const lucrovenda = produto.preco_custo * 2 ;// Calculando o preço de venda com 100% de lucro
 
       // Criando detalhes da venda
       const sellDetails = await this.SellDetails.create({
