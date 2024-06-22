@@ -28,6 +28,7 @@ const selldetailsRouter = require('./routes/selldetails');
 const clienteRouter = require('./routes/cliente');
 const purchaseprocessingRouter = require('./routes/purchaseprocessing');
 const departmentprocessingRouter = require('./routes/departmentprocessing');
+const sellProcessingRoutes = require('./routes/sellProcessing');
 
 const { applyMigrations } = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
@@ -60,6 +61,7 @@ app.use('/selldetails', selldetailsRouter);
 app.use('/cliente', clienteRouter);
 app.use('/purchaseprocessing', purchaseprocessingRouter);
 app.use('/departmentprocessing', departmentprocessingRouter);
+app.use('/sellprocessing', sellProcessingRoutes);
 
 // Middleware de tratamento de erros
 app.use(errorHandler);

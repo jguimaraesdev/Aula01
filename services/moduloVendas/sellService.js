@@ -9,7 +9,7 @@ class SellService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(valor, tipoMovimento, dataVenda, tipoPagamento, notafiscalId, clienteId) {
+  async create(valor, tipoMovimento, dataVenda, tipoPagamento, requisitionId, userId) {
       try {
           const result = await this.sellservice.create({ 
             valor, 
@@ -17,8 +17,8 @@ class SellService {
             dataVenda, 
             dataVencimento, 
             tipoPagamento, 
-            notafiscalId,
-            clienteId 
+            requisitionId,
+            userId 
         });
           return result;
       } catch (error) {

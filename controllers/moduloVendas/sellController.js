@@ -9,7 +9,8 @@ class BuySellController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { quantidade, dataVenda, tipoPagamento, requisitionId, userId} = req.body;
+      const { quantidade, dataVenda, tipoPagamento, requisitionId} = req.body;
+      const userId = req.userId;
       
       try {
           const result = await this.sellService.create(quantidade, dataVenda, tipoPagamento, requisitionId, userId);
