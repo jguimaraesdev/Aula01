@@ -3,35 +3,46 @@
 const dayjs = require('dayjs'); // npm install dayjs
 
 class SellProcessingService {
-  constructor(sellService, requisitionService, productService, controleProductService, titleService, controleTitleService, sellDetailsService, notaFiscalService, sequelize) {
-    this.sellService = sellService;
-    this.requisitionService = requisitionService;
-    this.productService = productService;
-    this.controleProductService = controleProductService;
-    this.titleService = titleService;
-    this.controleTitleService = controleTitleService;
-    this.sellDetailsService = sellDetailsService;
-    this.notaFiscalService = notaFiscalService;
+  constructor(SellModel, RequisitionModel, ProductModel, ControleProductModel, TitleModel, ControleTitleModel, SellDetailsModel, NotaFiscalModel, sequelize) {
+    this.Sell = SellModel;
+    this.Requisition = RequisitionModel;
+    this.Product = ProductModel;
+    this.ControleProduct = ControleProductModel;
+    this.Title = TitleModel;
+    this.ControleTitle = ControleTitleModel;
+    this.SellDetails = SellDetailsModel;
+    this.NotaFiscal = NotaFiscalModel;
     this.sequelize = sequelize;
   }
 
-  async create({ produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, valor, tipoMovimento, tipoPagamento, clienteId }) {
+  async create({ produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, tipoPagamento}) {
     const transaction = await this.sequelize.transaction();
     try {
-      //---------------------------------------------------------------------------------------//
+      // Procurar produto pelo nome
+      const produto = await this.Product.findOne({
+        where: { nome: produto_requerido },
+        transaction
+      });
+
+      if (!produto) {
+        throw new Error('Produto não encontrado');
+      }
+
+      const productId = produto.id;
+
       // Criando requisição
-      const requisition = await this.requisitionService.create({
-        produto_requerido, 
-        qtd_requerida, 
-        categoria, 
-        natureza_operacao, 
-        userId, 
-        costCenterId 
+      const requisition = await this.Requisition.create({
+        produto_requerido,
+        qtd_requerida,
+        categoria,
+        natureza_operacao,
+        userId,
+        costCenterId
       }, { transaction });
 
       // Procurar no ControleProduct se tem qtd_disponivel
-      const controleProduct = await this.controleProductService.findOne({
-        where: { productId: requisition.productId },
+      const controleProduct = await this.ControleProduct.findOne({
+        where: { productId },
         transaction
       });
 
@@ -40,9 +51,10 @@ class SellProcessingService {
       }
 
       // Atualizando ControleProduct
-      await this.controleProductService.update(
+      await this.ControleProduct.update(
         {
-          qtd_disponivel: controleProduct.qtd_disponivel - qtd_requerida
+          qtd_disponivel: controleProduct.qtd_disponivel - qtd_requerida,
+          qtd_bloqueado: qtd_requerida
         },
         {
           where: { id: controleProduct.id },
@@ -51,54 +63,61 @@ class SellProcessingService {
       );
 
       // Gerar dataVenda
-      const dataVenda = dayjs().format('YYYY-MM-DD');
+      const dataatual = dayjs().format('YYYY-MM-DD');
 
       // Criando venda
-      const sell = await this.sellService.create({
-        valor, 
-        tipoMovimento,
-        dataVenda, 
-        dataVencimento: dataVenda, // Atualizar conforme necessidade
-        tipoPagamento, 
+      const sell = await this.Sell.create({
+        quantidade : qtd_requerida,
+        dataVenda: dataatual, // Atualizar conforme necessidade
+        tipoPagamento,
         requisitionId: requisition.id,
         userId
       }, { transaction });
 
+
+      // Procurar no ControleProduct se tem qtd_disponivel
+      const cliente = await this.Cliente.findOne({
+        where: { userId },
+        transaction
+      });
+
+      const lucrovenda = (produto.preco_custo / qtd_requerida) * 2 ;// Calculando o preço de venda com 100% de lucro
+
       // Criando detalhes da venda
-      const sellDetails = await this.sellDetailsService.create({
+      const sellDetails = await this.SellDetails.create({
         quantidade: qtd_requerida,
-        preco_venda: valor / qtd_requerida,
-        productId: requisition.productId,
+        preco_venda: lucrovenda, 
+        productId,
         sellId: sell.id,
-        clienteId,
+        clienteId:cliente.id,
         notafiscalId: null // Atualizar após criação de NotaFiscal
       }, { transaction });
 
       // Criando Nota Fiscal
-      const notaFiscal = await this.notaFiscalService.create({
+      const notaFiscal = await this.NotaFiscal.create({
         natureza_operacao,
-        cnpj_cpf_comprador: '123456/0001-10',
-        nome_razao_comprador: 'JG Muambas',
+        cnpj_cpf_comprador: cliente.CPF ,
+        nome_razao_comprador: cliente.nome,
         descricao_produto: produto_requerido,
         quantidade: qtd_requerida,
-        cnpj_cpf_emitente: '987654/0001-10',
-        nome_razao_emitente: 'Empresa X',
-        valor_nota: valor
+        cnpj_cpf_emitente: '123456/0001-10',
+        nome_razao_emitente: 'JG Muambas',
+        valor_nota:  lucrovenda, 
       }, { transaction });
 
       // Atualizar sellDetails com notafiscalId
-      await this.sellDetailsService.update(
+      await this.SellDetails.update(
         { notafiscalId: notaFiscal.id },
         { where: { id: sellDetails.id }, transaction }
       );
 
       // Criando título
       const numeroParcela = tipoPagamento === 'PARCELADO' ? 3 : 1;
-      const valorParcela = valor / numeroParcela;
+      const valorParcela = lucrovenda  / numeroParcela;
 
-      const title = await this.titleService.create({
-        numeroParcela,
-        valorParcela,
+      const title = await this.Title.create({
+        qtd_parcela: numeroParcela,
+        valorOriginal: produto.preco_custo,
         dataVencimento: dayjs().add(30, 'day').format('YYYY-MM-DD'),
         status: 'pendente',
         notafiscalId: notaFiscal.id
@@ -107,8 +126,8 @@ class SellProcessingService {
       // Criando controle de título
       const controleTitlePromises = [];
       for (let i = 0; i < numeroParcela; i++) {
-        controleTitlePromises.push(this.controleTitleService.create({
-          tipoMovimento,
+        controleTitlePromises.push(this.ControleTitle.create({
+          tipoMovimento: 'abertura',
           valorMovimento: valorParcela,
           valorMulta: 0,
           valorJuros: 0,
