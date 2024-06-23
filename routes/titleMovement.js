@@ -8,7 +8,7 @@ const authenticateToken = new AuthenticateToken('SUA_CHAVE_SECRETA');
 const TitleMovementController = require('../controllers/process/TitleMovementController');
 const TitleMovementService = require('../services/process/TitleMovementService');
 
-const titleMovementService = new TitleMovementService(db.Title, db.ControleTitle, authenticateToken, sequelize);
+const titleMovementService = new TitleMovementService(db.Title, db.ControleTitle, authenticateToken, db.sequelize);
 const titleMovementController = new TitleMovementController(titleMovementService);
 
 router.post('/title/:titleId/cancelar', authenticateToken.verifyToken.bind(authenticateToken),(req, res) => {

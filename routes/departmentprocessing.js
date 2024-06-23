@@ -9,7 +9,7 @@ const authenticateToken = new AuthenticateToken('SUA_CHAVE_SECRETA');
 
 const DepartmentProcessingService = require('../services/process/DepartmentProcessingService');
 const DepartmentProcessingController = require('../controllers/process/PurchaseProcessingController');
-const departmentprocessingService = new DepartmentProcessingService(db.Department, db.CostCenter, authenticateToken);
+const departmentprocessingService = new DepartmentProcessingService(db.Department, db.CostCenter, authenticateToken, db.sequelize);
 const departmentprocessingController = new DepartmentProcessingController(departmentprocessingService);
 
 //--------------------------------------------------------------------------------------------------//

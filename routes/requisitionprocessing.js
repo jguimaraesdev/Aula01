@@ -13,7 +13,7 @@ const RequisitionProcessingService = require('../services/process/RequisitionPro
 const SellProcessingService = require('../services/process/SellProcessingService'); // Importar seu serviço de venda
 const sellProcessingService = new SellProcessingService(SellProcessingService);
 
-const requisitionProcessingService = new RequisitionProcessingService(db.Requisition, db.ControleProduct, db.Quotation, db.Supplier, sellProcessingService ,authenticateToken, sequelize);
+const requisitionProcessingService = new RequisitionProcessingService(db.Requisition, db.ControleProduct, db.Quotation, db.Supplier, sellProcessingService ,authenticateToken, db.sequelize);
 const requisitionProcessingController = new RequisitionProcessingController(requisitionProcessingService);
 
 router.post('/process-requisition', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
