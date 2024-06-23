@@ -119,26 +119,53 @@ class SellProcessingService {
       const title = await this.Title.create({
         qtd_parcela: numeroParcela,
         valorOriginal: produto.preco_custo,
-        dataVencimento: dayjs().add(30, 'day').format('YYYY-MM-DD'),
         status: 'pendente',
         notafiscalId: notaFiscal.id
       }, { transaction });
 
-      // Criando controle de título
-      const controleTitlePromises = [];
-      for (let i = 0; i < numeroParcela; i++) {
-        controleTitlePromises.push(this.ControleTitle.create({
-          tipoMovimento: 'abertura',
-          valorMovimento: valorParcela,
-          valorMulta: 0,
-          valorJuros: 0,
-          titleId: title.id
-        }, { transaction }));
+      
+      let results = [];
+
+      if (parcela === 3) {
+         
+          for (let i = 0; i < parcela; i++) {
+              const dataVencimentoParcela = dayjs().add(30 * (i + 1), 'day').format('YYYY-MM-DD');
+
+              const novotitulo = await this.ControleTitle.create(
+                  {
+                      tipoMovimento: 'abertura',
+                      valorMovimento: valorParcela,
+                      dataVencimento: dataVencimentoParcela,
+                      valorMulta: 0,
+                      valorJuros: 0,
+                      titleId: title.id
+                  },
+                  { transaction }
+              );
+              console.log(`Created ControleTitle ${i + 1}: `, novotitulo);
+              results.push(novotitulo);
+          }
+      } else {
+          
+          const novadata = dayjs().add(30, 'day').format('YYYY-MM-DD');
+
+          const novotitulo = await this.ControleTitle.create(
+              {
+                  tipoMovimento: 'abertura',
+                  valorMovimento: valorParcela,
+                  dataVencimento : novadata ,
+                  valorMulta: 0,
+                  valorJuros: 0,
+                  titleId: title.id
+              },
+              { transaction }
+          );
+          console.log('Created single ControleTitle: ', novotitulo);
+          results.push(novotitulo);
       }
-      await Promise.all(controleTitlePromises);
 
       await transaction.commit();
-      return { requisition, sell, sellDetails, notaFiscal, title };
+      return { requisition, sell, sellDetails, notaFiscal, controleTitles: results };
     } catch (error) {
       await transaction.rollback();
       console.error('Erro ao processar venda:', error);

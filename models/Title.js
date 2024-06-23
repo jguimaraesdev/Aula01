@@ -18,8 +18,8 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     status: {
-      type: Sequelize.ENUM('pendente', 'pago', 'cancelado'),
-      defaultValue: 'pendente',
+      type: Sequelize.ENUM('aberto', 'quitado', 'cancelado'),
+      defaultValue: 'aberto',
     },
   }, {
     indexes: [

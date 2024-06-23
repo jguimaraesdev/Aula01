@@ -77,12 +77,10 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
             parcela = 3;
         }
 
-        // Criando data de vencimento
-        const novadata = dayjs().add(30, 'day').format('YYYY-MM-DD');
 
         // Criando um novo título de dívida
         const result6 = await this.Title.create(
-            { qtd_Parcela: parcela, valorOriginal: custototal, dataVencimento: novadata, status: 'pendente' },
+            { qtd_Parcela: parcela, valorOriginal: custototal, status: 'aberto' },
             { transaction }
         );
 
@@ -122,6 +120,7 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
 
         //---------------------------------------------------------------------------------------//
         // Controle de Títulos para Parcelamento
+        
 
         let results = [];
 
@@ -129,10 +128,13 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
             let valor = custototal / parcela;
 
             for (let i = 0; i < parcela; i++) {
+                const dataVencimentoParcela = dayjs().add(30 * (i + 1), 'day').format('YYYY-MM-DD');
+
                 const result8 = await this.ControleTitle.create(
                     {
                         tipoMovimento: 'abertura',
                         valorMovimento: valor,
+                        dataVencimento: dataVencimentoParcela,
                         valorMulta: 0,
                         valorJuros: 0,
                         titleId: result6.id
@@ -143,10 +145,14 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
                 results.push(result8);
             }
         } else {
+            
+            const novadata = dayjs().add(30, 'day').format('YYYY-MM-DD');
+
             const result8 = await this.ControleTitle.create(
                 {
                     tipoMovimento: 'abertura',
                     valorMovimento: custototal,
+                    dataVencimento : novadata ,
                     valorMulta: 0,
                     valorJuros: 0,
                     titleId: result6.id
