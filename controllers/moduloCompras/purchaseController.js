@@ -9,10 +9,10 @@ class PurchaseController {
     //--------------------------------------------------------------------------------------------------//
   
     async create(req, res) {
-        const {dataCompra, quantidade, custototal, tipoPagamento, supplierId, quotationId} = req.body;
+        const {dataCompra, quantidade, custototal, tipoPagamento, supplierId, quotationId,notafiscalId} = req.body;
         const Id = req.userId; 
         try {
-            const result = await this.purchaseService.create(dataCompra, quantidade, custototal, tipoPagamento, supplierId, quotationId, Id);
+            const result = await this.purchaseService.create(dataCompra, quantidade, custototal, tipoPagamento, supplierId, quotationId, Id, notafiscalId);
             res.status(200).json(result);
         } catch(error){
             console.error('Erro no controlador ao criar:', error);

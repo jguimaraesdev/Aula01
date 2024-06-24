@@ -10,8 +10,9 @@ module.exports = (sequelize) => {
             autoIncrement: true
         },
         movimento_tipo: {
-            type: Sequelize.ENUM('Entrada', 'Saida', 'Devolução', 'Descarte'),
-            allowNull: false
+            type: Sequelize.ENUM('Disponivel', 'Devolução', 'Descarte'),
+            allowNull: false,
+            defaultValue: 'Disponivel'
         },
         qtd_disponivel: {
             type: Sequelize.INTEGER,
@@ -44,7 +45,7 @@ module.exports = (sequelize) => {
             as: 'Deposit',
             allowNull: false
         });
-        
+       
     };
 
 

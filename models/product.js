@@ -20,7 +20,8 @@ module.exports= (sequelize) => {
         },
         status: {
             type: Sequelize.ENUM('Ativo', 'Inativo'),
-            allowNull: false
+            allowNull: false,
+            defaultValue:'Ativo'
         }
         
         
@@ -39,11 +40,6 @@ module.exports= (sequelize) => {
             as: 'Supplier',
             allowNull: false
         
-    }),Product.belongsTo(models.NotaFiscal,{
-            foreignKey: 'notafiscalId',
-            as: 'NotaFiscal',
-            allowNull: true
-
     });
         
     };

@@ -44,7 +44,13 @@ module.exports = (sequelize) => {
       foreignKey: 'userId', 
       as: 'User' ,
       allowNull: false
-    })
+    }),
+    Purchase.belongsTo(models.NotaFiscal,{
+      foreignKey: 'notafiscalId',
+      as: 'NotaFiscal',
+      allowNull: true
+
+    });
   };
 
   return Purchase;

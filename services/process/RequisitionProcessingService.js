@@ -36,7 +36,7 @@ class RequisitionProcessingService {
         }catch (error) {
           console.error('Erro ao processar requisição:', error);
           throw error;
-          break;
+          
 
         }
 
@@ -53,7 +53,7 @@ class RequisitionProcessingService {
 
             // Verificar se o produto existe
             if (!product) {
-              new Error('Produto não encontrado');
+              throw new Error('Produto não encontrado');
             }
             else{
               // Verificar se há estoque disponível
@@ -63,8 +63,8 @@ class RequisitionProcessingService {
               });
 
               if(controleProduct.qtd_disponivel >= 10){
-                new Error('Produto com estoque suficiente! Requisição recusada.');
-                await transaction.rollback();
+                throw new Error('Produto com estoque suficiente! Requisição recusada.');
+                
               }
             }
           
@@ -76,8 +76,8 @@ class RequisitionProcessingService {
             });
 
             if (suppliers.length === 0) {
-              new Error('Nenhum fornecedor encontrado para a categoria e natureza da operação especificadas');
-              await transaction.rollback();
+              throw new Error('Nenhum fornecedor encontrado para a categoria e natureza da operação especificadas');
+             
             }
 
             const requisition = await this.Requisition.create({
@@ -110,7 +110,7 @@ class RequisitionProcessingService {
 
             await transaction.commit();
             return { message: 'Processamento concluído com sucesso' };
-            break;
+            
 
           } catch (error) {
             await transaction.rollback();

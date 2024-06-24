@@ -10,7 +10,7 @@ class PurchaseService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async create(dataCompra, quantidade, custototal, tipoPagamento, supplierId, quotationId, userId) {
+    async create(dataCompra, quantidade, custototal, tipoPagamento, supplierId, quotationId, userId, notafiscalId) {
 
         try {
             
@@ -20,7 +20,8 @@ class PurchaseService {
                     custototal, 
                     tipoPagamento, 
                     supplierId, 
-                    quotationId, 
+                    quotationId,
+                    notafiscalId, 
                     userId 
                 }
             );
