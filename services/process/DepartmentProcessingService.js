@@ -3,9 +3,10 @@
 
 
 class DepartmentProcessingService {
-    constructor(DepartmentModel, CostCenterModel) {
+    constructor(DepartmentModel, CostCenterModel, sequelize) {
         this.Department = DepartmentModel;
         this.CostCenter = CostCenterModel;
+        this.sequelize = sequelize;
 
     }
     async create(nome) {

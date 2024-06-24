@@ -18,12 +18,12 @@ router.get('/', authenticateToken.verifyToken.bind(authenticateToken),(req, res,
   res.send('Módulo de usuários está rodando');
 });
 
-router.post('/new', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
-  userController.create(req, res);
+router.post('/new', (req, res, next) => {
+  userController.create(req, res).catch(next);
 });
 
-router.post('/login', authenticateToken.verifyToken.bind(authenticateToken),(req, res, next) => {
-  userController.login(req, res);
+router.post('/login', (req, res, next) => {
+  userController.login(req, res).catch(next);
 });
 
 // Rota de atualização

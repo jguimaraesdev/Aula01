@@ -46,7 +46,8 @@ module.exports= (sequelize) => {
      
     }, {
         indexes: [
-            {
+            {   
+                name: 'nota_fiscals_natureza_cnpj_nome',
                 fields: ['natureza_operacao', 'cnpj_cpf_comprador', 'nome_razao_emitente']
             }
             // Adicione outros índices conforme necessário

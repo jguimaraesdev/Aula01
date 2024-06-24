@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
   }, {
     indexes: [
       {
-        fields: ['qtd_Parcela', 'situacao']
+        fields: ['qtd_Parcela', 'status']
       }
     ]
   });

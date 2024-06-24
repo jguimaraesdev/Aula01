@@ -8,7 +8,7 @@ class AuthenticateToken {
     }
 
     generateToken(userId) {
-        return jwt.sign({ id: userId }, this.secretKey, { expiresIn: '15m' });
+        return jwt.sign({ id: userId }, this.secretKey, { expiresIn: '1h' });
     }
 
     verifyToken(req, res, next) {
