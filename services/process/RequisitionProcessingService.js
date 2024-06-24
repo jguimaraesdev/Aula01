@@ -3,16 +3,16 @@
 const dayjs = require('dayjs'); // npm install dayjs
 
 class RequisitionProcessingService {
-  constructor(RequisitionModel, SellProcessingService, ControleProductModel, QuotationModel, SupplierModel, sequelize) {
+  constructor(RequisitionModel, ControleProductModel, QuotationModel, SupplierModel, SellProcessingService, sequelize) {
     this.Requisition = RequisitionModel;
-    this.SellProcessing = SellProcessingService;
     this.ControleProduct = ControleProductModel;
     this.Quotation = QuotationModel;
     this.Supplier = SupplierModel;
+    this.SellProcessing = SellProcessingService;
     this.sequelize = sequelize;
   }
 
-  async processRequisition({ produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, tipoPagamento }) {
+  async create( produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, tipoPagamento ) {
     const transaction = await this.sequelize.transaction();
     try {
       // Criar a requisição
