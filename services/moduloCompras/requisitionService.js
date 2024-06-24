@@ -10,21 +10,21 @@ class RequisitionService {
 
   //--------------------------------------------------------------------------------------------------//
 
-  async create(produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId) {
-    const transaction = await this.Requisition.sequelize.transaction();
+  async create(produto_requerido, categoria, natureza_operacao, qtd_requerida, status, userId, costCenterId) {
+    
       try {
 
-            const result = await this.Requisition.create({ produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId },{transaction});
-
-
-            await transaction.commit();
-    
-            // Retornando todas as transações
-            return { result };
-    
+            const result = await this.Requisition.create(
+                produto_requerido, 
+                categoria, 
+                natureza_operacao, 
+                qtd_requerida, 
+                status, 
+                userId, 
+                costCenterId
+            );
+            return result;
         } catch (error) {
-            await transaction.rollback();
-            console.error('Erro ao criar e atualizar dados:', error);
             throw error;
         }
   }

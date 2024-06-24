@@ -8,9 +8,9 @@ class QuotationController {
   //--------------------------------------------------------------------------------------------------//
 
   async create(req, res) {
-      const { preco, supplierId, requisitionId } = req.body;
+      const { preco, cotacaoData, validadeCotacao, supplierId, requisitionId} = req.body;
       try {
-          const result = await this.quotationService.create(preco, supplierId, requisitionId);
+          const result = await this.quotationService.create(preco, cotacaoData, validadeCotacao, supplierId, requisitionId);
           res.status(200).json(result);
       } catch (error) {
           res.status(500).json({ error: "Erro ao inserir a novo Registro" });

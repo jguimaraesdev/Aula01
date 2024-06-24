@@ -16,7 +16,8 @@ const requisitionProcessingService = new RequisitionProcessingService(
     db.Requisition, 
     db.ControleProduct, 
     db.Quotation, 
-    db.Supplier, 
+    db.Supplier,
+    db.Product, 
     sellProcessingService,
     db.sequelize
 );
