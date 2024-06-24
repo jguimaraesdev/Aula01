@@ -20,8 +20,8 @@ class PurchaseProcessingController {
                 userId,
             );
             res.status(200).json(result);
-        } catch (error) {
-            console.error('Erro no controlador ao criar PurchaseProcessing:', error);
+        } catch(error){
+            console.error('Erro no controlador ao criar:', error);
             res.status(500).json({ error: "Erro ao inserir novo Registro", detalhes: error.message });
         }
     }

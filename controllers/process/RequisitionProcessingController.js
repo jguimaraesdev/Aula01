@@ -18,10 +18,10 @@ class RequisitionProcessingController {
           tipoPagamento
         });
         return res.status(200).json(result);
-      } catch (error) {
-        console.error('Erro ao processar requisição:', error);
-        return res.status(500).json({ error: 'Erro ao processar requisição' });
-      }
+      } catch(error){
+        console.error('Erro no controlador ao criar:', error);
+        res.status(500).json({ error: "Erro ao inserir novo Registro", detalhes: error.message });
+    }
     }
   }
   

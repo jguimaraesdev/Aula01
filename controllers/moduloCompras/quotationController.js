@@ -102,10 +102,10 @@ class QuotationController {
         return res.status(404).json({ error: "Nenhuma cotação encontrada para o fornecedor" });
       }
       res.status(200).json(quotations);
-    } catch (error) {
-      console.error('Erro ao buscar cotações por fornecedor:', error);
-      res.status(500).json({ error: "Erro ao buscar cotações por fornecedor" });
-    }
+    } catch(error){
+      console.error('Erro no controlador ao criar:', error);
+      res.status(500).json({ error: "Erro ao inserir novo Registro", detalhes: error.message });
+  }
   }
   
 

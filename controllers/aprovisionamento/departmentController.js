@@ -17,10 +17,10 @@ class DepartmentController {
         const result = await this.departmentService.create(nome);
 
         res.status(201).json(result);
-      } catch (error) {
-        console.error("Erro ao inserir o novo registro:", error);
-        res.status(500).json({ error: "Erro ao inserir o novo registro", details: error.message });
-      }
+      } catch(error){
+        console.error('Erro no controlador ao criar:', error);
+        res.status(500).json({ error: "Erro ao inserir novo Registro", detalhes: error.message });
+    }
     }
   
     //--------------------------------------------------------------------------------------------------//

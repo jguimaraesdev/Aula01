@@ -11,8 +11,9 @@ class ControleProductController {
         try {
             const result = await this.controleproductService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
             res.status(200).json(result);
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao inserir registro" });
+        } catch(error){
+            console.error('Erro no controlador ao criar:', error);
+            res.status(500).json({ error: "Erro ao inserir novo Registro", detalhes: error.message });
         }
     }
 

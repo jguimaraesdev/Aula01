@@ -11,8 +11,9 @@ class DepositController {
         try {
             const result = await this.depositService.create(central);
             res.status(200).json(result);
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao inserir o novo registro" });
+        } catch(error){
+            console.error('Erro no controlador ao criar:', error);
+            res.status(500).json({ error: "Erro ao inserir novo Registro", detalhes: error.message });
         }
     }
 

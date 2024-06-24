@@ -12,10 +12,12 @@ module.exports = (sequelize) => {
       nome: {
         type: Sequelize.STRING,
         allowNull: false,
+        
       },
       CPF: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true
       }
     }, {
       indexes: [

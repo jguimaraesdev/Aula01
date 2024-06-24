@@ -20,9 +20,10 @@ class SellProcessingController {
           tipoPagamento,
         });
         res.status(200).json(result);
-      } catch (error) {
-        res.status(500).json({ error: 'Erro ao processar venda' });
-      }
+      } catch(error){
+        console.error('Erro no controlador ao criar:', error);
+        res.status(500).json({ error: "Erro ao inserir novo Registro", detalhes: error.message });
+    }
     }
   }
   
