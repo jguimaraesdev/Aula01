@@ -15,6 +15,7 @@ module.exports = (sequelize) => {
     cnpj:{
       type: Sequelize.STRING,
       allowNull: false,
+      unique:true
     },
     contato: {
       type: Sequelize.STRING,

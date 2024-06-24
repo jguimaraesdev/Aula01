@@ -16,7 +16,7 @@ const sellProcessingService = new SellProcessingService(SellProcessingService);
 const requisitionProcessingService = new RequisitionProcessingService(db.Requisition, db.ControleProduct, db.Quotation, db.Supplier, sellProcessingService ,authenticateToken, db.sequelize);
 const requisitionProcessingController = new RequisitionProcessingController(requisitionProcessingService);
 
-router.post('/process-requisition', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
+router.post('/new', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
     requisitionProcessingController.processRequisition(req, res).catch(next);
 });
 
