@@ -14,10 +14,6 @@ module.exports= (sequelize) => {
             allowNull:false,
             unique:true
         },
-        preco_custo:{
-            type: Sequelize.DOUBLE,
-            allowNull: true
-        },
         status: {
             type: Sequelize.ENUM('Ativo', 'Inativo'),
             allowNull: false,

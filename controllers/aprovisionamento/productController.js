@@ -8,9 +8,9 @@ class ProductController {
     //--------------------------------------------------------------------------------------------------//
 
     async create(req, res) {
-        const { nome, preco_custo, status } = req.body;
+        const { nome, status, supplierId } = req.body;
         try {
-            const result = await this.productService.create(nome, preco_custo, status);
+            const result = await this.productService.create(nome, status, supplierId );
             res.status(200).json(result);
         } catch(error){
             console.error('Erro no controlador ao criar:', error);

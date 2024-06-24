@@ -1,5 +1,3 @@
-
-
 class RequisitionProcessingService {
   constructor(RequisitionModel, ControleProductModel, QuotationModel, SupplierModel, ProductModel, SellProcessingService, sequelize) {
     this.Requisition = RequisitionModel;
@@ -12,15 +10,11 @@ class RequisitionProcessingService {
   }
 
   async create(produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, tipoPagamento) {
-    
     const transaction = await this.sequelize.transaction();
-    
+
+    try {
       switch (natureza_operacao) {
-
-        //-------------------------------------------------------------------------------------------------//
         case 'Venda':
-
-        try{
           // Disparar SellProcessingService
           await this.SellProcessing.create(
             produto_requerido,
@@ -30,101 +24,63 @@ class RequisitionProcessingService {
             userId,
             costCenterId,
             tipoPagamento,
-           transaction);
+            transaction
+          );
           break;
 
-        }catch (error) {
-          console.error('Erro ao processar requisição:', error);
-          throw error;
-          
-
-        }
-
-        //-------------------------------------------------------------------------------------------------//
-
         case 'Importação':
+          // Abrir cotações para fornecedores da categoria
+          const suppliers = await this.Supplier.findAll({
+            where: { categoria, natureza_operacao },
+            limit: 3,
+            transaction
+          });
 
-        try{
-            // Verificar o produto pelo nome
-            const product = await this.Product.findOne({
-              where: { nome: produto_requerido },
-              transaction
-            });
+          if (suppliers.length === 0) {
+            throw new Error('Nenhum fornecedor encontrado para a categoria e natureza da operação especificadas');
+          }
 
-            // Verificar se o produto existe
-            if (!product) {
-              throw new Error('Produto não encontrado');
-            }
-            else{
-              // Verificar se há estoque disponível
-                const controleProduct = await this.ControleProduct.findOne({
-                  where: { produtoId: product.id },
-                  transaction
-              });
+          const requisition = await this.Requisition.create({
+            produto_requerido,
+            categoria,
+            natureza_operacao,
+            qtd_requerida,
+            status: 'Em Processamento',
+            userId,
+            costCenterId
+          }, { transaction });
 
-              if(controleProduct.qtd_disponivel >= 10){
-                throw new Error('Produto com estoque suficiente! Requisição recusada.');
-                
-              }
-            }
-          
-            // Abrir cotações para fornecedores da categoria
-            const suppliers = await this.Supplier.findAll({
-              where: { categoria, natureza_operacao },
-              limit: 3,
-              transaction
-            });
+          const currentDate = new Date();
+          // Calcular a data de validade adicionando 5 dias
+          const validadeCotacao = new Date(currentDate);
+          validadeCotacao.setDate(currentDate.getDate() + 5);
 
-            if (suppliers.length === 0) {
-              throw new Error('Nenhum fornecedor encontrado para a categoria e natureza da operação especificadas');
-             
-            }
-
-            const requisition = await this.Requisition.create({
-              produto_requerido,
-              categoria,
-              natureza_operacao,
-              qtd_requerida,
-              status: 'Em Processamento',
-              userId,
-              costCenterId
+          const quotationPromises = suppliers.map(supplier => {
+            return this.Quotation.create({
+              preco: 0, // Definir o preço inicial, pode ser atualizado posteriormente
+              cotacaoData: currentDate,
+              validadeCotacao,
+              supplierId: supplier.id,
+              requisitionId: requisition.id
             }, { transaction });
+          });
 
+          await Promise.all(quotationPromises);
 
-            const currentDate = new Date();
-            // Calcular a data de validade adicionando 5 dias
-            const validadeCotacao = new Date(currentDate);
-            validadeCotacao.setDate(currentDate.getDate() + 5);
+          break;
 
-            const quotationPromises = suppliers.map(supplier => {
-              return this.Quotation.create({
-                preco: 0, // Definir o preço inicial, pode ser atualizado posteriormente
-                cotacaoData: currentDate,
-                validadeCotacao,
-                supplierId: supplier.id,
-                requisitionId: requisition.id
-              }, { transaction });
-            });
-
-            await Promise.all(quotationPromises);
-
-            await transaction.commit();
-            return { message: 'Processamento concluído com sucesso' };
-            
-
-          } catch (error) {
-            await transaction.rollback();
-            console.error('Erro ao processar requisição:', error);
-            error;
-            break;
-
-          } 
-         //-------------------------------------------------------------------------------------------------//
-
-          default:
-            throw new Error('Natureza da operação desconhecida');
+        default:
+          throw new Error('Natureza da operação desconhecida');
       }
 
+      await transaction.commit();
+      return { message: 'Processamento concluído com sucesso' };
+
+    } catch (error) {
+      await transaction.rollback();
+      console.error('Erro ao processar requisição:', error);
+      throw error; // Propaga o erro para o chamador
+    }
   }
 }
 

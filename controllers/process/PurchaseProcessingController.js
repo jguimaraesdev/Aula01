@@ -7,14 +7,12 @@ class PurchaseProcessingController {
     }
 
     async create(req, res) {
-        const { quantidade, custototal, tipoPagamento, quotationId} = req.body;
+        const { tipoPagamento, quotationId} = req.body;
         const userId = req.userId;
 
         try {
             console.log('Iniciando criação de PurchaseProcessing');
-            const result = await this.PurchaseProcessingService.create(
-                quantidade, 
-                custototal, 
+            const result = await this.PurchaseProcessingService.create( 
                 tipoPagamento,  
                 quotationId, 
                 userId,
