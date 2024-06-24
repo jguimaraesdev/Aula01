@@ -7,9 +7,9 @@ class ControleProductController {
     //--------------------------------------------------------------------------------------------------//
 
     async create(req, res) {
-        const { movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId  } = req.body;
+        const { movimento_tipo, qtd_disponivel, qtd_bloqueado, productId, depositId  } = req.body;
         try {
-            const result = await this.controleproductService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, valor_faturado, productId, depositId );
+            const result = await this.controleproductService.create(movimento_tipo, qtd_disponivel, qtd_bloqueado, productId, depositId );
             res.status(200).json(result);
         } catch(error){
             console.error('Erro no controlador ao criar:', error);

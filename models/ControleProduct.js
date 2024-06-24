@@ -21,10 +21,6 @@ module.exports = (sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        valor_faturado: {
-            type: Sequelize.DECIMAL(10, 2),
-            allowNull: false
-        }
     }, {
         indexes: [
           {

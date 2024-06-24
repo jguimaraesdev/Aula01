@@ -1,5 +1,3 @@
-// routes/sellProcessing.js
-
 const express = require('express');
 const router = express.Router();
 const AuthenticateToken = require('../services/authenticateToken');
@@ -20,12 +18,10 @@ const sellProcessingService = new SellProcessingService(
   db.SellDetails,
   db.NotaFiscal,
   db.Cliente,
-  db.sequelize,
-  authenticateToken
+  db.sequelize
 );
 const sellProcessingController = new SellProcessingController(sellProcessingService);
 
-//--------------------------------------------------------------------------------------------------//
 // Rotas
 router.post('/new', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
   sellProcessingController.create(req, res).catch(next);

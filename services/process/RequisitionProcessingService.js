@@ -12,12 +12,17 @@ class RequisitionProcessingService {
   }
 
   async create(produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, tipoPagamento) {
+    
     const transaction = await this.sequelize.transaction();
-    try {
+    
       switch (natureza_operacao) {
+
+        //-------------------------------------------------------------------------------------------------//
         case 'Venda':
+
+        try{
           // Disparar SellProcessingService
-          await this.SellProcessing.create({
+          await this.SellProcessing.create(
             produto_requerido,
             qtd_requerida,
             categoria,
@@ -25,29 +30,44 @@ class RequisitionProcessingService {
             userId,
             costCenterId,
             tipoPagamento,
-          }, { transaction });
+           transaction);
           break;
 
-        case 'Importação':
-          // Verificar o produto pelo nome
-          const product = await this.Product.findOne({
-            where: { nome: produto_requerido },
-            transaction
-          });
+        }catch (error) {
+          console.error('Erro ao processar requisição:', error);
+          throw error;
+          break;
 
-          // Verificar se o produto existe
-          if (!product) {
-            throw new Error('Produto não encontrado');
-          }else{
-            // Verificar se há estoque disponível
-              const controleProduct = await this.ControleProduct.findOne({
-                where: { produtoId: product.id },
-                transaction
+        }
+
+        //-------------------------------------------------------------------------------------------------//
+
+        case 'Importação':
+
+        try{
+            // Verificar o produto pelo nome
+            const product = await this.Product.findOne({
+              where: { nome: produto_requerido },
+              transaction
+            });
+
+            // Verificar se o produto existe
+            if (!product) {
+              new Error('Produto não encontrado');
+            }
+            else{
+              // Verificar se há estoque disponível
+                const controleProduct = await this.ControleProduct.findOne({
+                  where: { produtoId: product.id },
+                  transaction
               });
 
-          }
-
-          if (!controleProduct || controleProduct.qtd_disponivel < qtd_requerida || !product) {
+              if(controleProduct.qtd_disponivel >= 10){
+                new Error('Produto com estoque suficiente! Requisição recusada.');
+                await transaction.rollback();
+              }
+            }
+          
             // Abrir cotações para fornecedores da categoria
             const suppliers = await this.Supplier.findAll({
               where: { categoria, natureza_operacao },
@@ -56,7 +76,8 @@ class RequisitionProcessingService {
             });
 
             if (suppliers.length === 0) {
-              throw new Error('Nenhum fornecedor encontrado para a categoria e natureza da operação especificadas');
+              new Error('Nenhum fornecedor encontrado para a categoria e natureza da operação especificadas');
+              await transaction.rollback();
             }
 
             const requisition = await this.Requisition.create({
@@ -89,23 +110,21 @@ class RequisitionProcessingService {
 
             await transaction.commit();
             return { message: 'Processamento concluído com sucesso' };
-          } else {
-            
-            // Exemplo: controleProduct.qtd_disponivel -= qtd_requerida;
-            // await controleProduct.save({ transaction });
+            break;
 
-            await transaction.commit();
-            return { message: 'Estoque suficiente' };
-          }
+          } catch (error) {
+            await transaction.rollback();
+            console.error('Erro ao processar requisição:', error);
+            error;
+            break;
 
-        default:
-          throw new Error('Natureza da operação desconhecida');
+          } 
+         //-------------------------------------------------------------------------------------------------//
+
+          default:
+            throw new Error('Natureza da operação desconhecida');
       }
-    } catch (error) {
-      await transaction.rollback();
-      console.error('Erro ao processar requisição:', error);
-      throw error;
-    }
+
   }
 }
 

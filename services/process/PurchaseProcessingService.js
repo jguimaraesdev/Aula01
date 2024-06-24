@@ -60,13 +60,25 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
         
         // Criando produto
         const result4 = await this.Product.create(
-            { nome: result3.produto_requerido, preco_custo: custototal / quantidade, status: 'ATIVO', supplierId: data.supplierId },
+
+            { nome: result3.produto_requerido, 
+                preco_custo: custototal / quantidade, 
+                status: 'ATIVO', 
+                supplierId: data.supplierId 
+            },
             { transaction }
         );
 
         // Criando um controle de produto
         const result5 = await this.ControleProduct.create(
-            { movimento_tipo: 'Entrada', qtd_disponivel: quantidade, qtd_bloqueado: 0, valor_faturado: 0, productId: result4.id, depositId: 1 },
+
+            { movimento_tipo: 'Entrada', 
+                qtd_disponivel: quantidade, 
+                qtd_bloqueado: 0, 
+                valor_faturado: 0, 
+                productId: result4.id, 
+                depositId: 1 
+            },
             { transaction }
         );
 
@@ -77,7 +89,10 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
 
         // Criando um novo título de dívida
         const result6 = await this.Title.create(
-            { qtd_Parcela: parcela, valorOriginal: custototal, status: 'aberto' },
+            { qtd_Parcela: parcela, 
+                valorOriginal: 
+                custototal, 
+                status: 'aberto' },
             { transaction }
         );
 
@@ -121,7 +136,7 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
 
         let results = [];
 
-        for (let i = 0; i < numeroParcela; i++) {
+        for (let i = 0; i < parcela; i++) {
           
             const dataVencimentoParcela = dayjs().add(30 * (i + 1), 'day').format('YYYY-MM-DD');
             
