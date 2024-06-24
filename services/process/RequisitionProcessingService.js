@@ -35,7 +35,7 @@ class RequisitionProcessingService {
             natureza_operacao,
             userId,
             costCenterId,
-            tipoPagamento: 'À vista' // ou outro valor apropriado
+            tipoPagamento,
           }, transaction);
           break;
 

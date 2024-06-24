@@ -113,7 +113,9 @@ class SellProcessingService {
       );
 
       // Criando título
-      const numeroParcela = tipoPagamento === 'PARCELADO' ? 3 : 1;
+      
+      const firstLetter = tipoPagamento.charAt(0).toUpperCase();
+      const numeroParcela = parseInt(firstLetter, 10); // 10 é a base decimal
       const valorParcela = lucrovenda  / numeroParcela;
 
       const title = await this.Title.create({
@@ -126,46 +128,29 @@ class SellProcessingService {
       
       let results = [];
 
-      if (parcela === 3) {
-         
-          for (let i = 0; i < parcela; i++) {
-              const dataVencimentoParcela = dayjs().add(30 * (i + 1), 'day').format('YYYY-MM-DD');
-
-              const novotitulo = await this.ControleTitle.create(
-                  {
-                      tipoMovimento: 'abertura',
-                      valorMovimento: valorParcela,
-                      dataVencimento: dataVencimentoParcela,
-                      valorMulta: 0,
-                      valorJuros: 0,
-                      titleId: title.id
-                  },
-                  { transaction }
-              );
-              console.log(`Created ControleTitle ${i + 1}: `, novotitulo);
-              results.push(novotitulo);
-          }
-      } else {
+      for (let i = 0; i < numeroParcela; i++) {
           
-          const novadata = dayjs().add(30, 'day').format('YYYY-MM-DD');
-
-          const novotitulo = await this.ControleTitle.create(
+        const dataVencimentoParcela = dayjs().add(30 * (i + 1), 'day').format('YYYY-MM-DD');
+        
+        const novotitulo = await this.ControleTitle.create(
               {
-                  tipoMovimento: 'abertura',
-                  valorMovimento: valorParcela,
-                  dataVencimento : novadata ,
-                  valorMulta: 0,
-                  valorJuros: 0,
-                  titleId: title.id
-              },
-              { transaction }
-          );
-          console.log('Created single ControleTitle: ', novotitulo);
-          results.push(novotitulo);
-      }
-
+                tipoMovimento: 'abertura',
+                valorMovimento: valorParcela,
+                dataVencimento: dataVencimentoParcela,
+                valorMulta: 0,
+                valorJuros: 0,
+                titleId: title.id
+                },
+                { transaction }
+              );
+            console.log(`Created ControleTitle ${i + 1}: `, novotitulo);
+            results.push(novotitulo);
+        }
+      
       await transaction.commit();
+
       return { requisition, sell, sellDetails, notaFiscal, controleTitles: results };
+
     } catch (error) {
       await transaction.rollback();
       console.error('Erro ao processar venda:', error);

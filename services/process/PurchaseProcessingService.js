@@ -71,11 +71,8 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
         );
 
         // Definindo quantas parcelas o title vai receber
-        let parcela = 1;
-
-        if (tipoPagamento !== 'AVISTA') {
-            parcela = 3;
-        }
+        const firstLetter = tipoPagamento.charAt(0).toUpperCase();
+        const parcela = parseInt(firstLetter, 10); 
 
 
         // Criando um novo título de dívida
@@ -124,44 +121,24 @@ async create(quantidade, custototal, tipoPagamento, quotationId, userId) {
 
         let results = [];
 
-        if (parcela === 3) {
-            let valor = custototal / parcela;
-
-            for (let i = 0; i < parcela; i++) {
-                const dataVencimentoParcela = dayjs().add(30 * (i + 1), 'day').format('YYYY-MM-DD');
-
-                const result8 = await this.ControleTitle.create(
-                    {
-                        tipoMovimento: 'abertura',
-                        valorMovimento: valor,
-                        dataVencimento: dataVencimentoParcela,
-                        valorMulta: 0,
-                        valorJuros: 0,
-                        titleId: result6.id
-                    },
-                    { transaction }
-                );
-                console.log(`Created ControleTitle ${i + 1}: `, result8);
-                results.push(result8);
-            }
-        } else {
+        for (let i = 0; i < numeroParcela; i++) {
+          
+            const dataVencimentoParcela = dayjs().add(30 * (i + 1), 'day').format('YYYY-MM-DD');
             
-            const novadata = dayjs().add(30, 'day').format('YYYY-MM-DD');
-
-            const result8 = await this.ControleTitle.create(
-                {
+            const novotitulo = await this.ControleTitle.create(
+                  {
                     tipoMovimento: 'abertura',
-                    valorMovimento: custototal,
-                    dataVencimento : novadata ,
+                    valorMovimento: valorParcela,
+                    dataVencimento: dataVencimentoParcela,
                     valorMulta: 0,
                     valorJuros: 0,
-                    titleId: result6.id
-                },
-                { transaction }
-            );
-            console.log('Created single ControleTitle: ', result8);
-            results.push(result8);
-        }
+                    titleId: title.id
+                    },
+                    { transaction }
+                  );
+                console.log(`Created ControleTitle ${i + 1}: `, novotitulo);
+                results.push(novotitulo);
+            }
 
         await transaction.commit();
 

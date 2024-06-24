@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     tipoPagamento: {
-      type: Sequelize.ENUM('AVISTA', 'PARCELADO'),
+      type: Sequelize.ENUM('1X', '2X', '3X'),
       allowNull: false,
     }
   }, {
