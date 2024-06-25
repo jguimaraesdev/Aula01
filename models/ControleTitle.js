@@ -16,7 +16,15 @@ module.exports = (sequelize) => {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
     },
+    valorParcial: {
+      type: Sequelize.DECIMAL(10, 2),
+      allowNull: true,
+    },
     dataVencimento: {
+      type: Sequelize.DATE,
+      allowNull: false,
+    },
+    dataPagamento: {
       type: Sequelize.DATE,
       allowNull: false,
     },

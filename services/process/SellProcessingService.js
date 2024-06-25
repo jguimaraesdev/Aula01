@@ -30,7 +30,7 @@ class SellProcessingService {
 
       // Verificar se há estoque disponível
       const controleProduct = await this.ControleProduct.findOne({
-        where: { produtoId: productId },
+        where: { productId },
         transaction
       });
 
@@ -44,11 +44,13 @@ class SellProcessingService {
         qtd_requerida,
         categoria,
         natureza_operacao,
+        qtd_requerida,
+        status: 'Em Processamento',
         userId,
         costCenterId
       }, { transaction });
 
-      if (!controleProduct || controleProduct.qtd_disponivel < qtd_requerida) {
+      if (controleProduct.qtd_disponivel < qtd_requerida) {
         throw new Error('Quantidade disponível insuficiente');
       }
 
@@ -56,28 +58,32 @@ class SellProcessingService {
       await this.ControleProduct.update(
         {
           qtd_disponivel: controleProduct.qtd_disponivel - qtd_requerida,
-          qtd_bloqueado: qtd_requerida
+          qtd_bloqueado: this.sequelize.literal(`qtd_bloqueado + ${qtd_requerida}`)
         },
         { where: { id: controleProduct.id }, transaction }
       );
 
       // Gerar dataVenda
-      const dataatual = dayjs().format('YYYY-MM-DD');
+      const dataVenda = dayjs().format('YYYY-MM-DD');
 
       // Criando venda
       const sell = await this.Sell.create({
         quantidade: qtd_requerida,
-        dataVenda: dataatual,
+        dataVenda,
         tipoPagamento,
         requisitionId: requisition.id,
         userId
       }, { transaction });
 
-      // Procurar no ControleProduct se tem qtd_disponivel
+      // Procurar cliente pelo userId
       const cliente = await this.Cliente.findOne({
         where: { userId },
         transaction
       });
+
+      if (!cliente) {
+        throw new Error('Cliente não encontrado');
+      }
 
       const lucrovenda = produto.preco_custo * 2; // Calculando o preço de venda com 100% de lucro
 
@@ -85,7 +91,7 @@ class SellProcessingService {
       const sellDetails = await this.SellDetails.create({
         quantidade: qtd_requerida,
         preco_venda: lucrovenda,
-        productId: productId,
+        productId,
         sellId: sell.id,
         clienteId: cliente.id,
         notafiscalId: null // Atualizar após criação de NotaFiscal
@@ -116,7 +122,7 @@ class SellProcessingService {
 
       const title = await this.Title.create({
         qtd_parcela: numeroParcela,
-        valorOriginal: produto.preco_custo,
+        valorOriginal: lucrovenda,
         status: 'aberto',
         notafiscalId: notaFiscal.id
       }, { transaction });
@@ -139,8 +145,6 @@ class SellProcessingService {
         console.log(`Created ControleTitle ${i + 1}: `, novotitulo);
         results.push(novotitulo);
       }
-
-      await transaction.commit();
 
       return { requisition, sell, sellDetails, notaFiscal, controleTitles: results };
 
