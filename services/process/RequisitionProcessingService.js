@@ -15,8 +15,7 @@ class RequisitionProcessingService {
       switch (natureza_operacao) {
 
         case 'Venda':
-          // Disparar SellProcessingService
-          // Criando requisição
+          
           try{
 
           const requisition = await this.Requisition.create({
