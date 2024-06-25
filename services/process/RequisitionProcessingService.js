@@ -1,33 +1,42 @@
 class RequisitionProcessingService {
-  constructor(RequisitionModel, ControleProductModel, QuotationModel, SupplierModel, ProductModel, SellProcessingService, sequelize) {
+  constructor(RequisitionModel, ControleProductModel, QuotationModel, SupplierModel, ProductModel, sequelize) {
     this.Requisition = RequisitionModel;
     this.ControleProduct = ControleProductModel;
     this.Quotation = QuotationModel;
     this.Supplier = SupplierModel;
     this.Product = ProductModel;
-    this.SellProcessing = SellProcessingService;
     this.sequelize = sequelize;
   }
 
-  async create(produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, tipoPagamento) {
+  async create(produto_requerido, categoria, natureza_operacao, qtd_requerida, userId, costCenterId) {
     const transaction = await this.sequelize.transaction();
 
     try {
       switch (natureza_operacao) {
+
         case 'Venda':
           // Disparar SellProcessingService
-          await this.SellProcessing.create({
-            produto_requerido,
-            qtd_requerida,
-            categoria,
-            natureza_operacao,
-            costCenterId,
-            tipoPagamento,
-            userId,
-            transaction
-          });
-          break;
+          // Criando requisição
+          try{
 
+          const requisition = await this.Requisition.create({
+              produto_requerido,
+              categoria,
+              natureza_operacao,
+              qtd_requerida,
+              status: 'Em Processamento',
+              userId,
+              costCenterId
+            }, { transaction });
+
+            return requisition;
+          }catch (error) {
+            await transaction.rollback();
+            console.error('Erro ao criar e atualizar dados:', error);
+            throw error;
+          } 
+
+        
         case 'Importação':
           // Abrir cotações para fornecedores da categoria
           const suppliers = await this.Supplier.findAll({

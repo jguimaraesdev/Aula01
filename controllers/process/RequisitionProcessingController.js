@@ -6,17 +6,11 @@ class RequisitionProcessingController {
     }
   
     async create(req, res) {
-      const { produto_requerido, qtd_requerida, categoria, natureza_operacao, costCenterId, tipoPagamento } = req.body;
+      const { produto_requerido, categoria, natureza_operacao, qtd_requerida, costCenterId} = req.body;
       const userId = req.userId;
       try {
         const result = await this.requisitionProcessingService.create(
-          produto_requerido,
-          qtd_requerida,
-          categoria,
-          natureza_operacao,
-          userId,
-          costCenterId,
-          tipoPagamento
+          produto_requerido, categoria, natureza_operacao, qtd_requerida, userId, costCenterId
         );
         return res.status(200).json(result);
       } catch(error){

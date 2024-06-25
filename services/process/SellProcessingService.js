@@ -14,23 +14,23 @@ class SellProcessingService {
     this.sequelize = sequelize;
   }
 
-  async create(produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, tipoPagamento) {
+  async create(produto_requerido, qtd_requerida, natureza_operacao, userId, requisitionId, tipoPagamento) {
     const transaction = await this.sequelize.transaction();
     try {
-    
+      
+       // Procurar requisição pelo Id
+       const requisition = await this.Requisition.findOne({
+        where: { id: requisitionId },
+        transaction
+      });
 
-      // Criando requisição
-      const requisition = await this.Requisition.create({
-        produto_requerido,
-        categoria,
-        natureza_operacao,
-        qtd_requerida,
-        status: 'Em Processamento',
-        userId,
-        costCenterId
-      }, { transaction });
+      // Verificar se a quantidade disponível é suficiente
+      if (requisition.status ==='Concuida' || 'Cancelada') {
+        throw new Error('REQUISIÇÃO JÁ CONCUIDA OU CANCELADA');
+      }
 
-      // Procurar cliente pelo userId
+
+      // Procurar nome do produto pelo nome
       const produto = await this.Product.findOne({
         where: { nome: requisition.produto_requerido },
         transaction
@@ -50,7 +50,7 @@ class SellProcessingService {
           // Atualiza o status da requisição
           await this.Requisition.update(
             { status },
-            { where: { id: requisition.id }, transaction }
+            { where: { id: requisitionId }, transaction }
           );
           throw new Error('Produto com estoque insuficiente! Requisição recusada.');
         }
@@ -75,7 +75,7 @@ class SellProcessingService {
         quantidade: qtd_requerida,
         dataVenda:dayjs().format('YYYY-MM-DD'),
         tipoPagamento,
-        requisitionId: requisition.id,
+        requisitionId,
         userId
       }, { transaction });
 
@@ -123,7 +123,7 @@ class SellProcessingService {
       // Atualiza o status da requisição
       await this.Requisition.update(
         { status },
-        { where: { id: requisition.id }, transaction }
+        { where: { id: requisitionId }, transaction }
       );
 
       // Criando título
@@ -166,7 +166,7 @@ class SellProcessingService {
 
       await transaction.commit();
 
-      return { requisition, sell, sellDetails, notaFiscal, controleTitles: results };
+      return { sell, sellDetails, notaFiscal, controleTitles: results };
 
     } catch (error) {
       await transaction.rollback();
