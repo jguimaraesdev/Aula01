@@ -24,8 +24,8 @@ class RequisitionProcessingService {
             costCenterId,
             tipoPagamento,
             userId,
-            
-          }, {transaction});
+            transaction
+          });
           break;
 
         case 'Importação':

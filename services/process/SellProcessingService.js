@@ -44,8 +44,16 @@ class SellProcessingService {
       });
 
       if (!controleProduct || controleProduct.qtd_disponivel <= 0) {
-        throw new Error('Produto com estoque insuficiente! Requisição recusada.');
-      }
+        
+          const status = 'Rejeitada';
+
+          // Atualiza o status da requisição
+          await this.Requisition.update(
+            { status },
+            { where: { id: requisition.id }, transaction }
+          );
+          throw new Error('Produto com estoque insuficiente! Requisição recusada.');
+        }
 
       // Verificar se a quantidade disponível é suficiente
       if (controleProduct.qtd_disponivel < qtd_requerida) {
@@ -56,7 +64,7 @@ class SellProcessingService {
       await this.ControleProduct.update(
         {
           qtd_disponivel: controleProduct.qtd_disponivel - qtd_requerida,
-          qtd_bloqueado: this.sequelize.literal(`qtd_bloqueado + ${qtd_requerida}`)
+          qtd_bloqueado_venda: this.sequelize.literal(`qtd_bloqueado_venda + ${qtd_requerida}`)
         },
         { where: { id: controleProduct.id }, transaction }
       );
@@ -109,6 +117,13 @@ class SellProcessingService {
       await this.SellDetails.update(
         { notafiscalId: notaFiscal.id },
         { where: { sellId: sell.id }, transaction }
+      );
+      const status = 'Concluida';
+
+      // Atualiza o status da requisição
+      await this.Requisition.update(
+        { status },
+        { where: { id: requisition.id }, transaction }
       );
 
       // Criando título
