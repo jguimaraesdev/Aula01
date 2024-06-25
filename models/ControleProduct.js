@@ -24,8 +24,12 @@ module.exports = (sequelize) => {
         },
         qtd_bloqueado_venda: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         },
+        dataEntrada:{
+            type: Sequelize.DATE,
+            allowNull:false
+        }
     }, {
         indexes: [
           {

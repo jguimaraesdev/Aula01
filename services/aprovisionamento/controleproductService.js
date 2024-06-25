@@ -6,13 +6,14 @@ class ControleProductService {
 
     //--------------------------------------------------------------------------------------------------//
 
-    async create(movimento_tipo, qtd_disponivel, preco_custo, qtd_bloqueado, productId, depositId) {
+    async create(movimento_tipo, qtd_disponivel, preco_custo, qtd_bloqueado_venda, dataEntrada, productId, depositId) {
         try {
             const result = await this.ControleProduct.create({
                 movimento_tipo,
                 qtd_disponivel,
                 preco_custo,
-                qtd_bloqueado,
+                qtd_bloqueado_venda,
+                dataEntrada,
                 productId, 
                 depositId
             });

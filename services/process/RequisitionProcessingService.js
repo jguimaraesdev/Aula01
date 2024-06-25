@@ -16,16 +16,16 @@ class RequisitionProcessingService {
       switch (natureza_operacao) {
         case 'Venda':
           // Disparar SellProcessingService
-          await this.SellProcessing.create(
+          await this.SellProcessing.create({
             produto_requerido,
             qtd_requerida,
             categoria,
             natureza_operacao,
-            userId,
             costCenterId,
             tipoPagamento,
-            transaction
-          );
+            userId,
+            
+          }, {transaction});
           break;
 
         case 'Importação':

@@ -1,4 +1,4 @@
-const dayjs = require('dayjs'); // npm install dayjs
+const dayjs = require('dayjs');
 
 class PurchaseProcessingService {
   constructor(
@@ -77,7 +77,7 @@ class PurchaseProcessingService {
 
       let product, controleProduct;
 
-      if (!existingProduct){
+      if (!existingProduct) {
         // Criando produto
         product = await this.Product.create(
           {
@@ -93,9 +93,27 @@ class PurchaseProcessingService {
           {
             movimento_tipo: 'Disponivel',
             qtd_disponivel: quantidade,
-            preco_custo: data.preco / quantidade,
-            qtd_bloqueado: 0,
+            preco_custo: data.preco,
+            qtd_bloqueado_venda: 0,
             valor_faturado: 0,
+            dataEntrada: dayjs().format('YYYY-MM-DD'),
+            productId: product.id,
+            depositId: 1
+          },
+          { transaction }
+        );
+      } else {
+        product = existingProduct;
+
+        // Criando um novo controle de produto para FIFO
+        controleProduct = await this.ControleProduct.create(
+          {
+            movimento_tipo: 'Disponivel',
+            qtd_disponivel: quantidade,
+            preco_custo: data.preco / quantidade,
+            qtd_bloqueado_venda: 0,
+            valor_faturado: 0,
+            dataEntrada: dayjs().format('YYYY-MM-DD'),
             productId: product.id,
             depositId: 1
           },
@@ -103,7 +121,7 @@ class PurchaseProcessingService {
         );
       }
 
-      // Definindo quantas parcelas o title vai receber
+      // Definindo quantas parcelas o título vai receber
       const firstLetter = tipoPagamento.charAt(0).toUpperCase();
       const parcela = parseInt(firstLetter, 10);
 
@@ -121,7 +139,7 @@ class PurchaseProcessingService {
       const supplier = await this.Supplier.findByPk(data.supplierId, { transaction });
 
       if (!supplier) {
-        throw new Error('Supplier não encontrado');
+        throw new Error('Fornecedor não encontrado');
       }
 
       // Cria nota fiscal

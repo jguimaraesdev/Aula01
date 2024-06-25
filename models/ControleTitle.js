@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
     },
     dataPagamento: {
       type: Sequelize.DATE,
-      allowNull: false,
+      allowNull: true,
     },
     valorMulta: {
       type: Sequelize.DECIMAL(10, 2),

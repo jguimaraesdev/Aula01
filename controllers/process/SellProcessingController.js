@@ -16,7 +16,6 @@ class SellProcessingController {
           natureza_operacao,
           userId,
           costCenterId,
-          tipoMovimento,
           tipoPagamento,
         });
         res.status(200).json(result);

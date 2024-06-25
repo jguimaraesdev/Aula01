@@ -4,7 +4,7 @@ class SellProcessingService {
   constructor(SellModel, RequisitionModel, ProductModel, ControleProductModel, TitleModel, ControleTitleModel, SellDetailsModel, NotaFiscalModel, ClienteModel, sequelize) {
     this.Sell = SellModel;
     this.Requisition = RequisitionModel;
-    this.Product = ProductModel;
+    this.Product = ProductModel; // Verifique se ProductModel está sendo passado corretamente
     this.ControleProduct = ControleProductModel;
     this.Title = TitleModel;
     this.ControleTitle = ControleTitleModel;
@@ -14,29 +14,45 @@ class SellProcessingService {
     this.sequelize = sequelize;
   }
 
-  async create(produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, tipoPagamento, transaction) {
+  async create(produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, tipoPagamento) {
+    const transaction = await this.sequelize.transaction();
     try {
+      console.log('Produto requerido:', produto_requerido);
       // Procurar produto pelo nome
-      const produto = await this.Product.findOne({
+      const produto =  await this.Product.findOne({
         where: { nome: produto_requerido },
         transaction
       });
+      console.log('Produto encontrado:', produto);
 
       if (!produto) {
         throw new Error('Produto não encontrado');
       }
 
-      const productId = produto.id;
-
-      // Verificar se há estoque disponível
+      // Buscar o estoque mais antigo do produto pelo critério FIFO
       const controleProduct = await this.ControleProduct.findOne({
-        where: { productId },
+        where: { productId: produto.id },
+        order: [['dataEntrada', 'ASC']], // Ordenar por dataEntrada ascendente para FIFO
         transaction
       });
 
       if (!controleProduct || controleProduct.qtd_disponivel <= 0) {
         throw new Error('Produto com estoque insuficiente! Requisição recusada.');
       }
+
+      // Verificar se a quantidade disponível é suficiente
+      if (controleProduct.qtd_disponivel < qtd_requerida) {
+        throw new Error('Quantidade disponível insuficiente');
+      }
+
+      // Atualizar ControleProduct com a nova quantidade disponível e quantidade bloqueada
+      await this.ControleProduct.update(
+        {
+          qtd_disponivel: controleProduct.qtd_disponivel - qtd_requerida,
+          qtd_bloqueado: this.sequelize.literal(`qtd_bloqueado + ${qtd_requerida}`)
+        },
+        { where: { id: controleProduct.id }, transaction }
+      );
 
       // Criando requisição
       const requisition = await this.Requisition.create({
@@ -49,19 +65,6 @@ class SellProcessingService {
         userId,
         costCenterId
       }, { transaction });
-
-      if (controleProduct.qtd_disponivel < qtd_requerida) {
-        throw new Error('Quantidade disponível insuficiente');
-      }
-
-      // Atualizando ControleProduct
-      await this.ControleProduct.update(
-        {
-          qtd_disponivel: controleProduct.qtd_disponivel - qtd_requerida,
-          qtd_bloqueado: this.sequelize.literal(`qtd_bloqueado + ${qtd_requerida}`)
-        },
-        { where: { id: controleProduct.id }, transaction }
-      );
 
       // Gerar dataVenda
       const dataVenda = dayjs().format('YYYY-MM-DD');
@@ -91,7 +94,7 @@ class SellProcessingService {
       const sellDetails = await this.SellDetails.create({
         quantidade: qtd_requerida,
         preco_venda: lucrovenda,
-        productId,
+        productId: produto.id,
         sellId: sell.id,
         clienteId: cliente.id,
         notafiscalId: null // Atualizar após criação de NotaFiscal
@@ -146,13 +149,15 @@ class SellProcessingService {
         results.push(novotitulo);
       }
 
+      await transaction.commit();
+
       return { requisition, sell, sellDetails, notaFiscal, controleTitles: results };
 
     } catch (error) {
       await transaction.rollback();
-      console.error('Erro ao processar venda:', error);
+      console.error('Erro ao criar e atualizar dados:', error);
       throw error;
-    }
+    } 
   }
 }
 
