@@ -23,12 +23,14 @@ class SellProcessingService {
         transaction
       });
 
+      console.log(requisition)
+
       if (!requisition) {
         throw new Error('NÃO EXISTE OU NÃO ENCONTRADA');
       }
 
       // Verificar se a requisição já foi concluída ou cancelada
-      if (requisition.status === 'Concluída' || requisition.status === 'Cancelada') {
+      if (requisition.status === 'Concluida' || requisition.status === 'Rejeitada') {
         throw new Error('REQUISIÇÃO JÁ CONCLUÍDA OU CANCELADA');
       }
 
