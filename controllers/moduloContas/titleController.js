@@ -9,10 +9,10 @@ class TitleController {
     //--------------------------------------------------------------------------------------------------//
   
     async create(req, res) {
-        const { notafiscalId, numeroParcela, valorParcela,  status} = req.body;
+        const {qtd_parcela, valorOriginal,  status, notafiscalId} = req.body;
         
         try {
-            const result = await this.titleService.create(notafiscalId, numeroParcela, valorParcela, status );
+            const result = await this.titleService.create(qtd_parcela, valorOriginal,  status, notafiscalId);
             res.status(200).json(result);
         } catch(error){
             console.error('Erro no controlador ao criar:', error);

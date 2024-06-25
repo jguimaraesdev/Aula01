@@ -18,7 +18,8 @@ const sellProcessingService = new SellProcessingService(
   db.SellDetails,
   db.NotaFiscal,
   db.Cliente,
-  db.sequelize
+  db.sequelize,
+  authenticateToken 
 );
 const sellProcessingController = new SellProcessingController(sellProcessingService);
 

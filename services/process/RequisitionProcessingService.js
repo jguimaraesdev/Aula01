@@ -12,69 +12,29 @@ class RequisitionProcessingService {
     const transaction = await this.sequelize.transaction();
 
     try {
+      let requisition;
+
       switch (natureza_operacao) {
-
         case 'Venda':
-          
-          try{
-
-          const requisition = await this.Requisition.create({
-              produto_requerido,
-              categoria,
-              natureza_operacao,
-              qtd_requerida,
-              status: 'Em Processamento',
-              userId,
-              costCenterId
-            }, { transaction });
-
-            return requisition;
-          }catch (error) {
-            await transaction.rollback();
-            console.error('Erro ao criar e atualizar dados:', error);
-            throw error;
-          } 
-
-        
-        case 'Importação':
-          // Abrir cotações para fornecedores da categoria
-          const suppliers = await this.Supplier.findAll({
-            where: { categoria, natureza_operacao },
-            limit: 3,
-            transaction
-          });
-
-          if (suppliers.length === 0) {
-            throw new Error('Nenhum fornecedor encontrado para a categoria e natureza da operação especificadas');
-          }
-
-          const requisition = await this.Requisition.create({
+          requisition = await this.createRequisition({
             produto_requerido,
             categoria,
             natureza_operacao,
             qtd_requerida,
-            status: 'Em Processamento',
             userId,
             costCenterId
-          }, { transaction });
+          }, transaction);
+          break;
 
-          const currentDate = new Date();
-          // Calcular a data de validade adicionando 5 dias
-          const validadeCotacao = new Date(currentDate);
-          validadeCotacao.setDate(currentDate.getDate() + 5);
-
-          const quotationPromises = suppliers.map(supplier => {
-            return this.Quotation.create({
-              preco: 0, // Definir o preço inicial, pode ser atualizado posteriormente
-              cotacaoData: currentDate,
-              validadeCotacao,
-              supplierId: supplier.id,
-              requisitionId: requisition.id
-            }, { transaction });
-          });
-
-          await Promise.all(quotationPromises);
-
+        case 'Importação':
+          requisition = await this.handleImportation({
+            produto_requerido,
+            categoria,
+            natureza_operacao,
+            qtd_requerida,
+            userId,
+            costCenterId
+          }, transaction);
           break;
 
         default:
@@ -88,6 +48,60 @@ class RequisitionProcessingService {
       await transaction.rollback();
       console.error('Erro ao processar requisição:', error);
       throw error; // Propaga o erro para o chamador
+    }
+  }
+
+  async createRequisition(data, transaction) {
+    try {
+      return await this.Requisition.create({
+        produto_requerido: data.produto_requerido,
+        categoria: data.categoria,
+        natureza_operacao: data.natureza_operacao,
+        qtd_requerida: data.qtd_requerida,
+        status: 'Em Processamento',
+        userId: data.userId,
+        costCenterId: data.costCenterId
+      }, { transaction });
+    } catch (error) {
+      console.error('Erro ao criar requisição:', error);
+      throw error;
+    }
+  }
+
+  async handleImportation(data, transaction) {
+    try {
+      const suppliers = await this.Supplier.findAll({
+        where: { categoria: data.categoria, natureza_operacao: data.natureza_operacao },
+        limit: 3,
+        transaction
+      });
+
+      if (suppliers.length === 0) {
+        throw new Error('Nenhum fornecedor encontrado para a categoria e natureza da operação especificadas');
+      }
+
+      const requisition = await this.createRequisition(data, transaction);
+
+      const currentDate = new Date();
+      const validadeCotacao = new Date(currentDate);
+      validadeCotacao.setDate(currentDate.getDate() + 5);
+
+      const quotationPromises = suppliers.map(supplier => {
+        return this.Quotation.create({
+          preco: 0, // Definir o preço inicial, pode ser atualizado posteriormente
+          cotacaoData: currentDate,
+          validadeCotacao,
+          supplierId: supplier.id,
+          requisitionId: requisition.id
+        }, { transaction });
+      });
+
+      await Promise.all(quotationPromises);
+
+      return requisition;
+    } catch (error) {
+      console.error('Erro ao processar importação:', error);
+      throw error;
     }
   }
 }

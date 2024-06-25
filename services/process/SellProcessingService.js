@@ -4,7 +4,7 @@ class SellProcessingService {
   constructor(SellModel, RequisitionModel, ProductModel, ControleProductModel, TitleModel, ControleTitleModel, SellDetailsModel, NotaFiscalModel, ClienteModel, sequelize) {
     this.Sell = SellModel;
     this.Requisition = RequisitionModel;
-    this.Product = ProductModel; // Verifique se ProductModel está sendo passado corretamente
+    this.Product = ProductModel;
     this.ControleProduct = ControleProductModel;
     this.Title = TitleModel;
     this.ControleTitle = ControleTitleModel;
@@ -14,49 +14,52 @@ class SellProcessingService {
     this.sequelize = sequelize;
   }
 
-  async create(produto_requerido, qtd_requerida, natureza_operacao, userId, requisitionId, tipoPagamento) {
+  async create(userId, requisitionId, tipoPagamento) {
     const transaction = await this.sequelize.transaction();
     try {
-      
-       // Procurar requisição pelo Id
-       const requisition = await this.Requisition.findOne({
+      // Procurar requisição pelo Id
+      const requisition = await this.Requisition.findOne({
         where: { id: requisitionId },
         transaction
       });
 
-      // Verificar se a quantidade disponível é suficiente
-      if (requisition.status ==='Concuida' || 'Cancelada') {
-        throw new Error('REQUISIÇÃO JÁ CONCUIDA OU CANCELADA');
+      if (!requisition) {
+        throw new Error('NÃO EXISTE OU NÃO ENCONTRADA');
       }
 
+      // Verificar se a requisição já foi concluída ou cancelada
+      if (requisition.status === 'Concluída' || requisition.status === 'Cancelada') {
+        throw new Error('REQUISIÇÃO JÁ CONCLUÍDA OU CANCELADA');
+      }
 
-      // Procurar nome do produto pelo nome
+      // Variáveis para uso
+      const { qtd_requerida, produto_requerido } = requisition;
+
+      // Procurar produto pelo nome
       const produto = await this.Product.findOne({
-        where: { nome: requisition.produto_requerido },
+        where: { nome: produto_requerido },
         transaction
       });
+
+      if (!produto) {
+        throw new Error('Produto não encontrado');
+      }
 
       // Buscar o estoque mais antigo do produto pelo critério FIFO
       const controleProduct = await this.ControleProduct.findOne({
         where: { productId: produto.id },
-        order: [['dataEntrada', 'ASC']], // Ordenar por dataEntrada ascendente para FIFO
+        order: [['dataEntrada', 'ASC']],
         transaction
       });
 
       if (!controleProduct || controleProduct.qtd_disponivel <= 0) {
-        
-          const status = 'Rejeitada';
-
-          // Atualiza o status da requisição
-          await this.Requisition.update(
-            { status },
-            { where: { id: requisitionId }, transaction }
-          );
-          throw new Error('Produto com estoque insuficiente! Requisição recusada.');
-        }
+        await this.updateRequisitionStatus(requisitionId, 'Rejeitada', transaction);
+        throw new Error('Produto com estoque insuficiente! Requisição recusada.');
+      }
 
       // Verificar se a quantidade disponível é suficiente
       if (controleProduct.qtd_disponivel < qtd_requerida) {
+        await this.updateRequisitionStatus(requisitionId, 'Rejeitada', transaction);
         throw new Error('Quantidade disponível insuficiente');
       }
 
@@ -69,11 +72,10 @@ class SellProcessingService {
         { where: { id: controleProduct.id }, transaction }
       );
 
-
       // Criando venda
       const sell = await this.Sell.create({
         quantidade: qtd_requerida,
-        dataVenda:dayjs().format('YYYY-MM-DD'),
+        dataVenda: dayjs().format('YYYY-MM-DD'),
         tipoPagamento,
         requisitionId,
         userId
@@ -81,7 +83,7 @@ class SellProcessingService {
 
       // Procurar cliente pelo userId
       const cliente = await this.Cliente.findOne({
-        where: { userId : userId },
+        where: { userId },
         transaction
       });
 
@@ -89,12 +91,12 @@ class SellProcessingService {
         throw new Error('Cliente não encontrado');
       }
 
-      const lucrovenda = controleProduct.preco_custo * 2; // Calculando o preço de venda com 100% de lucro
+      const lucroVenda = controleProduct.preco_custo * 2; // Calculando o preço de venda com 100% de lucro
 
       // Criando detalhes da venda
       const sellDetails = await this.SellDetails.create({
         quantidade: qtd_requerida,
-        preco_venda: lucrovenda,
+        preco_venda: lucroVenda,
         productId: produto.id,
         sellId: sell.id,
         clienteId: cliente.id,
@@ -103,14 +105,14 @@ class SellProcessingService {
 
       // Criando Nota Fiscal
       const notaFiscal = await this.NotaFiscal.create({
-        natureza_operacao,
+        natureza_operacao: requisition.natureza_operacao,
         cnpj_cpf_comprador: cliente.CPF,
         nome_razao_comprador: cliente.nome,
         descricao_produto: produto_requerido,
         quantidade: qtd_requerida,
         cnpj_cpf_emitente: '123456/0001-10',
         nome_razao_emitente: 'JG Muambas',
-        valor_nota: lucrovenda,
+        valor_nota: lucroVenda,
       }, { transaction });
 
       // Atualizar sellDetails com notafiscalId
@@ -118,61 +120,52 @@ class SellProcessingService {
         { notafiscalId: notaFiscal.id },
         { where: { sellId: sell.id }, transaction }
       );
-      const status = 'Concluida';
 
       // Atualiza o status da requisição
-      await this.Requisition.update(
-        { status },
-        { where: { id: requisitionId }, transaction }
-      );
+      await this.updateRequisitionStatus(requisitionId, 'Concluída', transaction);
 
       // Criando título
-       // Definindo quantas parcelas o título vai receber
-       const firstLetter = tipoPagamento.charAt(0).toUpperCase();
-       const numeroParcela = parseInt(firstLetter, 10);
+      const numeroParcela = parseInt(tipoPagamento.charAt(0), 10);
+      const valorParcela = lucroVenda / numeroParcela;
 
-       const valorParcela = lucrovenda / numeroParcela;
-
-      // Criando um novo título de dívida
-      const title = await this.Title.create(
-        {
-          qtd_Parcela: numeroParcela,
-          valorOriginal: lucrovenda,
-          status: 'aberto'
-        },
-        { transaction }
-      );
+      const title = await this.Title.create({
+        qtd_Parcela: numeroParcela,
+        valorOriginal: lucroVenda,
+        status: 'aberto',
+        notafiscalId: notaFiscal.id
+      }, { transaction });
 
       let results = [];
-
       for (let i = 0; i < numeroParcela; i++) {
         const dataVencimentoParcela = dayjs().add(30 * (i + 1), 'day').format('YYYY-MM-DD');
-        const novotitulo = await this.ControleTitle.create(
-          {
-            tipoMovimento: 'abertura',
-            valorMovimento: valorParcela,
-            valorParcial: 0,
-            dataVencimento: dataVencimentoParcela,
-            dataPagamento: null,
-            valorMulta: 0,
-            valorJuros: 0,
-            titleId: title.id
-          },
-          { transaction }
-        );
-        console.log(`Created ControleTitle ${i + 1}: `, novotitulo);
+        const novotitulo = await this.ControleTitle.create({
+          tipoMovimento: 'abertura',
+          valorMovimento: valorParcela,
+          valorParcial: 0,
+          dataVencimento: dataVencimentoParcela,
+          dataPagamento: null,
+          valorMulta: 0,
+          valorJuros: 0,
+          titleId: title.id
+        }, { transaction });
         results.push(novotitulo);
       }
 
       await transaction.commit();
-
       return { sell, sellDetails, notaFiscal, controleTitles: results };
 
     } catch (error) {
       await transaction.rollback();
       console.error('Erro ao criar e atualizar dados:', error);
       throw error;
-    } 
+    }
+  }
+
+  async updateRequisitionStatus(requisitionId, status, transaction) {
+    await this.Requisition.update(
+      { status },
+      { where: { id: requisitionId }, transaction }
+    );
   }
 }
 

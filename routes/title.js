@@ -11,7 +11,7 @@ const AuthenticateToken = require('../services/authenticateToken');
 const authenticateToken = new AuthenticateToken('SUA_CHAVE_SECRETA');
 
 // Instanciando o serviço e o controlador
-const titleService = new TitleService(db.Title, authenticateToken);
+const titleService = new TitleService(db.Title, db.NotaFiscal, authenticateToken);
 const titleController = new TitleController(titleService);
 
 //--------------------------------------------------------------------------------------------------//

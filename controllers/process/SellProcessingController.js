@@ -6,11 +6,11 @@ class SellProcessingController {
     }
   
     async create(req, res) {
-      const { produto_requerido, qtd_requerida, natureza_operacao, requisitionId, tipoPagamento} = req.body;
+      const {requisitionId, tipoPagamento} = req.body;
       const userId = req.userId;
       try {
         const result = await this.sellProcessingService.create(
-          produto_requerido, qtd_requerida, natureza_operacao, userId, requisitionId, tipoPagamento
+          userId, requisitionId, tipoPagamento
         );
         res.status(200).json(result);
       } catch (error) {

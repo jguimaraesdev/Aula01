@@ -11,14 +11,11 @@ class TitleService {
 
     //--------------------------------------------------------------------------------------------------//
     
-    async create(numeroParcela, valorParcela, status, notafiscalId ) {
+    async create(qtd_parcela, valorOriginal,  status, notafiscalId ) {
         try {
         
             const result = await this.Title.create({ 
-                numeroParcela, 
-                valorParcela,
-                status,
-                notafiscalId, 
+                qtd_parcela, valorOriginal,  status, notafiscalId 
             },
         
         );
