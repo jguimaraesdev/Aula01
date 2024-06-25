@@ -93,18 +93,6 @@ class SellProcessingService {
         throw new Error('Cliente não encontrado');
       }
 
-      const lucroVenda = controleProduct.preco_custo * 2; // Calculando o preço de venda com 100% de lucro
-
-      // Criando detalhes da venda
-      const sellDetails = await this.SellDetails.create({
-        quantidade: qtd_requerida,
-        preco_venda: lucroVenda,
-        productId: produto.id,
-        sellId: sell.id,
-        clienteId: cliente.id,
-        notafiscalId: null // Atualizar após criação de NotaFiscal
-      }, { transaction });
-
       // Criando Nota Fiscal
       const notaFiscal = await this.NotaFiscal.create({
         natureza_operacao: requisition.natureza_operacao,
@@ -117,14 +105,22 @@ class SellProcessingService {
         valor_nota: lucroVenda,
       }, { transaction });
 
-      // Atualizar sellDetails com notafiscalId
-      await this.SellDetails.update(
-        { notafiscalId: notaFiscal.id },
-        { where: { sellId: sell.id }, transaction }
-      );
+
+      const lucroVenda = controleProduct.preco_custo * 2; // Calculando o preço de venda com 100% de lucro
+
+      // Criando detalhes da venda
+      const sellDetails = await this.SellDetails.create({
+        quantidade: qtd_requerida,
+        preco_venda: lucroVenda,
+        productId: produto.id,
+        sellId: sell.id,
+        clienteId: cliente.id,
+        notafiscalId: null // Atualizar após criação de NotaFiscal
+      }, { transaction });
+
 
       // Atualiza o status da requisição
-      await this.updateRequisitionStatus(requisitionId, 'Concluída', transaction);
+      await this.updateRequisitionStatus(requisitionId, 'Concluida', transaction);
 
       // Criando título
       const numeroParcela = parseInt(tipoPagamento.charAt(0), 10);
