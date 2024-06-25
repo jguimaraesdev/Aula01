@@ -17,17 +17,24 @@ class SellProcessingService {
   async create(produto_requerido, qtd_requerida, categoria, natureza_operacao, userId, costCenterId, tipoPagamento) {
     const transaction = await this.sequelize.transaction();
     try {
-      console.log('Produto requerido:', produto_requerido);
-      // Procurar produto pelo nome
-      const produto =  await this.Product.findOne({
-        where: { nome: produto_requerido },
+    
+
+      // Criando requisição
+      const requisition = await this.Requisition.create({
+        produto_requerido,
+        categoria,
+        natureza_operacao,
+        qtd_requerida,
+        status: 'Em Processamento',
+        userId,
+        costCenterId
+      }, { transaction });
+
+      // Procurar cliente pelo userId
+      const produto = await this.Product.findOne({
+        where: { nome: requisition.produto_requerido },
         transaction
       });
-      console.log('Produto encontrado:', produto);
-
-      if (!produto) {
-        throw new Error('Produto não encontrado');
-      }
 
       // Buscar o estoque mais antigo do produto pelo critério FIFO
       const controleProduct = await this.ControleProduct.findOne({
@@ -54,25 +61,11 @@ class SellProcessingService {
         { where: { id: controleProduct.id }, transaction }
       );
 
-      // Criando requisição
-      const requisition = await this.Requisition.create({
-        produto_requerido,
-        qtd_requerida,
-        categoria,
-        natureza_operacao,
-        qtd_requerida,
-        status: 'Em Processamento',
-        userId,
-        costCenterId
-      }, { transaction });
-
-      // Gerar dataVenda
-      const dataVenda = dayjs().format('YYYY-MM-DD');
 
       // Criando venda
       const sell = await this.Sell.create({
         quantidade: qtd_requerida,
-        dataVenda,
+        dataVenda:dayjs().format('YYYY-MM-DD'),
         tipoPagamento,
         requisitionId: requisition.id,
         userId
@@ -80,7 +73,7 @@ class SellProcessingService {
 
       // Procurar cliente pelo userId
       const cliente = await this.Cliente.findOne({
-        where: { userId },
+        where: { userId : userId },
         transaction
       });
 
@@ -88,7 +81,7 @@ class SellProcessingService {
         throw new Error('Cliente não encontrado');
       }
 
-      const lucrovenda = produto.preco_custo * 2; // Calculando o preço de venda com 100% de lucro
+      const lucrovenda = controleProduct.preco_custo * 2; // Calculando o preço de venda com 100% de lucro
 
       // Criando detalhes da venda
       const sellDetails = await this.SellDetails.create({
@@ -115,20 +108,25 @@ class SellProcessingService {
       // Atualizar sellDetails com notafiscalId
       await this.SellDetails.update(
         { notafiscalId: notaFiscal.id },
-        { where: { id: sellDetails.id }, transaction }
+        { where: { sellId: sell.id }, transaction }
       );
 
       // Criando título
-      const firstLetter = tipoPagamento.charAt(0).toUpperCase();
-      const numeroParcela = parseInt(firstLetter, 10); // 10 é a base decimal
-      const valorParcela = lucrovenda / numeroParcela;
+       // Definindo quantas parcelas o título vai receber
+       const firstLetter = tipoPagamento.charAt(0).toUpperCase();
+       const numeroParcela = parseInt(firstLetter, 10);
 
-      const title = await this.Title.create({
-        qtd_parcela: numeroParcela,
-        valorOriginal: lucrovenda,
-        status: 'aberto',
-        notafiscalId: notaFiscal.id
-      }, { transaction });
+       const valorParcela = lucrovenda / numeroParcela;
+
+      // Criando um novo título de dívida
+      const title = await this.Title.create(
+        {
+          qtd_Parcela: numeroParcela,
+          valorOriginal: lucrovenda,
+          status: 'aberto'
+        },
+        { transaction }
+      );
 
       let results = [];
 
@@ -138,7 +136,9 @@ class SellProcessingService {
           {
             tipoMovimento: 'abertura',
             valorMovimento: valorParcela,
+            valorParcial: 0,
             dataVencimento: dataVencimentoParcela,
+            dataPagamento: null,
             valorMulta: 0,
             valorJuros: 0,
             titleId: title.id

@@ -37,7 +37,8 @@ module.exports= (sequelize) => {
         });
         SellDetails.belongsTo(models.NotaFiscal, {
             foreignKey: 'notafiscalId',
-            as: 'NotaFiscal'
+            as: 'NotaFiscal',
+            allowNull:true
         });
     };
 
