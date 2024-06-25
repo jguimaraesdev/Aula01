@@ -77,14 +77,7 @@ class PurchaseProcessingService {
 
       let product, controleProduct;
 
-      if (existingProduct) {
-        // Produto já existe, atualizar o estoque
-        product = existingProduct;
-        controleProduct = await this.ControleProduct.update(
-          { qtd_disponivel: this.sequelize.literal(`qtd_disponivel + ${quantidade}`) },
-          { where: { productId: existingProduct.id }, transaction }
-        );
-      } else {
+      if (!existingProduct){
         // Criando produto
         product = await this.Product.create(
           {
@@ -100,6 +93,7 @@ class PurchaseProcessingService {
           {
             movimento_tipo: 'Disponivel',
             qtd_disponivel: quantidade,
+            preco_custo: data.preco / quantidade,
             qtd_bloqueado: 0,
             valor_faturado: 0,
             productId: product.id,

@@ -12,7 +12,6 @@ module.exports= (sequelize) => {
         nome:{
             type: Sequelize.STRING,
             allowNull:false,
-            unique:true
         },
         status: {
             type: Sequelize.ENUM('Ativo', 'Inativo'),

@@ -8,12 +8,14 @@ class ControleTitleService {
   
     //--------------------------------------------------------------------------------------------------//
   
-    async create( tipoMovimento, valorMovimento, dataVencimento, valorMulta, valorJuros, titleId ) {
+    async create( tipoMovimento, valorMovimento, valorParcial, dataVencimento, dataPagamento, valorMulta, valorJuros, titleId ) {
         try {
             const result = await this.controleTitle.create({
                 tipoMovimento, 
                 valorMovimento,
-                dataVencimento, 
+                valorParcial,
+                dataVencimento,
+                dataPagamento, 
                 valorMulta, 
                 valorJuros, 
                 titleId

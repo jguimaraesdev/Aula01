@@ -18,7 +18,11 @@ module.exports = (sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        qtd_bloqueado: {
+        preco_custo:{
+            type: Sequelize.DOUBLE,
+            allowNull:false
+        },
+        qtd_bloqueado_venda: {
             type: Sequelize.INTEGER,
             allowNull: false
         },
