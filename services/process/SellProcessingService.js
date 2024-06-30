@@ -93,6 +93,8 @@ class SellProcessingService {
         throw new Error('Cliente não encontrado');
       }
 
+      const lucroVenda = controleProduct.preco_custo * 2; // Calculando o preço de venda com 100% de lucro
+
       // Criando Nota Fiscal
       const notaFiscal = await this.NotaFiscal.create({
         natureza_operacao: requisition.natureza_operacao,
@@ -106,7 +108,7 @@ class SellProcessingService {
       }, { transaction });
 
 
-      const lucroVenda = controleProduct.preco_custo * 2; // Calculando o preço de venda com 100% de lucro
+     
 
       // Criando detalhes da venda
       const sellDetails = await this.SellDetails.create({

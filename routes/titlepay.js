@@ -15,14 +15,12 @@ router.post('/cancelar/:titleId', authenticateToken.verifyToken.bind(authenticat
     titlepayController.cancelarTitulo(req, res).catch(next);
 });
 
-router.post('/pagar', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
-    titlepayController.pagarParcela(req, res).catch(next);
+router.put('/pagarintegral', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
+    titlepayController.pagarIntegral(req, res).catch(next);
 });
 
-// Manipulador de erros
-router.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Algo deu errado!');
+router.put('/pagarparcial', authenticateToken.verifyToken.bind(authenticateToken), (req, res, next) => {
+    titlepayController.pagarParcial(req, res).catch(next);
 });
 
 module.exports = router;

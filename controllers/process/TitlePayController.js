@@ -22,10 +22,10 @@ class TitlePayController {
 
      //--------------------------------------------------------------------------------------------------//
 
-    async pagarParcela(req, res) {
+    async pagarIntegral(req, res) {
       const { cpf_cnpj, valor } = req.body;
       try {
-        const result = await this.titlepayservice.pagarParcela(cpf_cnpj, valor);
+        const result = await this.titlepayservice.pagarIntegral(cpf_cnpj, valor);
         return res.status(200).json(result);
       } catch(error){
         console.error('Erro no controlador ao criar :', error);
@@ -34,6 +34,18 @@ class TitlePayController {
     }
 
      //--------------------------------------------------------------------------------------------------//
+
+     async pagarParcial(req, res) {
+      const { cpf_cnpj, valor } = req.body;
+      try {
+        const result = await this.titlepayservice.pagarParcial(cpf_cnpj, valor);
+        return res.status(200).json(result);
+      } catch(error){
+        console.error('Erro no controlador ao criar :', error);
+        res.status(500).json({ error: "Erro ao inserir novo Registro", detalhes: error.message });
+    }
+    }
+    //--------------------------------------------------------------------------------------------------//
   }
   
   module.exports = TitlePayController;
