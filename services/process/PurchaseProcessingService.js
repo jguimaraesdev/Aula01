@@ -93,7 +93,7 @@ class PurchaseProcessingService {
           {
             movimento_tipo: 'Disponivel',
             qtd_disponivel: quantidade,
-            preco_custo: data.preco,
+            preco_custo: custototal,
             qtd_bloqueado_venda: 0,
             valor_faturado: 0,
             dataEntrada: dayjs().format('YYYY-MM-DD'),
