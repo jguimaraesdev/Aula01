@@ -104,7 +104,7 @@ class SellProcessingService {
         quantidade: qtd_requerida,
         cnpj_cpf_emitente: '123456/0001-10',
         nome_razao_emitente: 'JG Muambas',
-        valor_nota: lucroVenda,
+        valor_nota: lucroVenda * qtd_requerida,
       }, { transaction });
 
 
@@ -117,7 +117,7 @@ class SellProcessingService {
         productId: produto.id,
         sellId: sell.id,
         clienteId: cliente.id,
-        notafiscalId: null // Atualizar após criação de NotaFiscal
+        notafiscalId: notaFiscal.id
       }, { transaction });
 
 
@@ -126,11 +126,11 @@ class SellProcessingService {
 
       // Criando título
       const numeroParcela = parseInt(tipoPagamento.charAt(0), 10);
-      const valorParcela = lucroVenda / numeroParcela;
+      const valorParcela = (lucroVenda*qtd_requerida) / numeroParcela;
 
       const title = await this.Title.create({
         qtd_Parcela: numeroParcela,
-        valorOriginal: lucroVenda,
+        valorOriginal: lucroVenda * qtd_requerida,
         status: 'aberto',
         notafiscalId: notaFiscal.id
       }, { transaction });

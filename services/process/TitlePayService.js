@@ -63,46 +63,45 @@ class TitlePayService {
       const parcela = await this.controleTitle.findOne({
         where: {
           titleId: titulo.id,
-          tipoMovimento:'abertura',
+          tipoMovimento: 'abertura',
           dataPagamento: null,
-          dataVencimento: {[Op.lte]: dayjs().format('YYYY-MM-DD')}
+          dataVencimento: { [Op.lte]: dayjs().format('YYYY-MM-DD') }
         },
         order: [['dataVencimento', 'ASC']],
         transaction
       });
-      
   
       if (!parcela) {
         throw new Error('Não há parcelas vencendo atualmente.');
       }
-      
-      // Convertendo valorMovimento para número
+  
       const valorMovimento = parseFloat(parcela.valorMovimento);
-      const valor1 = parseFloat(valor);
-
-
+      const valorPago = parseFloat(valor);
+  
       let updateResult;
-      if (valorMovimento === valor1) {
+      if (valorMovimento === valorPago) {
         updateResult = await this.controleTitle.update(
-          { tipoMovimento: 'pagamento',
-            valorParcial: 0, 
-            dataPagamento: dayjs().format('YYYY-MM-DD') 
+          {
+            tipoMovimento: 'pagamento',
+            valorParcial: 0,
+            dataPagamento: dayjs().format('YYYY-MM-DD')
           },
           { where: { id: parcela.id }, transaction }
         );
-      } else if (valorMovimento < valor1) {
+      } else if (valorMovimento < valorPago) {
         updateResult = await this.controleTitle.update(
-          { valorParcial: valor1, 
-            dataPagamento: dayjs().format('YYYY-MM-DD') 
+          {
+            valorParcial: valorPago - valorMovimento,
+            dataPagamento: dayjs().format('YYYY-MM-DD')
           },
           { where: { id: parcela.id }, transaction }
         );
+      } else {
+        throw new Error('Valor pago insuficiente para quitar a parcela.');
       }
   
-      console.log("Resultado da atualização:", updateResult);
-  
       if (!updateResult || updateResult[0] === 0) {
-        new Error('Falha ao atualizar a parcela.');
+        throw new Error('Falha ao atualizar a parcela.');
       }
   
       const parcelasAbertas = await this.controleTitle.count({
@@ -110,26 +109,24 @@ class TitlePayService {
         transaction
       });
   
-      console.log("Contagem de parcelas abertas:", parcelasAbertas);
-  
       if (parcelasAbertas === 0) {
         await this.title.update(
           { status: 'quitado' },
           { where: { id: titulo.id }, transaction }
         );
-        return { message: 'Divida quitada.' };
+        await transaction.commit();
+        return { message: 'Dívida quitada.' };
       }
   
       await transaction.commit();
-  
       return { message: 'Parcela paga com sucesso.' };
-      
     } catch (error) {
       await transaction.rollback();
       console.error('Erro ao pagar parcela:', error);
       throw error;
     }
   }
+  
   //--------------------------------------------------------------------------------------------------------//
   
   async pagarParcial(cpf_cnpj, valor) {
