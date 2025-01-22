@@ -39,5 +39,5 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar 
 
 - **Desenvolvedor:** Jhonny Guimarães  
 - **E-mail:** guimaraes.jhonny@outlook.com  
-- **LinkedIn:** [Jhonny Guimarães](#)  
+- **LinkedIn:** [Jhonny Guimarães](http://www.linkedin.com/in/jhonny-guimaraes)  
 - **GitHub:** [codeguima](https://github.com/codeguima)
