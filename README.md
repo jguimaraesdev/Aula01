@@ -18,6 +18,7 @@ Este projeto consiste no desenvolvimento de um sistema de compra e venda baseado
 - **ORM**: Sequelize
 - **Autenticação**: JWT
 - **Segurança**: Bcrypt para criptografia de senhas
+- **Arquitetura**: Model, Service, Controller
 
 ## 🏷️ Entidades Representadas
 
